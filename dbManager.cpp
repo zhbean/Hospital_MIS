@@ -1,20 +1,28 @@
-#include "testdb.h"
+#include "dbManager.h"
 
-testdb::testdb()
+dbManager::dbManager()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL"); //database driver
+    db = QSqlDatabase::addDatabase("QMYSQL"); //database driver
     db.setHostName("192.168.1.56");  //database ip address
     db.setUserName("Doctor");   //database username
     db.setPassword("123456");   //database password
     db.setDatabaseName("Hospital_MIS");     //database table name
+}
+dbManager::~dbManager()
+{
+    db.close();
+}
+bool dbManager::openDB(){
     if (db.open())
     {
-        qDebug() << "succ";
+        return true;
     }
     else
     {
-        qDebug()<<db.lastError();
-        qDebug() << "failed";
-        exit(0);
+       return false;
     }
 }
+QSqlDatabase* dbManager::getDB(){
+    return &db;
+}
+
