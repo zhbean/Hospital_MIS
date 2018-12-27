@@ -3,7 +3,7 @@
 testdb::testdb()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL"); //database driver
-    db.setHostName("192.168.64.132");  //database ip address
+    db.setHostName("192.168.1.56");  //database ip address
     db.setUserName("Doctor");   //database username
     db.setPassword("123456");   //database password
     db.setDatabaseName("Hospital_MIS");     //database table name
