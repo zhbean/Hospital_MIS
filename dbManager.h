@@ -1,17 +1,19 @@
 #ifndef TESTDB_H
 #define TESTDB_H
 
-#include <QCoreApplication>
 #include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlTableModel>
 #include <QSqlError>
 #include <QDebug>
 
-class testdb
+class dbManager
 {
 public:
-    testdb();
+    dbManager();
+   ~dbManager();
+    QSqlDatabase *getDB();
+    bool openDB();
+private:
+    QSqlDatabase db;
 };
 
 #endif // TESTDB_H

@@ -1,13 +1,17 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include "testdb.h"
+#include "dbManager.h"
+#include "qdebug.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
-    testdb db;
+    dbManager db;
+    if(db.openDB()){
+        qDebug()<<"scc";
+    };
 
     return a.exec();
 }
