@@ -27,7 +27,7 @@ INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,depa
 INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,department_id) VALUES('小赵',0,38,102,'123',103);
 INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,department_id) VALUES('小黄',0,28,103,'123',103);
 /*处方单*/
-INSERT INTO psp(doctor_id,patient_id,psp_date) VALUES(10000,10000,'2018/06/21 10:30:26 星期四');
+INSERT INTO psp(doctor_id,patient_id,patient_disease,psp_date) VALUES(10000,10000,'重度感冒','2018/06/21 10:30:26 星期四');
 /*药方详情*/
 INSERT INTO pspdetail(psp_id,drug_id,drug_num,psp_price,psp_info) VALUES(10000,10000,5,150,'每天一瓶');
 INSERT INTO pspdetail(psp_id,drug_id,drug_num,psp_price,psp_info) VALUES(10000,10001,5,3000,'每天一瓶');

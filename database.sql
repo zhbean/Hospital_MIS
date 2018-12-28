@@ -67,6 +67,7 @@ PRIMARY KEY (psp_id),
 FOREIGN KEY(doctor_id) REFERENCES staff(staff_id),
 FOREIGN KEY(patient_id) REFERENCES patient(patient_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8,AUTO_INCREMENT = 10000;
+alter table psp add column patient_disease TEXT not null after patient_id;/*增加了诊断*/
 /*药方详情*/
 CREATE TABLE IF NOT EXISTS pspdetail(
 psp_id INT NOT NULL,

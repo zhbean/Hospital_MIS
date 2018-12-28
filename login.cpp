@@ -107,7 +107,7 @@ void Login::on_OkButton_clicked()
         QMessageBox::information(NULL,"错误","数据库错误!",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
         return;
     }
-
+}
 void Login::on_CancelButton_clicked()
 {
     this->close();
