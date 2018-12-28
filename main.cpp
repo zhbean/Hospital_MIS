@@ -1,17 +1,34 @@
-#include "mainwindow.h"
 #include <QApplication>
 #include "dbManager.h"
 #include "login.h"
 #include "qdebug.h"
+#include "managewindow.h"
+#include "diagnosiswindow.h"
+#include "registerwindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
     Login c;
-    dbManager db;
-    c.show();
-    //w.show();
+    c.exec();
+    int b=0;
+    manageWindow m;
+    diagnosisWindow d;
+    registerWindow r;
+
+    switch(b) {
+    case 0:
+        r.show();
+        break;
+    case 1:
+        d.show();
+        break;
+    case 2:
+        break;
+    case 3:
+        m.show();
+        break;
+    }
 
     return a.exec();
 }

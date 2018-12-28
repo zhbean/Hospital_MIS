@@ -28,6 +28,7 @@ public slots:
     void timerUpdate(void);
 private slots:
     void on_OkButton_clicked();
+    void on_CancelButton_clicked();
 };
 
 #endif // LOGIN_H
