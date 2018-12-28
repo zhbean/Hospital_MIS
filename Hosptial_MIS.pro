@@ -27,16 +27,19 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         dbManager.cpp \
-      login.cpp
+      login.cpp \
+    pharmacydialog.cpp
 
 HEADERS += \
         mainwindow.h \
         dbManager.h \
-      login.h
+      login.h \
+    pharmacydialog.h
 
 FORMS += \
         mainwindow.ui \
-      login.ui
+      login.ui \
+    pharmacydialog.ui
 
 QT += sql
 
