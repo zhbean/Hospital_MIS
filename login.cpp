@@ -31,28 +31,32 @@ void Login::showEvent(QShowEvent *event)
     QStandardItemModel *combM = new QStandardItemModel(this);
     QStandardItem *combI;
     dbManager db;
-    QSqlQuery query = db.selectDB("select * from dpmdetail;");
-    if(query.exec()){
-        while(query.next()){
-            combI=new QStandardItem(query.value("dpmdetail_name").toString());
-            //设置提示
-            combI->setToolTip(query.value("dpmdetail_id").toString());
-            combM->appendRow(combI);
+    if(db.openDB())
+    {
+        QSqlQuery query = db.selectDB("select * from dpmdetail;");
+        if(query.exec()){
+            while(query.next()){
+                combI=new QStandardItem(query.value("dpmdetail_name").toString());
+                //设置提示
+                combI->setToolTip(query.value("dpmdetail_id").toString());
+                combM->appendRow(combI);
+            }
+            this->ui->comboBox->setModel(combM);
         }
-        this->ui->comboBox->setModel(combM);
+        else{
+            QMessageBox::information(NULL,"错误","数据连接失败！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+            qDebug()<<"没有查询结果";
+            return;
+        }
     }
-    else{
-        QMessageBox::information(NULL,"错误","数据连接失败！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
-        qDebug()<<"没有查询结果";
-        return;
-    }
+
 }
 
 
 void Login::on_OkButton_clicked()
 {
     int position_id;
-    int limit=-1;
+
     //获取帐号密码
     int account = this->ui->AccountEdit->text().toInt();
     QString pwd = this->ui->PassWordEdit->text();
@@ -65,48 +69,40 @@ void Login::on_OkButton_clicked()
 
     //查询数据库鉴别权限
     dbManager db;
-    QSqlQuery query = db.selectDB("select * from staff where staff_id=? and staff_password=?;");
-    query.addBindValue(account);
-    query.addBindValue(pwd);
-    if(query.exec()){
-        if(query.next()){
-            //得到职位号
-            position_id = query.value("position_id").toInt();
-            qDebug()<<position_id;
-            //得到权限
-            QSqlQuery limit_query = db.selectDB("select * from positions where position_id=?");
-            limit_query.addBindValue(position_id);
-            if(limit_query.exec()){
-                while(limit_query.next()){
-                    limit = limit_query.value("position_limit").toInt();
+    if(db.openDB()){
+        QSqlQuery query = db.selectDB("select * from staff where staff_id=? and staff_password=?;");
+        query.addBindValue(account);
+        query.addBindValue(pwd);
+        if(query.exec()){
+            if(query.next()){
+                //得到职位号
+                position_id = query.value("position_id").toInt();
+                qDebug()<<position_id;
+                //得到权限
+                QSqlQuery limit_query = db.selectDB("select * from positions where position_id=?");
+                limit_query.addBindValue(position_id);
+                if(limit_query.exec()){
+                    while(limit_query.next()){
+                        limit = limit_query.value("position_limit").toInt();
+                    }
                 }
-                switch(limit)
-                {
-                case 0:
-                break;
-                case 1:
-                break;
-                case 2:
-                break;
-                case 3:
-                break;
+                else{
+                    QMessageBox::information(NULL,"错误","数据库错误!",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+                    return;
                 }
             }
             else{
-                QMessageBox::information(NULL,"错误","数据库错误!",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+                //账号或密码错误
+                QMessageBox::information(NULL,"错误","账号或密码错误!",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
                 return;
             }
         }
         else{
-            //账号或密码错误
-            QMessageBox::information(NULL,"错误","账号或密码错误!",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+            QMessageBox::information(NULL,"错误","数据库错误!",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
             return;
         }
     }
-    else{
-        QMessageBox::information(NULL,"错误","数据库错误!",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
-        return;
-    }
+}
 
 void Login::on_CancelButton_clicked()
 {
