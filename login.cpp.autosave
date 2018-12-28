@@ -83,13 +83,14 @@ void Login::on_OkButton_clicked()
                 switch(limit)
                 {
                 case 0:
-                break;
+                    
+                    break;
                 case 1:
-                break;
+                    break;
                 case 2:
-                break;
+                    break;
                 case 3:
-                break;
+                    break;
                 }
             }
             else{
