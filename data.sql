@@ -12,10 +12,11 @@ INSERT INTO drug(drug_name,factory_id,drug_buyprice,drug_price,real_inventory,vi
 INSERT INTO drug(drug_name,factory_id,drug_buyprice,drug_price,real_inventory,virtual_inventory) VALUES('全建保健',10001,500,600,500,500);
 INSERT INTO drug(drug_name,factory_id,drug_buyprice,drug_price,real_inventory,virtual_inventory) VALUES('小林创可贴',10002,20,30,100,100);
 /*职位*/
-INSERT INTO positions(position_name) VALUES('院长');
-INSERT INTO positions(position_name) VALUES('医师');
-INSERT INTO positions(position_name) VALUES('护士长');
-INSERT INTO positions(position_name) VALUES('护士');
+INSERT INTO positions(position_name,position_limit) VALUES('院长',1);
+INSERT INTO positions(position_name,position_limit) VALUES('医师',1);
+INSERT INTO positions(position_name,position_limit) VALUES('护士长',0);
+INSERT INTO positions(position_name,position_limit) VALUES('护士',2);
+INSERT INTO positions(position_name,position_limit) VALUES('管理员',3);
 /*科室*/
 INSERT INTO department(department_name,department_info) VALUES('内科','普通门诊');
 INSERT INTO department(department_name,department_info) VALUES('骨科','跌打损伤');

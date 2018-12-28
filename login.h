@@ -24,6 +24,7 @@ public:
 private:
     Ui::Login *ui;
     void showEvent(QShowEvent *event);
+        int limit=-1;//登陆权限
 public slots:
     void timerUpdate(void);
 private slots:
