@@ -85,6 +85,7 @@ void Login::on_OkButton_clicked()
                     while(limit_query.next()){
                         limit = limit_query.value("position_limit").toInt();
                     }
+                    this->accept();
                 }
                 else{
                     QMessageBox::information(NULL,"错误","数据库错误!",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);

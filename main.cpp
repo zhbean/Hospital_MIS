@@ -11,27 +11,28 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     Login c;
-    c.exec();
-    int b=0;
-    manageWindow m;
-    diagnosisWindow d;
-    registerWindow r;
-    PharmacyDialog p;
-
-    switch(b) {
-    case 0:
-        r.show();
-        break;
-    case 1:
-        d.show();
-        break;
-    case 2:
-        p.show();
-        break;
-    case 3:
-        m.show();
-        break;
+    if(c.exec()==QDialog::Accepted){
+        qDebug()<<c.limit;
+        manageWindow m;
+        diagnosisWindow d;
+        registerWindow r;
+        PharmacyDialog p;
+        switch(c.limit){
+        case 0:
+            r.show();
+            break;
+        case 1:
+            d.show();
+            break;
+        case 2:
+            p.show();
+            break;
+        case 3:
+            m.show();
+            break;
+        default: break;
+        }
+        return a.exec();
     }
-
-    return a.exec();
+    return 0;
 }

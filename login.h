@@ -20,11 +20,11 @@ class Login : public QDialog
 public:
     explicit Login(QWidget *parent = nullptr);
     ~Login();
+    int limit=-1;//登陆权限
 
 private:
     Ui::Login *ui;
     void showEvent(QShowEvent *event);
-        int limit=-1;//登陆权限
 public slots:
     void timerUpdate(void);
 private slots:
