@@ -25,21 +25,31 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
         dbManager.cpp \
       login.cpp \
-    pharmacydialog.cpp
+    pharmacydialog.cpp\
+    diagnosiswindow.cpp \
+    managewindow.cpp \
+    registerwindow.cpp
 
 HEADERS += \
-        mainwindow.h \
         dbManager.h \
       login.h \
-    pharmacydialog.h
+    pharmacydialog.h\
+    diagnosiswindow.h \
+    managewindow.h \
+    registerwindow.h
+
+
+
 
 FORMS += \
-        mainwindow.ui \
       login.ui \
-    pharmacydialog.ui
+    diagnosiswindow.ui \
+    managewindow.ui \
+   pharmacydialog.ui\
+    registerwindow.ui
+
 
 QT += sql
 

@@ -25,3 +25,8 @@ void Login::timerUpdate(void)
     ui->Timelabel->setText(str);
 }
 
+
+void Login::on_CancelButton_clicked()
+{
+    this->close();
+}

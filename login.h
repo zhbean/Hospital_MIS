@@ -21,6 +21,8 @@ private:
     Ui::Login *ui;
 public slots:
     void timerUpdate(void);
+private slots:
+    void on_CancelButton_clicked();
 };
 
 #endif // LOGIN_H
