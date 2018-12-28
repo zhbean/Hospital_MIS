@@ -25,18 +25,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
         dbManager.cpp \
-      login.cpp
+      login.cpp \
+    diagnosiswindow.cpp \
+    managewindow.cpp \
+    registerwindow.cpp
 
 HEADERS += \
-        mainwindow.h \
         dbManager.h \
-      login.h
+      login.h \
+    diagnosiswindow.h \
+    managewindow.h \
+    registerwindow.h
 
 FORMS += \
-        mainwindow.ui \
-      login.ui
+      login.ui \
+    diagnosiswindow.ui \
+    managewindow.ui \
+    registerwindow.ui
 
 QT += sql
 
