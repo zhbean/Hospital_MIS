@@ -22,11 +22,13 @@ INSERT INTO department(department_name,department_info) VALUES('内科','普通�
 INSERT INTO department(department_name,department_info) VALUES('骨科','跌打损伤');
 INSERT INTO department(department_name,department_info) VALUES('皮肤科','过敏炎症');
 INSERT INTO department(department_name,department_info) VALUES('护士科','护士');
+INSERT INTO department(department_name,department_info) VALUES('管理科','管理员工，设置信息');
 /*员工*/
 INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,department_id) VALUES('小王',1,28,101,'123',100);
 INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,department_id) VALUES('老李',1,48,101,'123',101);
 INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,department_id) VALUES('小赵',0,38,102,'123',103);
 INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,department_id) VALUES('小黄',0,28,103,'123',103);
+INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,department_id) VALUES('老白',1,30,104,'123',104);
 /*处方单*/
 INSERT INTO psp(doctor_id,patient_id,patient_disease,psp_date) VALUES(10000,10000,'重度感冒','2018/06/21 10:30:26 星期四');
 /*药方详情*/

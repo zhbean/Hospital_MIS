@@ -49,7 +49,10 @@ void Login::showEvent(QShowEvent *event)
             return;
         }
     }
-
+    else{
+        QMessageBox::information(NULL,"错误","数据库错误!",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
 }
 
 
