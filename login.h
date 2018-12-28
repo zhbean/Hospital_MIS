@@ -4,6 +4,10 @@
 #include <QDialog>
 #include <QDateTime>
 #include <QTimer>
+#include "dbManager.h"
+#include "QStandardItem"
+#include "QStandardItemModel"
+#include "QMessageBox"
 
 namespace Ui {
 class Login;
@@ -19,8 +23,11 @@ public:
 
 private:
     Ui::Login *ui;
+    void showEvent(QShowEvent *event);
 public slots:
     void timerUpdate(void);
+private slots:
+    void on_OkButton_clicked();
 };
 
 #endif // LOGIN_H

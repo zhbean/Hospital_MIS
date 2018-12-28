@@ -4,6 +4,7 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QDebug>
+#include "QSqlQuery"
 
 class dbManager
 {
@@ -12,6 +13,7 @@ public:
    ~dbManager();
     QSqlDatabase *getDB();
     bool openDB();
+    QSqlQuery selectDB(QString sql);
 private:
     QSqlDatabase db;
 };
