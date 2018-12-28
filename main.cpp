@@ -5,6 +5,7 @@
 #include "managewindow.h"
 #include "diagnosiswindow.h"
 #include "registerwindow.h"
+#include "pharmacydialog.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +16,7 @@ int main(int argc, char *argv[])
     manageWindow m;
     diagnosisWindow d;
     registerWindow r;
+    PharmacyDialog p;
 
     switch(b) {
     case 0:
@@ -24,6 +26,7 @@ int main(int argc, char *argv[])
         d.show();
         break;
     case 2:
+        p.show();
         break;
     case 3:
         m.show();
