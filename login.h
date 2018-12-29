@@ -30,6 +30,8 @@ public slots:
 private slots:
     void on_OkButton_clicked();
     void on_CancelButton_clicked();
+ signals:
+    void setAccountAndToolTip(int,int);
 };
 
 #endif // LOGIN_H

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1036</width>
-    <height>583</height>
+    <height>658</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>80</y>
       <width>1041</width>
       <height>161</height>
      </rect>
@@ -130,6 +130,97 @@
       <string>TextLabel</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>270</y>
+      <width>341</width>
+      <height>341</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>病人病症</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>4</x>
+      <y>2</y>
+      <width>60</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>房间名：</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="RoomNameLabel">
+    <property name="geometry">
+     <rect>
+      <x>62</x>
+      <y>2</y>
+      <width>281</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="StaffIdLabel">
+    <property name="geometry">
+     <rect>
+      <x>437</x>
+      <y>2</y>
+      <width>251</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>349</x>
+      <y>2</y>
+      <width>90</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>值班员工号：</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>694</x>
+      <y>2</y>
+      <width>105</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>值班人员姓名：</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="StaffNameLabel">
+    <property name="geometry">
+     <rect>
+      <x>802</x>
+      <y>2</y>
+      <width>231</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

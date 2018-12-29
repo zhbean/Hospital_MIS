@@ -1,4 +1,5 @@
 #include <QApplication>
+#include<QObject>
 #include "dbManager.h"
 #include "login.h"
 #include "qdebug.h"
@@ -11,12 +12,17 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     Login c;
+    manageWindow m;
+    diagnosisWindow d;
+    registerWindow r;
+    PharmacyDialog p;
+    QObject::connect(&c,SIGNAL(setAccountAndToolTip(int,int)),&d,SLOT(getAccountAndToolTip(int,int)));
+    QObject::connect(&c,SIGNAL(setAccountAndToolTip(int,int)),&m,SLOT(getAccountAndToolTip(int,int)));
+    QObject::connect(&c,SIGNAL(setAccountAndToolTip(int,int)),&r,SLOT(getAccountAndToolTip(int,int)));
+    QObject::connect(&c,SIGNAL(setAccountAndToolTip(int,int)),&p,SLOT(getAccountAndToolTip(int,int)));
+
     if(c.exec()==QDialog::Accepted){
         qDebug()<<c.limit;
-        manageWindow m;
-        diagnosisWindow d;
-        registerWindow r;
-        PharmacyDialog p;
         switch(c.limit){
         case 0:
             r.show();
@@ -32,6 +38,7 @@ int main(int argc, char *argv[])
             break;
         default: break;
         }
+
         return a.exec();
     }
     return 0;

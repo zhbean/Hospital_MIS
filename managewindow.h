@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::manageWindow *ui;
+
+private slots:
+    void getAccountAndToolTip(int account,int dpmdetail);
 };
 
 #endif // MANAGEWINDOW_H

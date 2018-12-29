@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::PharmacyDialog *ui;
+
+private slots:
+    void getAccountAndToolTip(int account,int dpmdetail);
 };
 
 #endif // PHARMACYDIALOG_H
