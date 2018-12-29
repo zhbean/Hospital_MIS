@@ -20,7 +20,7 @@ PRIMARY KEY (factory_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8,AUTO_INCREMENT = 10000;
 /*药品*/
 CREATE TABLE IF NOT EXISTS drug(
-drug_id INT NOT NULL AUTO_INCREMENT,
+drug_id INT NOT NULL,
 drug_name VARCHAR(20) NOT NULL,
 factory_id INT NOT NULL,
 drug_buyprice FLOAT(8,2) NOT NULL,
@@ -29,7 +29,19 @@ real_inventory INT NOT NULL,
 virtual_inventory INT NOT NULL,
 PRIMARY KEY (drug_id),
 FOREIGN KEY(factory_id) REFERENCES factory(factory_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8,AUTO_INCREMENT = 10000;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*药品仓库进退记录*/
+CREATE TABLE IF NOT EXISTS storecord(
+record_id INT NOT NULL AUTO_INCREMENT,
+drug_id INT,
+drug_number INT,
+record_type VARCHAR(10),
+staff_id INT,
+record_time TEXT,
+PRIMARY KEY (record_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*职位*/
 CREATE TABLE IF NOT EXISTS positions(
 position_id INT NOT NULL AUTO_INCREMENT,
