@@ -11,87 +11,456 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>医院管理</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label_6">
-    <property name="geometry">
-     <rect>
-      <x>352</x>
-      <y>0</y>
-      <width>90</width>
-      <height>23</height>
-     </rect>
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <property name="spacing">
+     <number>2</number>
     </property>
-    <property name="text">
-     <string>值班员工号：</string>
+    <property name="leftMargin">
+     <number>2</number>
     </property>
-   </widget>
-   <widget class="QLabel" name="label_8">
-    <property name="geometry">
-     <rect>
-      <x>697</x>
-      <y>0</y>
-      <width>105</width>
-      <height>23</height>
-     </rect>
+    <property name="topMargin">
+     <number>2</number>
     </property>
-    <property name="text">
-     <string>值班人员姓名：</string>
+    <property name="rightMargin">
+     <number>2</number>
     </property>
-   </widget>
-   <widget class="QLabel" name="RoomNameLabel">
-    <property name="geometry">
-     <rect>
-      <x>65</x>
-      <y>0</y>
-      <width>281</width>
-      <height>23</height>
-     </rect>
+    <property name="bottomMargin">
+     <number>2</number>
     </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="StaffNameLabel">
-    <property name="geometry">
-     <rect>
-      <x>805</x>
-      <y>0</y>
-      <width>231</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>7</x>
-      <y>0</y>
-      <width>60</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>房间名：</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="StaffIdLabel">
-    <property name="geometry">
-     <rect>
-      <x>440</x>
-      <y>0</y>
-      <width>251</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
+    <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QFrame" name="frame">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>5</number>
+         </property>
+         <property name="bottomMargin">
+          <number>2</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>房间名：</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="RoomNameLabel">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>值班员工号：</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="StaffIdLabel">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>值班人员姓名：</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="StaffNameLabel">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QStackedWidget" name="stackedWidget">
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <widget class="QWidget" name="pag_Setting">
+         <widget class="QTabWidget" name="tabWidget_2">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>10</y>
+            <width>1031</width>
+            <height>521</height>
+           </rect>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tab_3">
+           <attribute name="title">
+            <string>Tab 1</string>
+           </attribute>
+          </widget>
+          <widget class="QWidget" name="tab_4">
+           <attribute name="title">
+            <string>Tab 2</string>
+           </attribute>
+          </widget>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="pag_Statistics">
+         <widget class="QTabWidget" name="tabWidget">
+          <property name="geometry">
+           <rect>
+            <x>9</x>
+            <y>9</y>
+            <width>1021</width>
+            <height>521</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tab_dpm">
+           <attribute name="title">
+            <string>科室设置</string>
+           </attribute>
+           <widget class="QTreeView" name="trv_department">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>551</width>
+              <height>491</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QStackedWidget" name="stackedWidget_2">
+            <property name="geometry">
+             <rect>
+              <x>560</x>
+              <y>10</y>
+              <width>461</width>
+              <height>471</height>
+             </rect>
+            </property>
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <widget class="QWidget" name="page">
+             <widget class="QWidget" name="">
+              <property name="geometry">
+               <rect>
+                <x>90</x>
+                <y>20</y>
+                <width>211</width>
+                <height>251</height>
+               </rect>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout">
+               <item>
+                <widget class="QLabel" name="lab_dpmID">
+                 <property name="font">
+                  <font>
+                   <pointsize>14</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>科室号</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="edt_dpmID">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>14</pointsize>
+                  </font>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="lab_dpmName">
+                 <property name="font">
+                  <font>
+                   <pointsize>14</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>科室名</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="edt_dpmName">
+                 <property name="font">
+                  <font>
+                   <pointsize>14</pointsize>
+                  </font>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="lab_dpmInfo">
+                 <property name="font">
+                  <font>
+                   <pointsize>14</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>描述</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="edt_dpmInfo">
+                 <property name="font">
+                  <font>
+                   <pointsize>14</pointsize>
+                  </font>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="">
+              <property name="geometry">
+               <rect>
+                <x>120</x>
+                <y>310</y>
+                <width>171</width>
+                <height>144</height>
+               </rect>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="0" column="0">
+                <widget class="QPushButton" name="btn_addDpm">
+                 <property name="text">
+                  <string>添加</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QPushButton" name="btn_updateDpm">
+                 <property name="text">
+                  <string>修改</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QPushButton" name="btn_delDpm">
+                 <property name="text">
+                  <string>删除</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QPushButton" name="btn_addDtl">
+                 <property name="text">
+                  <string>添加详情</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+            <widget class="QWidget" name="page_2">
+             <widget class="QPushButton" name="btn_addDpm_2">
+              <property name="geometry">
+               <rect>
+                <x>120</x>
+                <y>316</y>
+                <width>169</width>
+                <height>31</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>添加</string>
+              </property>
+             </widget>
+             <widget class="QPushButton" name="btn_delDpm_2">
+              <property name="geometry">
+               <rect>
+                <x>120</x>
+                <y>390</y>
+                <width>169</width>
+                <height>31</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>删除</string>
+              </property>
+             </widget>
+             <widget class="QPushButton" name="btn_updateDpm_2">
+              <property name="geometry">
+               <rect>
+                <x>120</x>
+                <y>353</y>
+                <width>169</width>
+                <height>31</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>修改</string>
+              </property>
+             </widget>
+             <widget class="QWidget" name="">
+              <property name="geometry">
+               <rect>
+                <x>90</x>
+                <y>4</y>
+                <width>231</width>
+                <height>276</height>
+               </rect>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_2">
+               <item>
+                <widget class="QLabel" name="lab_dpmID_3">
+                 <property name="font">
+                  <font>
+                   <pointsize>14</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>科室号</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="edt_dpmID_3">
+                 <property name="font">
+                  <font>
+                   <pointsize>14</pointsize>
+                  </font>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="lab_dpmID_2">
+                 <property name="font">
+                  <font>
+                   <pointsize>14</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>房间号</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="edt_dpmID_2">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>14</pointsize>
+                  </font>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="lab_dpmName_2">
+                 <property name="font">
+                  <font>
+                   <pointsize>14</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>房间名</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="edt_dpmName_2">
+                 <property name="font">
+                  <font>
+                   <pointsize>14</pointsize>
+                  </font>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="lab_dpmInfo_2">
+                 <property name="font">
+                  <font>
+                   <pointsize>14</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>房间位置</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="edt_dpmInfo_2">
+                 <property name="font">
+                  <font>
+                   <pointsize>14</pointsize>
+                  </font>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="tab_duty">
+           <attribute name="title">
+            <string>值班设置</string>
+           </attribute>
+          </widget>
+          <widget class="QWidget" name="tab_staff">
+           <attribute name="title">
+            <string>员工管理</string>
+           </attribute>
+          </widget>
+         </widget>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -99,7 +468,7 @@
      <x>0</x>
      <y>0</y>
      <width>1036</width>
-     <height>28</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

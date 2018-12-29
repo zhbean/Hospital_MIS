@@ -44,6 +44,8 @@ department_name VARCHAR(12) NOT NULL,
 department_info VARCHAR(120),
 PRIMARY KEY (department_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8,AUTO_INCREMENT = 100;
+/*添加唯一性约束*/
+alter table department add unique(department_name);
 /*员工*/
 CREATE TABLE IF NOT EXISTS staff(
 staff_id INT NOT NULL AUTO_INCREMENT,
@@ -100,6 +102,9 @@ dpmdetail_position VARCHAR(20) NOT NULL,
 PRIMARY KEY (dpmdetail_id),
 FOREIGN KEY(department_id) REFERENCES department(department_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8,AUTO_INCREMENT = 1000;
+/*添加唯一性约束*/
+alter table dpmdetail add unique(dpmdetail_name);
+alter table dpmdetail add unique(dpmdetail_position);
 /*值班详情*/
 CREATE TABLE IF NOT EXISTS duty(
 duty_id INT NOT NULL AUTO_INCREMENT,
