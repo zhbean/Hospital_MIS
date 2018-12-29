@@ -211,12 +211,12 @@
       <rect>
        <x>700</x>
        <y>10</y>
-       <width>67</width>
-       <height>17</height>
+       <width>81</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>药品名称：</string>
+      <string>药品编号：</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_3">
@@ -224,12 +224,12 @@
       <rect>
        <x>700</x>
        <y>50</y>
-       <width>67</width>
-       <height>17</height>
+       <width>81</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>厂商编号：</string>
+      <string>药品名称：</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_4">
@@ -237,12 +237,12 @@
       <rect>
        <x>700</x>
        <y>90</y>
-       <width>67</width>
-       <height>17</height>
+       <width>81</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>进价：</string>
+      <string>厂商编号：</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_5">
@@ -251,11 +251,11 @@
        <x>700</x>
        <y>130</y>
        <width>67</width>
-       <height>17</height>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>售价：</string>
+      <string>进价：</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit">
@@ -302,20 +302,20 @@
      <property name="geometry">
       <rect>
        <x>700</x>
-       <y>180</y>
+       <y>170</y>
        <width>67</width>
-       <height>17</height>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>数量：</string>
+      <string>售价：</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_5">
      <property name="geometry">
       <rect>
        <x>810</x>
-       <y>180</y>
+       <y>170</y>
        <width>211</width>
        <height>25</height>
       </rect>
@@ -325,7 +325,7 @@
      <property name="geometry">
       <rect>
        <x>750</x>
-       <y>230</y>
+       <y>260</y>
        <width>241</width>
        <height>51</height>
       </rect>
@@ -338,7 +338,7 @@
      <property name="geometry">
       <rect>
        <x>810</x>
-       <y>310</y>
+       <y>330</y>
        <width>211</width>
        <height>25</height>
       </rect>
@@ -348,9 +348,9 @@
      <property name="geometry">
       <rect>
        <x>700</x>
-       <y>310</y>
+       <y>320</y>
        <width>81</width>
-       <height>21</height>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -361,9 +361,9 @@
      <property name="geometry">
       <rect>
        <x>700</x>
-       <y>360</y>
+       <y>370</y>
        <width>81</width>
-       <height>21</height>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -374,7 +374,7 @@
      <property name="geometry">
       <rect>
        <x>810</x>
-       <y>360</y>
+       <y>380</y>
        <width>211</width>
        <height>25</height>
       </rect>
@@ -384,7 +384,7 @@
      <property name="geometry">
       <rect>
        <x>750</x>
-       <y>400</y>
+       <y>430</y>
        <width>241</width>
        <height>51</height>
       </rect>
@@ -397,7 +397,7 @@
      <property name="geometry">
       <rect>
        <x>750</x>
-       <y>570</y>
+       <y>600</y>
        <width>241</width>
        <height>51</height>
       </rect>
@@ -410,9 +410,9 @@
      <property name="geometry">
       <rect>
        <x>700</x>
-       <y>480</y>
-       <width>67</width>
-       <height>17</height>
+       <y>490</y>
+       <width>81</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -423,9 +423,9 @@
      <property name="geometry">
       <rect>
        <x>700</x>
-       <y>530</y>
-       <width>71</width>
-       <height>17</height>
+       <y>540</y>
+       <width>81</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -436,7 +436,7 @@
      <property name="geometry">
       <rect>
        <x>810</x>
-       <y>480</y>
+       <y>500</y>
        <width>211</width>
        <height>25</height>
       </rect>
@@ -446,7 +446,30 @@
      <property name="geometry">
       <rect>
        <x>810</x>
-       <y>520</y>
+       <y>550</y>
+       <width>211</width>
+       <height>25</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>210</y>
+       <width>67</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>数量：</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_7">
+     <property name="geometry">
+      <rect>
+       <x>810</x>
+       <y>210</y>
        <width>211</width>
        <height>25</height>
       </rect>
