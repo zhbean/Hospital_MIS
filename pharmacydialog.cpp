@@ -83,5 +83,8 @@ void PharmacyDialog::on_pushButton_selectDrug_clicked()
     {
     }
     //否则，按照药品名称模糊查询
+}
+void PharmacyDialog::getAccountAndToolTip(int account,int dpmdetail)//account为账号即员工号，dpmdetail为科室详情号
+{
 
 }
