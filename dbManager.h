@@ -14,6 +14,7 @@ public:
     QSqlDatabase *getDB();
     bool openDB();
     QSqlQuery selectDB(QString sql);
+    QStringList getStaffAndRoom(int account,int dpmdetail);
 private:
     QSqlDatabase db;
 };

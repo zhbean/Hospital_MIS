@@ -2,7 +2,7 @@
 #define REGISTERWINDOW_H
 
 #include <QMainWindow>
-
+#include "dbManager.h"
 namespace Ui {
 class registerWindow;
 }

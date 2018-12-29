@@ -40,4 +40,23 @@ QSqlQuery dbManager::selectDB(QString sql){
     query.prepare(sql);
     return query;
 }
-
+QStringList dbManager::getStaffAndRoom(int account,int dpmdetail){
+    QSqlQuery query;
+    QStringList information;
+    QString Staffsql="select * from staff where staff_id="+QString::number(account)+";";
+    QString dpmdetailsql="select * from dpmdetail where dpmdetail_id="+QString::number(dpmdetail)+";";
+    query.prepare(Staffsql);
+    query.exec();
+    while(query.next()){
+        QString name=query.value("staff_name").toString();
+        qDebug()<<name;
+        information.insert(0,name);
+    }
+    query.prepare(dpmdetailsql);
+    query.exec();
+    while (query.next()) {
+        QString dpmdetailName=query.value("dpmdetail_name").toString();
+        information.insert(1,dpmdetailName);
+    }
+    return information;
+}

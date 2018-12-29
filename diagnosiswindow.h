@@ -2,6 +2,7 @@
 #define DIAGNOSISWINDOW_H
 
 #include <QMainWindow>
+#include "dbManager.h"
 
 namespace Ui {
 class diagnosisWindow;
