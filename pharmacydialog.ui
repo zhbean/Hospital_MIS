@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>909</width>
+    <width>1011</width>
     <height>770</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>911</width>
+     <width>1011</width>
      <height>111</height>
     </rect>
    </property>
@@ -52,7 +52,7 @@
     <rect>
      <x>0</x>
      <y>110</y>
-     <width>911</width>
+     <width>1011</width>
      <height>661</height>
     </rect>
    </property>
@@ -67,7 +67,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>911</width>
+      <width>1021</width>
       <height>661</height>
      </rect>
     </property>
@@ -93,15 +93,296 @@
      <widget class="QTableWidget" name="tableWidget_store">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>-10</x>
         <y>0</y>
-        <width>561</width>
+        <width>701</width>
         <height>631</height>
        </rect>
       </property>
       <attribute name="horizontalHeaderDefaultSectionSize">
        <number>100</number>
       </attribute>
+      <column>
+       <property name="text">
+        <string>药品编号</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>药品名称</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>出厂商编号</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>进价</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>售价</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>实际库存</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>临时库存</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>10</y>
+        <width>67</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>药品名称：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>50</y>
+        <width>67</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>厂商编号：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>90</y>
+        <width>67</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>进价：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>130</y>
+        <width>67</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>售价：</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>780</x>
+        <y>10</y>
+        <width>211</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_2">
+      <property name="geometry">
+       <rect>
+        <x>780</x>
+        <y>50</y>
+        <width>211</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_3">
+      <property name="geometry">
+       <rect>
+        <x>780</x>
+        <y>90</y>
+        <width>211</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_4">
+      <property name="geometry">
+       <rect>
+        <x>780</x>
+        <y>130</y>
+        <width>211</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>180</y>
+        <width>67</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>数量：</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_5">
+      <property name="geometry">
+       <rect>
+        <x>780</x>
+        <y>180</y>
+        <width>211</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>230</y>
+        <width>241</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>仓库进药</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_6">
+      <property name="geometry">
+       <rect>
+        <x>780</x>
+        <y>310</y>
+        <width>211</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>310</y>
+        <width>67</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>药品编号：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_14">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>360</y>
+        <width>67</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>退货数量：</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_13">
+      <property name="geometry">
+       <rect>
+        <x>780</x>
+        <y>360</y>
+        <width>211</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>400</y>
+        <width>241</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>仓库退药</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_selectDrug">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>570</y>
+        <width>241</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>药品查询</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_22">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>480</y>
+        <width>67</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>药品编号：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_23">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>530</y>
+        <width>71</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>药品名称：</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_drugId_forSelect">
+      <property name="geometry">
+       <rect>
+        <x>780</x>
+        <y>480</y>
+        <width>211</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_drugName_forSelect">
+      <property name="geometry">
+       <rect>
+        <x>780</x>
+        <y>520</y>
+        <width>211</width>
+        <height>25</height>
+       </rect>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_sale">
@@ -111,13 +392,18 @@
      <widget class="QTableWidget" name="tableWidget_sal">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>591</width>
-        <height>631</height>
+        <x>-10</x>
+        <y>-10</y>
+        <width>711</width>
+        <height>641</height>
        </rect>
       </property>
      </widget>
+    </widget>
+    <widget class="QWidget" name="tab_factory">
+     <attribute name="title">
+      <string>出厂商管理</string>
+     </attribute>
     </widget>
    </widget>
   </widget>
