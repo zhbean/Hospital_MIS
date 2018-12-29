@@ -25,6 +25,8 @@ public:
 private:
     Ui::Login *ui;
     void showEvent(QShowEvent *event);
+    void checkDuty(int dpmdetail,int account);
+    void writeDuty(int dutyID,int status,int staffID,QDateTime curTime);
 public slots:
     void timerUpdate(void);
 private slots:
