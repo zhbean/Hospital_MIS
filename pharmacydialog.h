@@ -4,6 +4,7 @@
 #include<QMessageBox>
 #include <QSqlDatabase>
 #include <QDialog>
+#include <QDateTime>
 
 namespace Ui {
 class PharmacyDialog;
@@ -19,12 +20,16 @@ public:
 
 private slots:
     void on_pushButton_selectDrug_clicked();
+    void on_pushButton_purchase_clicked();
+    void getAccountAndToolTip(int account,int dpmdetail);
 
 private:
     Ui::PharmacyDialog *ui;
+    int staff_id;
 
-private slots:
-    void getAccountAndToolTip(int account,int dpmdetail);
+
+
+
 };
 
 #endif // PHARMACYDIALOG_H

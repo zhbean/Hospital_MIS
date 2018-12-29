@@ -154,6 +154,12 @@
    <property name="currentIndex">
     <number>0</number>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>16</width>
+     <height>16</height>
+    </size>
+   </property>
    <widget class="QWidget" name="tab_store">
     <attribute name="title">
      <string>药品库存管理</string>
@@ -258,7 +264,7 @@
       <string>进价：</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="lineEdit_drugId_forPurchase">
      <property name="geometry">
       <rect>
        <x>810</x>
@@ -268,7 +274,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
+    <widget class="QLineEdit" name="lineEdit_drugName_forPurchase">
      <property name="geometry">
       <rect>
        <x>810</x>
@@ -278,7 +284,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_3">
+    <widget class="QLineEdit" name="lineEdit_factoryId">
      <property name="geometry">
       <rect>
        <x>810</x>
@@ -288,7 +294,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_4">
+    <widget class="QLineEdit" name="lineEdit_drugBuyPrice">
      <property name="geometry">
       <rect>
        <x>810</x>
@@ -311,7 +317,7 @@
       <string>售价：</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_5">
+    <widget class="QLineEdit" name="lineEdit_drugPrice">
      <property name="geometry">
       <rect>
        <x>810</x>
@@ -321,7 +327,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="pushButton_purchase">
      <property name="geometry">
       <rect>
        <x>750</x>
@@ -334,7 +340,7 @@
       <string>仓库进药</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_6">
+    <widget class="QLineEdit" name="lineEdit_drugid_forReturn">
      <property name="geometry">
       <rect>
        <x>810</x>
@@ -370,7 +376,7 @@
       <string>退货数量：</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_13">
+    <widget class="QLineEdit" name="lineEdit_returnNumber">
      <property name="geometry">
       <rect>
        <x>810</x>
@@ -380,7 +386,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_3">
+    <widget class="QPushButton" name="pushButton_return">
      <property name="geometry">
       <rect>
        <x>750</x>
@@ -465,7 +471,7 @@
       <string>数量：</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_7">
+    <widget class="QLineEdit" name="lineEdit_purchaseNumber">
      <property name="geometry">
       <rect>
        <x>810</x>
@@ -494,6 +500,11 @@
    <widget class="QWidget" name="tab_factory">
     <attribute name="title">
      <string>出厂商管理</string>
+    </attribute>
+   </widget>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>操作记录管理</string>
     </attribute>
    </widget>
   </widget>
