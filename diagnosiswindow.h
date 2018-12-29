@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::diagnosisWindow *ui;
+
+private slots:
+    void getAccountAndToolTip(int account,int dpmdetail);
 };
 
 #endif // DIAGNOSISWINDOW_H

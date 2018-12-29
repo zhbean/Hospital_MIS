@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::registerWindow *ui;
+
+private slots:
+    void getAccountAndToolTip(int account,int dpmdetail);
 };
 
 #endif // REGISTERWINDOW_H

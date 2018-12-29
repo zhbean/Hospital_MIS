@@ -89,6 +89,7 @@ void Login::on_OkButton_clicked()
                         limit = limit_query.value("position_limit").toInt();
                     }
                     checkDuty(dpmdetail,account);
+                    emit setAccountAndToolTip(account,dpmdetail);
                     this->accept();
                 }
                 else{
