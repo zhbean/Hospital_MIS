@@ -19,9 +19,30 @@ public:
     ~PharmacyDialog();
 
 private slots:
+
+    void getAccountAndToolTip(int account,int dpmdetail);
+
+    //tab库存
     void on_pushButton_selectDrug_clicked();
     void on_pushButton_purchase_clicked();
-    void getAccountAndToolTip(int account,int dpmdetail);
+
+    //tab操作记录
+    void on_pushButton_selectByDrugId_clicked();
+
+    void on_pushButton_selectByStaffId_clicked();
+
+    void on_pushButton_recordTab_selectByDrugName_clicked();
+
+    //tab出厂商
+    void on_pushButton_addFactory_clicked();
+
+    void on_pushButton_tabFactory_UpdateFactory_clicked();
+
+    void on_pushButton_tabFactory_select_clicked();
+
+    void on_pushButton_tabSale_selectPayment_clicked();
+
+    void on_tableWidget_sale_cellDoubleClicked(int row, int column);
 
 private:
     Ui::PharmacyDialog *ui;

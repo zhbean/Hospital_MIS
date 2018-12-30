@@ -16,7 +16,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>药房管理系统</string>
   </property>
   <widget class="QFrame" name="frame_title">
    <property name="geometry">
@@ -54,10 +54,10 @@
    <widget class="QLabel" name="StaffIdLabel">
     <property name="geometry">
      <rect>
-      <x>438</x>
-      <y>80</y>
-      <width>251</width>
-      <height>20</height>
+      <x>454</x>
+      <y>81</y>
+      <width>221</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
@@ -67,10 +67,10 @@
    <widget class="QLabel" name="StaffNameLabel">
     <property name="geometry">
      <rect>
-      <x>803</x>
-      <y>80</y>
-      <width>231</width>
-      <height>20</height>
+      <x>819</x>
+      <y>81</y>
+      <width>221</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
@@ -80,10 +80,10 @@
    <widget class="QLabel" name="label_24">
     <property name="geometry">
      <rect>
-      <x>695</x>
+      <x>690</x>
       <y>80</y>
-      <width>105</width>
-      <height>23</height>
+      <width>119</width>
+      <height>26</height>
      </rect>
     </property>
     <property name="text">
@@ -93,10 +93,10 @@
    <widget class="QLabel" name="label_25">
     <property name="geometry">
      <rect>
-      <x>5</x>
+      <x>10</x>
       <y>80</y>
-      <width>60</width>
-      <height>23</height>
+      <width>68</width>
+      <height>26</height>
      </rect>
     </property>
     <property name="text">
@@ -106,10 +106,10 @@
    <widget class="QLabel" name="RoomNameLabel">
     <property name="geometry">
      <rect>
-      <x>63</x>
-      <y>80</y>
-      <width>281</width>
-      <height>23</height>
+      <x>74</x>
+      <y>81</y>
+      <width>221</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
@@ -121,8 +121,8 @@
      <rect>
       <x>350</x>
       <y>80</y>
-      <width>90</width>
-      <height>23</height>
+      <width>102</width>
+      <height>26</height>
      </rect>
     </property>
     <property name="text">
@@ -131,6 +131,9 @@
    </widget>
   </widget>
   <widget class="QTabWidget" name="tabWidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -152,7 +155,7 @@
     </size>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="iconSize">
     <size>
@@ -330,9 +333,9 @@
     <widget class="QPushButton" name="pushButton_purchase">
      <property name="geometry">
       <rect>
-       <x>750</x>
+       <x>810</x>
        <y>260</y>
-       <width>241</width>
+       <width>211</width>
        <height>51</height>
       </rect>
      </property>
@@ -389,9 +392,9 @@
     <widget class="QPushButton" name="pushButton_return">
      <property name="geometry">
       <rect>
-       <x>750</x>
+       <x>810</x>
        <y>430</y>
-       <width>241</width>
+       <width>211</width>
        <height>51</height>
       </rect>
      </property>
@@ -402,9 +405,9 @@
     <widget class="QPushButton" name="pushButton_selectDrug">
      <property name="geometry">
       <rect>
-       <x>750</x>
+       <x>810</x>
        <y>600</y>
-       <width>241</width>
+       <width>211</width>
        <height>51</height>
       </rect>
      </property>
@@ -486,26 +489,766 @@
     <attribute name="title">
      <string>药品发放管理</string>
     </attribute>
-    <widget class="QTableWidget" name="tableWidget_sal">
+    <widget class="QTableWidget" name="tableWidget_sale">
      <property name="geometry">
       <rect>
-       <x>-10</x>
-       <y>-10</y>
-       <width>711</width>
-       <height>641</height>
+       <x>0</x>
+       <y>0</y>
+       <width>691</width>
+       <height>631</height>
       </rect>
      </property>
+     <property name="acceptDrops">
+      <bool>false</bool>
+     </property>
+     <column>
+      <property name="text">
+       <string>缴费单号</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>药方号</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>员工号</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>总额</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>缴费时间</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QFrame" name="frame_12">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>0</y>
+       <width>351</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="label_89">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>20</y>
+        <width>161</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>查询病人缴费单</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="frame_13">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>240</y>
+       <width>351</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="label_90">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>20</y>
+        <width>161</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>发放药品</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_tabSale_patientId">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>100</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_91">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>100</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>身份证号：</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_tabSale_selectPayment">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>170</y>
+       <width>231</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>查询缴费单</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_92">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>330</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>缴费单号：</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_2">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>330</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>390</y>
+       <width>231</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>发放药品</string>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="listWidget_tabSale">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>460</y>
+       <width>341</width>
+       <height>171</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>                           缴费单详情</string>
+      </property>
+     </item>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_factory">
     <attribute name="title">
      <string>出厂商管理</string>
     </attribute>
+    <widget class="QTableWidget" name="tableWidget_factory">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>691</width>
+       <height>631</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>厂商编号</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>厂商名称</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>厂商地址</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>联系方式</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_tabFactory_factoryName_forAdd">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>10</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_tabFactory_factoryAddress_forAdd">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>50</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_tabFactory_factoryConn_forAdd">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>90</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_34">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>10</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>厂商名称：</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_35">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>50</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>厂商地址：</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_36">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>90</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>联系方式：</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_addFactory">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>140</y>
+       <width>231</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>添加厂商</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_38">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>270</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>厂商名称：</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_39">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>310</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>厂商地址：</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_40">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>350</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>联系方式：</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_tabFactory_factoryName_forUpdate">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>270</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_tabFactory_factoryAddress_forUpdate">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>310</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_tabFactory_factoryConn_forUpdate">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>350</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_tabFactory_UpdateFactory">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>400</y>
+       <width>231</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>更新厂商</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_tabFactory_factoryId_forUpdate">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>230</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_61">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>230</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>厂商编号：</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_62">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>480</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>厂商编号：</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_63">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>530</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>厂商名称：</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_tabFactory_factoryID_forSelect">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>480</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_tabFactory_factoryName_forSelect">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>530</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_tabFactory_select">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>580</y>
+       <width>231</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>查询</string>
+     </property>
+    </widget>
    </widget>
-   <widget class="QWidget" name="tab">
+   <widget class="QWidget" name="tab_record">
     <attribute name="title">
      <string>操作记录管理</string>
     </attribute>
+    <widget class="QTableWidget" name="tableWidget_record">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>691</width>
+       <height>631</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>药品编号</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>药品名称</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>数量</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>操作类型</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>操作员工号</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>操作时间</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QFrame" name="frame">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>0</y>
+       <width>351</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>20</y>
+        <width>251</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>指定药品编号查询</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="frame_2">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>430</y>
+       <width>351</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>20</y>
+        <width>251</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>指定员工号查询</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="frame_5">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>220</y>
+       <width>351</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="label_29">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>20</y>
+        <width>191</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>指定药品名称查询</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLabel" name="label_30">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>90</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>药品编号：</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_recordTab_drugId">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>90</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_selectByDrugId">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>160</y>
+       <width>231</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>查询</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_selectByStaffId">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>600</y>
+       <width>231</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>查询</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_31">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>520</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>员工号：</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_recordTab_staffId">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>520</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_32">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>300</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>药品名称：</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_recordTab_drugName">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>300</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_recordTab_selectByDrugName">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>370</y>
+       <width>231</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>查询</string>
+     </property>
+    </widget>
+    <zorder>pushButton_selectByStaffId</zorder>
+    <zorder>tableWidget_record</zorder>
+    <zorder>frame</zorder>
+    <zorder>frame_2</zorder>
+    <zorder>frame_5</zorder>
+    <zorder>label_30</zorder>
+    <zorder>lineEdit_recordTab_drugId</zorder>
+    <zorder>label_31</zorder>
+    <zorder>lineEdit_recordTab_staffId</zorder>
+    <zorder>pushButton_selectByDrugId</zorder>
+    <zorder>label_32</zorder>
+    <zorder>lineEdit_recordTab_drugName</zorder>
+    <zorder>pushButton_recordTab_selectByDrugName</zorder>
    </widget>
   </widget>
  </widget>
