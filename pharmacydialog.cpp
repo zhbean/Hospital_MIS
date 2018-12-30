@@ -108,5 +108,98 @@ void PharmacyDialog::on_pushButton_selectDrug_clicked()
 }
 void PharmacyDialog::getAccountAndToolTip(int account,int dpmdetail)//account为账号即员工号，dpmdetail为科室详情号
 {
+    staff_id=account;
+
+}
+
+void PharmacyDialog::on_pushButton_purchase_clicked()
+{
+    //判断输入信息是否完善
+    if(ui->lineEdit_drugId_forPurchase->text()==""||ui->lineEdit_drugName_forPurchase->text()==""||ui->lineEdit_factoryId->text()==""||ui->lineEdit_drugBuyPrice->text()==""||ui->lineEdit_drugPrice->text()==""||ui->lineEdit_purchaseNumber->text()=="")
+    {
+        QMessageBox::information(this,"错误","有必要信息为空");
+        return;
+    }
+
+    //获取输入信息
+    QString drug_id=ui->lineEdit_drugId_forPurchase->text();
+    QString factory_id=ui->lineEdit_factoryId->text();
+    QString drug_name=ui->lineEdit_drugName_forPurchase->text();
+    QString drug_buyPrice=ui->lineEdit_drugBuyPrice->text();
+    QString drug_price=ui->lineEdit_drugPrice->text();
+    QString drug_number=ui->lineEdit_purchaseNumber->text();
+
+    //连接数据库
+    dbManager db;
+    if(!db.openDB())
+    {
+        QMessageBox::information(this,"失败","连接数据库失败.");
+        return;
+    }
+    QSqlDatabase* pDB=db.getDB();//获取连接
+    QSqlQuery query(*pDB);//创建query
+
+    //厂商不在库，则终止本次操作。
+    QString sql;
+    sql="select *from factory where factory_id="+factory_id+";";
+    if(!query.exec(sql))
+    {
+        QMessageBox::information(this,"查询失败","查询厂商信息失败");
+        return;
+    }
+    if(!query.next())//厂商信息不存在
+    {
+        QMessageBox::information(this,"失败","厂商信不存在，请先添加厂商信息。");
+        return;
+    }
+    while(query.next());//把NEXT指针移动完毕
+
+    //插入进货记录
+    QDateTime time =QDateTime::currentDateTime();
+    QString record_time=time.toString("yyyy-MM-dd hh:mm:ss");
+    QString record_type="进货";
+    qDebug()<<staff_id;
+    QString staff_id_str=QString::number(staff_id);
+    sql="insert into storecord(drug_id,drug_number,record_type,staff_id,record_time) values("+drug_id+","+drug_number+",'"+record_type+"',"+staff_id_str+",'"+record_time+"');";
+    qDebug()<<sql;
+    if(!query.exec(sql))
+    {
+        QMessageBox::information(this,"失败","插入进货记录失败");
+        return;
+    }
+    QMessageBox::information(this,"成功","插入进货记录");
+
+
+    //药品信息不在库,insert
+    sql="select * from drug where drug_id="+drug_id+";";
+    if(!query.exec(sql))
+    {
+        QMessageBox::information(this,"查询失败","查询药品信息失败");
+        return;
+    }
+    if(!query.next())//药品信息不存在，insert
+    {
+
+        sql="insert into drug values("+drug_id+",'"+drug_name+"',"+factory_id+","+drug_buyPrice+","+drug_price+","+drug_number+","+drug_number+");";
+        if(!query.exec(sql))
+        {
+            QMessageBox::information(this,"失败","插入药品信息失败");
+            return;
+        }
+        QMessageBox::information(this,"成功","插入药品信息");
+        return;
+
+    }
+    while(query.next());//把NEXT指针移动完毕
+
+    //药品信息已存在,update
+    sql="update drug set real_inventory=real_inventory+"+drug_number+",virtual_inventory=virtual_inventory+"+drug_number+" where drug_id="+drug_id+";";
+    if(!query.exec(sql))
+    {
+        QMessageBox::information(this,"失败","更新药品信息失败");
+        return;
+    }
+    QMessageBox::information(this,"成功","更新药品库存");
+
 
 }
