@@ -75,8 +75,41 @@ void diagnosisWindow::showStatistics(){
         QString pspSql="select * from psp where ID='"+ID+"';";
         Query.prepare(pspSql);
         Query.exec();
-        while (Query.next()) {
-
+        while (Query.next()){
+            QString pspId=Query.value("psp_id").toString();
+            QString patientDisease=Query.value("patient_disease").toString();
+            ui->diseasePlainTextEdit->setPlainText(patientDisease);
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
