@@ -23,6 +23,12 @@ private slots:
     void on_pushButton_purchase_clicked();
     void getAccountAndToolTip(int account,int dpmdetail);
 
+    void on_pushButton_selectByDrugId_clicked();
+
+    void on_pushButton_selectByStaffId_clicked();
+
+    void on_pushButton_recordTab_selectByDrugName_clicked();
+
 private:
     Ui::PharmacyDialog *ui;
     int staff_id;

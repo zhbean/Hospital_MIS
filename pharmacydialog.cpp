@@ -14,6 +14,31 @@ PharmacyDialog::~PharmacyDialog()
     delete ui;
 }
 
+//-----------------------------------------------标题栏显示-------------------------------------------------------------------------------------
+void PharmacyDialog::getAccountAndToolTip(int account,int dpmdetail)//account为账号即员工号，dpmdetail为科室详情号
+{
+    staff_id=account;
+    dbManager db;
+    db.openDB();
+    QStringList information=db.getStaffAndRoom(account,dpmdetail);
+    if(!information.isEmpty()){
+        ui->StaffIdLabel->setNum(account);
+        ui->StaffNameLabel->setText(information.at(0));
+        ui->RoomNameLabel->setText(information.at(1));
+    }
+    else{
+        QMessageBox::information(NULL,"错误","数据查询错误！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+    }
+
+}
+
+
+
+
+//-------------------------------------------tab药品库存管理-------------------------------------------------------
+
+
+//------药品查询------
 void PharmacyDialog::on_pushButton_selectDrug_clicked()
 {
     //清空tablewidget
@@ -58,12 +83,12 @@ void PharmacyDialog::on_pushButton_selectDrug_clicked()
     //执行查询
     if(!query.exec(sql))
     {
-        QMessageBox::information(this,"查询失败","查询全部药品信息失败");
+        QMessageBox::information(this,"查询失败","查询药品信息失败");
         return;
     }
     if(!query.next())
     {
-        QMessageBox::information(this,"error","仓库药品信息记录为空");
+        QMessageBox::information(this,"error","查询结果为空");
         return;
     }
     //输出显示数据
@@ -106,23 +131,8 @@ void PharmacyDialog::on_pushButton_selectDrug_clicked()
     //QTableWidget根据内容调整列宽
     ui->tableWidget_store->resizeColumnsToContents();
 }
-void PharmacyDialog::getAccountAndToolTip(int account,int dpmdetail)//account为账号即员工号，dpmdetail为科室详情号
-{
-    staff_id=account;
-    dbManager db;
-    db.openDB();
-    QStringList information=db.getStaffAndRoom(account,dpmdetail);
-    if(!information.isEmpty()){
-        ui->StaffIdLabel->setNum(account);
-        ui->StaffNameLabel->setText(information.at(0));
-        ui->RoomNameLabel->setText(information.at(1));
-    }
-    else{
-        QMessageBox::information(NULL,"错误","数据查询错误！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
-    }
 
-}
-
+//-----------仓库进药---------
 void PharmacyDialog::on_pushButton_purchase_clicked()
 {
     //判断输入信息是否完善
@@ -160,7 +170,7 @@ void PharmacyDialog::on_pushButton_purchase_clicked()
     }
     if(!query.next())//厂商信息不存在
     {
-        QMessageBox::information(this,"失败","厂商信不存在，请先添加厂商信息。");
+        QMessageBox::information(this,"失败","厂商不存在，请先添加厂商信息。");
         return;
     }
     while(query.next());//把NEXT指针移动完毕
@@ -214,3 +224,254 @@ void PharmacyDialog::on_pushButton_purchase_clicked()
 
 
 }
+
+//-------------仓库退药----------------
+
+
+
+//-------------------------------------------tab操作记录管理-------------------------------------------------------
+
+//-------------按药品编号查询记录----------------
+void PharmacyDialog::on_pushButton_selectByDrugId_clicked()
+{
+    //清空tablewidget
+    while(ui->tableWidget_record->rowCount()!=0)
+    {
+        ui->tableWidget_record->removeRow(0);
+    }
+    //组装SQL语句
+    QString sql;
+    QString drug_id=ui->lineEdit_recordTab_drugId->text();
+    if (""==drug_id)//查询显示全部
+    {
+       QMessageBox::information(this,"OK","未输入药品号，查询全部记录");
+       sql="select storecord.drug_id,drug.drug_name,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id;";
+    }
+    else
+    {
+        sql="select storecord.drug_id,drug.drug_name,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id and storecord.drug_id="+drug_id+";";
+
+    }
+    //连接数据库
+    dbManager db;
+    if(!db.openDB())
+    {
+        QMessageBox::information(this,"失败","连接数据库失败.");
+        return;
+    }
+    QSqlDatabase* pDB=db.getDB();//获取连接
+    QSqlQuery query(*pDB);//创建query
+    //执行查询
+    if(!query.exec(sql))
+    {
+        QMessageBox::information(this,"查询失败","查询失败");
+        return;
+    }
+    if(!query.next())
+    {
+        QMessageBox::information(this,"error","查询结果为空");
+        return;
+    }
+    //输出显示数据
+    else
+    {
+        QMessageBox::information(this,"OK","查询成功");
+        ui->tableWidget_record->insertRow(0);
+        QTableWidgetItem *p0=new QTableWidgetItem(query.value(0).toString());
+        QTableWidgetItem *p1=new QTableWidgetItem(query.value(1).toString());
+        QTableWidgetItem *p2=new QTableWidgetItem(query.value(2).toString());
+        QTableWidgetItem *p3=new QTableWidgetItem(query.value(3).toString());
+        QTableWidgetItem *p4=new QTableWidgetItem(query.value(4).toString());
+        QTableWidgetItem *p5=new QTableWidgetItem(query.value(5).toString());
+        ui->tableWidget_record->setItem(0,0,p0);
+        ui->tableWidget_record->setItem(0,1,p1);
+        ui->tableWidget_record->setItem(0,2,p2);
+        ui->tableWidget_record->setItem(0,3,p3);
+        ui->tableWidget_record->setItem(0,4,p4);
+        ui->tableWidget_record->setItem(0,5,p5);
+        while(query.next())
+        {
+            ui->tableWidget_record->insertRow(0);
+            QTableWidgetItem *p0=new QTableWidgetItem(query.value(0).toString());
+            QTableWidgetItem *p1=new QTableWidgetItem(query.value(1).toString());
+            QTableWidgetItem *p2=new QTableWidgetItem(query.value(2).toString());
+            QTableWidgetItem *p3=new QTableWidgetItem(query.value(3).toString());
+            QTableWidgetItem *p4=new QTableWidgetItem(query.value(4).toString());
+            QTableWidgetItem *p5=new QTableWidgetItem(query.value(5).toString());
+            ui->tableWidget_record->setItem(0,0,p0);
+            ui->tableWidget_record->setItem(0,1,p1);
+            ui->tableWidget_record->setItem(0,2,p2);
+            ui->tableWidget_record->setItem(0,3,p3);
+            ui->tableWidget_record->setItem(0,4,p4);
+            ui->tableWidget_record->setItem(0,5,p5);
+        }
+    }
+    //QTableWidget根据内容调整列宽
+    ui->tableWidget_record->resizeColumnsToContents();
+}
+//-------------按药品名称查询记录----------------
+void PharmacyDialog::on_pushButton_recordTab_selectByDrugName_clicked()
+{
+    //清空tablewidget
+    while(ui->tableWidget_record->rowCount()!=0)
+    {
+        ui->tableWidget_record->removeRow(0);
+    }
+    //组装SQL语句
+    QString sql;
+    QString drug_name=ui->lineEdit_recordTab_drugName->text();
+    if (""==drug_name)//查询显示全部
+    {
+       QMessageBox::information(this,"OK","未输入药品名称，查询全部记录");
+       sql="select storecord.drug_id,drug.drug_name,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id;";
+    }
+    else
+    {
+
+        sql="select storecord.drug_id,drug.drug_name,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id and drug.drug_name like '%"+drug_name+"%';";
+
+    }
+    //连接数据库
+    dbManager db;
+    if(!db.openDB())
+    {
+        QMessageBox::information(this,"失败","连接数据库失败.");
+        return;
+    }
+    QSqlDatabase* pDB=db.getDB();//获取连接
+    QSqlQuery query(*pDB);//创建query
+    //执行查询
+    if(!query.exec(sql))
+    {
+        QMessageBox::information(this,"查询失败","查询失败");
+        return;
+    }
+    if(!query.next())
+    {
+        QMessageBox::information(this,"error","查询结果为空");
+        return;
+    }
+    //输出显示数据
+    else
+    {
+        QMessageBox::information(this,"OK","查询成功");
+        ui->tableWidget_record->insertRow(0);
+        QTableWidgetItem *p0=new QTableWidgetItem(query.value(0).toString());
+        QTableWidgetItem *p1=new QTableWidgetItem(query.value(1).toString());
+        QTableWidgetItem *p2=new QTableWidgetItem(query.value(2).toString());
+        QTableWidgetItem *p3=new QTableWidgetItem(query.value(3).toString());
+        QTableWidgetItem *p4=new QTableWidgetItem(query.value(4).toString());
+        QTableWidgetItem *p5=new QTableWidgetItem(query.value(5).toString());
+        ui->tableWidget_record->setItem(0,0,p0);
+        ui->tableWidget_record->setItem(0,1,p1);
+        ui->tableWidget_record->setItem(0,2,p2);
+        ui->tableWidget_record->setItem(0,3,p3);
+        ui->tableWidget_record->setItem(0,4,p4);
+        ui->tableWidget_record->setItem(0,5,p5);
+        while(query.next())
+        {
+            ui->tableWidget_record->insertRow(0);
+            QTableWidgetItem *p0=new QTableWidgetItem(query.value(0).toString());
+            QTableWidgetItem *p1=new QTableWidgetItem(query.value(1).toString());
+            QTableWidgetItem *p2=new QTableWidgetItem(query.value(2).toString());
+            QTableWidgetItem *p3=new QTableWidgetItem(query.value(3).toString());
+            QTableWidgetItem *p4=new QTableWidgetItem(query.value(4).toString());
+            QTableWidgetItem *p5=new QTableWidgetItem(query.value(5).toString());
+            ui->tableWidget_record->setItem(0,0,p0);
+            ui->tableWidget_record->setItem(0,1,p1);
+            ui->tableWidget_record->setItem(0,2,p2);
+            ui->tableWidget_record->setItem(0,3,p3);
+            ui->tableWidget_record->setItem(0,4,p4);
+            ui->tableWidget_record->setItem(0,5,p5);
+        }
+    }
+    //QTableWidget根据内容调整列宽
+    ui->tableWidget_record->resizeColumnsToContents();
+
+}
+
+
+
+
+
+//-------------按员工编号查询记录----------------
+void PharmacyDialog::on_pushButton_selectByStaffId_clicked()
+{
+    //清空tablewidget
+    while(ui->tableWidget_record->rowCount()!=0)
+    {
+        ui->tableWidget_record->removeRow(0);
+    }
+    //组装SQL语句
+    QString sql;
+    QString staff_id=ui->lineEdit_recordTab_staffId->text();
+    if (""==staff_id)//查询显示全部
+    {
+       QMessageBox::information(this,"OK","未输入员工号，查询全部记录");
+       sql="select storecord.drug_id,drug.drug_name,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id;";
+    }
+    else
+    {
+        sql="select storecord.drug_id,drug.drug_name,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id and storecord.staff_id="+staff_id+";";
+
+    }
+    //连接数据库
+    dbManager db;
+    if(!db.openDB())
+    {
+        QMessageBox::information(this,"失败","连接数据库失败.");
+        return;
+    }
+    QSqlDatabase* pDB=db.getDB();//获取连接
+    QSqlQuery query(*pDB);//创建query
+    //执行查询
+    if(!query.exec(sql))
+    {
+        QMessageBox::information(this,"查询失败","查询失败");
+        return;
+    }
+    if(!query.next())
+    {
+        QMessageBox::information(this,"error","查询结果为空");
+        return;
+    }
+    //输出显示数据
+    else
+    {
+        QMessageBox::information(this,"OK","查询成功");
+        ui->tableWidget_record->insertRow(0);
+        QTableWidgetItem *p0=new QTableWidgetItem(query.value(0).toString());
+        QTableWidgetItem *p1=new QTableWidgetItem(query.value(1).toString());
+        QTableWidgetItem *p2=new QTableWidgetItem(query.value(2).toString());
+        QTableWidgetItem *p3=new QTableWidgetItem(query.value(3).toString());
+        QTableWidgetItem *p4=new QTableWidgetItem(query.value(4).toString());
+        QTableWidgetItem *p5=new QTableWidgetItem(query.value(5).toString());
+        ui->tableWidget_record->setItem(0,0,p0);
+        ui->tableWidget_record->setItem(0,1,p1);
+        ui->tableWidget_record->setItem(0,2,p2);
+        ui->tableWidget_record->setItem(0,3,p3);
+        ui->tableWidget_record->setItem(0,4,p4);
+        ui->tableWidget_record->setItem(0,5,p5);
+        while(query.next())
+        {
+            ui->tableWidget_record->insertRow(0);
+            QTableWidgetItem *p0=new QTableWidgetItem(query.value(0).toString());
+            QTableWidgetItem *p1=new QTableWidgetItem(query.value(1).toString());
+            QTableWidgetItem *p2=new QTableWidgetItem(query.value(2).toString());
+            QTableWidgetItem *p3=new QTableWidgetItem(query.value(3).toString());
+            QTableWidgetItem *p4=new QTableWidgetItem(query.value(4).toString());
+            QTableWidgetItem *p5=new QTableWidgetItem(query.value(5).toString());
+            ui->tableWidget_record->setItem(0,0,p0);
+            ui->tableWidget_record->setItem(0,1,p1);
+            ui->tableWidget_record->setItem(0,2,p2);
+            ui->tableWidget_record->setItem(0,3,p3);
+            ui->tableWidget_record->setItem(0,4,p4);
+            ui->tableWidget_record->setItem(0,5,p5);
+        }
+    }
+    //QTableWidget根据内容调整列宽
+    ui->tableWidget_record->resizeColumnsToContents();
+
+}
+
+
