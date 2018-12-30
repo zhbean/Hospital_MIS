@@ -8,9 +8,9 @@ INSERT INTO factory(factory_name,factory_address,factory_contact) VALUES('鸿茅
 INSERT INTO factory(factory_name,factory_address,factory_contact) VALUES('泉建','天津','120');
 INSERT INTO factory(factory_name,factory_address,factory_contact) VALUES('小林制药','日本','911');
 /*药品*/
-INSERT INTO drug(drug_name,factory_id,drug_buyprice,drug_price,real_inventory,virtual_inventory) VALUES('红毛大瓶',10000,20,30,1000,1000);
-INSERT INTO drug(drug_name,factory_id,drug_buyprice,drug_price,real_inventory,virtual_inventory) VALUES('全建保健',10001,500,600,500,500);
-INSERT INTO drug(drug_name,factory_id,drug_buyprice,drug_price,real_inventory,virtual_inventory) VALUES('小林创可贴',10002,20,30,100,100);
+INSERT INTO drug(drug_id,drug_name,factory_id,drug_buyprice,drug_price,real_inventory,virtual_inventory) VALUES(1,'红毛大瓶',10000,20,30,1000,1000);
+INSERT INTO drug(drug_id,drug_name,factory_id,drug_buyprice,drug_price,real_inventory,virtual_inventory) VALUES(2,'全建保健',10001,500,600,500,500);
+INSERT INTO drug(drug_id,drug_name,factory_id,drug_buyprice,drug_price,real_inventory,virtual_inventory) VALUES(3,'小林创可贴',10002,20,30,100,100);
 /*职位*/
 INSERT INTO positions(position_name,position_limit) VALUES('院长',1);
 INSERT INTO positions(position_name,position_limit) VALUES('医师',1);
@@ -30,10 +30,10 @@ INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,depa
 INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,department_id) VALUES('小黄',0,28,103,'123',103);
 INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,department_id) VALUES('老白',1,30,104,'123',104);
 /*处方单*/
-INSERT INTO psp(doctor_id,patient_id,patient_disease,psp_date) VALUES(10000,10000,'重度感冒','2018/06/21 10:30:26 星期四');
+INSERT INTO psp(doctor_id,ID,patient_disease,psp_date) VALUES(10000,'122199801020000','重度感冒','2018/06/21 10:30:26 星期四');
 /*药方详情*/
-INSERT INTO pspdetail(psp_id,drug_id,drug_num,psp_price,psp_info) VALUES(10000,10000,5,150,'每天一瓶');
-INSERT INTO pspdetail(psp_id,drug_id,drug_num,psp_price,psp_info) VALUES(10000,10001,5,3000,'每天一瓶');
+INSERT INTO pspdetail(psp_id,drug_id,drug_num,psp_price,psp_info) VALUES(10000,1,5,150,'每天一瓶');
+INSERT INTO pspdetail(psp_id,drug_id,drug_num,psp_price,psp_info) VALUES(10000,2,5,3000,'每天一瓶');
 /*缴费单*/
 INSERT INTO payment(psp_id,staff_id,sum_price,payment_date) VALUES(10000,10003,3150,'2018-06-21 10:30:26 星期四');
 /*科室详情*/

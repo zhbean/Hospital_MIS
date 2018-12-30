@@ -7,142 +7,326 @@
     <x>0</x>
     <y>0</y>
     <width>1036</width>
-    <height>658</height>
+    <height>654</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>诊断系统</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>80</y>
-      <width>1041</width>
-      <height>161</height>
+      <y>40</y>
+      <width>821</width>
+      <height>191</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="title">
      <string>病人详情</string>
     </property>
-    <widget class="QLabel" name="label">
+    <widget class="QGroupBox" name="groupBox_4">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>40</y>
-       <width>41</width>
-       <height>21</height>
+       <x>500</x>
+       <y>20</y>
+       <width>321</width>
+       <height>171</height>
       </rect>
      </property>
-     <property name="text">
-      <string>病号：</string>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
+     <property name="title">
+      <string>过敏手术史</string>
+     </property>
+     <widget class="QPlainTextEdit" name="allergyPlainTextEdit">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>321</width>
+        <height>151</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
-    <widget class="QLabel" name="patientIdLabel">
+    <widget class="QSplitter" name="splitter_2">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>40</y>
-       <width>67</width>
-       <height>21</height>
+       <x>41</x>
+       <y>30</y>
+       <width>131</width>
+       <height>31</height>
       </rect>
      </property>
-     <property name="text">
-      <string>TextLabel</string>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
+     <widget class="QLabel" name="label">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>病号：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="patientIdLabel">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
     </widget>
-    <widget class="QLabel" name="patientNameLabel">
+    <widget class="QSplitter" name="splitter_3">
      <property name="geometry">
       <rect>
-       <x>100</x>
+       <x>10</x>
        <y>70</y>
-       <width>67</width>
-       <height>21</height>
+       <width>161</width>
+       <height>31</height>
       </rect>
      </property>
-     <property name="text">
-      <string>TextLabel</string>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
+     <widget class="QLabel" name="label_4">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>病人姓名：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="patientNameLabel">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
     </widget>
-    <widget class="QLabel" name="label_4">
+    <widget class="QSplitter" name="splitter_4">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>40</x>
+       <y>110</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QLabel" name="label_5">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>性别：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="patientSexLabel">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QSplitter" name="splitter_5">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>150</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QLabel" name="label_7">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>年龄：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="patientAgeLabel">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QSplitter" name="splitter_7">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
        <y>70</y>
-       <width>71</width>
-       <height>20</height>
+       <width>271</width>
+       <height>31</height>
       </rect>
      </property>
-     <property name="text">
-      <string>病人姓名：</string>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
+     <widget class="QLabel" name="label_9">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>紧急联系电话：</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="emergencyContactLabel">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
     </widget>
-    <widget class="QLabel" name="label_5">
+    <widget class="QSplitter" name="splitter_6">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>100</y>
-       <width>41</width>
-       <height>20</height>
+       <x>210</x>
+       <y>30</y>
+       <width>241</width>
+       <height>31</height>
       </rect>
      </property>
-     <property name="text">
-      <string>性别：</string>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-    </widget>
-    <widget class="QLabel" name="patientSexLabel">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>100</y>
-       <width>67</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_7">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>130</y>
-       <width>41</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>年龄：</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="patientAgeLabel">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>130</y>
-       <width>67</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
+     <widget class="QLabel" name="label_3">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>联系电话：</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="patientContactLabel">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>270</y>
-      <width>341</width>
-      <height>341</height>
+      <y>250</y>
+      <width>275</width>
+      <height>351</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="title">
      <string>病人病症</string>
     </property>
+    <widget class="QPlainTextEdit" name="diseasePlainTextEdit">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>251</width>
+       <height>271</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
@@ -153,6 +337,12 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
     <property name="text">
      <string>房间名：</string>
     </property>
@@ -160,11 +350,17 @@
    <widget class="QLabel" name="RoomNameLabel">
     <property name="geometry">
      <rect>
-      <x>62</x>
+      <x>69</x>
       <y>2</y>
-      <width>281</width>
+      <width>268</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="text">
      <string/>
@@ -173,11 +369,17 @@
    <widget class="QLabel" name="StaffIdLabel">
     <property name="geometry">
      <rect>
-      <x>437</x>
+      <x>436</x>
       <y>2</y>
-      <width>251</width>
-      <height>20</height>
+      <width>250</width>
+      <height>23</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="text">
      <string/>
@@ -186,11 +388,17 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>349</x>
+      <x>341</x>
       <y>2</y>
       <width>90</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="text">
      <string>值班员工号：</string>
@@ -199,11 +407,17 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>694</x>
+      <x>690</x>
       <y>2</y>
       <width>105</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="text">
      <string>值班人员姓名：</string>
@@ -212,15 +426,113 @@
    <widget class="QLabel" name="StaffNameLabel">
     <property name="geometry">
      <rect>
-      <x>802</x>
+      <x>801</x>
       <y>2</y>
-      <width>231</width>
-      <height>20</height>
+      <width>224</width>
+      <height>23</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="text">
      <string/>
     </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_3">
+    <property name="geometry">
+     <rect>
+      <x>279</x>
+      <y>250</y>
+      <width>752</width>
+      <height>351</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="title">
+     <string>药方清单</string>
+    </property>
+    <widget class="QListWidget" name="medicalListWidget">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>31</y>
+       <width>741</width>
+       <height>271</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QSplitter" name="splitter_8">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>60</y>
+      <width>201</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+    <widget class="QPushButton" name="AddButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>添加药</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="DelButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>删除药</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="OKButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>确定开药</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="PrintButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>打印处方单</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -235,6 +547,15 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>AddButton</tabstop>
+  <tabstop>DelButton</tabstop>
+  <tabstop>OKButton</tabstop>
+  <tabstop>PrintButton</tabstop>
+  <tabstop>diseasePlainTextEdit</tabstop>
+  <tabstop>medicalListWidget</tabstop>
+  <tabstop>allergyPlainTextEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

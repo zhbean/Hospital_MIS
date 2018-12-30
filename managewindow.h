@@ -5,6 +5,7 @@
 #include "dbManager.h"
 #include "QStandardItemModel"
 #include "QStandardItem"
+#include<QMessageBox>
 
 namespace Ui {
 class manageWindow;

@@ -2,6 +2,10 @@
 #define DIAGNOSISWINDOW_H
 
 #include <QMainWindow>
+#include "dbManager.h"
+#include <QMessageBox>
+#include <QSqlQuery>
+
 
 namespace Ui {
 class diagnosisWindow;
@@ -20,6 +24,7 @@ private:
 
 private slots:
     void getAccountAndToolTip(int account,int dpmdetail);
+    void showStatistics();
 };
 
 #endif // DIAGNOSISWINDOW_H
