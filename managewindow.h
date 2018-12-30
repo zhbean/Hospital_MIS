@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "dbManager.h"
+#include<QMessageBox>
+
 namespace Ui {
 class manageWindow;
 }

@@ -1,13 +1,13 @@
 /*病人*/
 CREATE TABLE IF NOT EXISTS patient(
-patient_id INT NOT NULL AUTO_INCREMENT,
+/*patient_id INT NOT NULL AUTO_INCREMENT,已不需要*/
 patient_name VARCHAR(20) NOT NULL,
 ID CHAR(20) NOT NULL,
 patient_age INT NOT NULL,
 patient_contact VARCHAR(60),
 emergency_contact VARCHAR(60),
 allergy_history VARCHAR(120),
-PRIMARY KEY (patient_id)
+PRIMARY KEY (ID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8,AUTO_INCREMENT = 10000;
 alter table patient add column patient_sex INT not null after patient_age;/*添加性别列*/
 /*出厂商*/
@@ -74,13 +74,13 @@ alter table staff modify column staff_sex INT;/*员工性别用int表示*/
 CREATE TABLE IF NOT EXISTS psp(
 psp_id INT NOT NULL AUTO_INCREMENT,
 doctor_id INT NOT NULL,
-patient_id INT NOT NULL,
+/*patient_id*/ID CHAR(20) NOT NULL,
 psp_date TEXT NOT NULL,
 PRIMARY KEY (psp_id),
 FOREIGN KEY(doctor_id) REFERENCES staff(staff_id),
-FOREIGN KEY(patient_id) REFERENCES patient(patient_id)
+FOREIGN KEY(ID) REFERENCES patient(ID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8,AUTO_INCREMENT = 10000;
-alter table psp add column patient_disease TEXT not null after patient_id;/*增加了诊断*/
+alter table psp add column patient_disease TEXT not null after ID;/*增加了诊断*/
 /*药方详情*/
 CREATE TABLE IF NOT EXISTS pspdetail(
 psp_id INT NOT NULL,
