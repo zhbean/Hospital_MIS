@@ -72,44 +72,63 @@ void diagnosisWindow::showStatistics(){
             ui->emergencyContactLabel->setText(emergencyContact);
             ui->allergyPlainTextEdit->setPlainText(allergyHistory);
         }
-        QString pspSql="select * from psp where ID='"+ID+"';";
+        QString pspSql="select * from psp,staff where ID='"+ID+"' and staff.staff_id=psp.doctor_id;";
         Query.prepare(pspSql);
         Query.exec();
+        QStringList pspId;
+        QStringList patientDisease;
+        QStringList pspDate;
+        QStringList staffName;
+        QDateTime psp[10];
+        int i=0;
         while (Query.next()){
-            QString pspId=Query.value("psp_id").toString();
-            QString patientDisease=Query.value("patient_disease").toString();
-            ui->diseasePlainTextEdit->setPlainText(patientDisease);
+            pspId.insert(i,Query.value("psp_id").toString());
+            patientDisease.insert(i,Query.value("patient_disease").toString());
+            staffName.insert(i,Query.value("staff_name").toString());
+            pspDate.insert(i,Query.value("psp_date").toString());
+        }
+        QDateTime currentTime=QDateTime::currentDateTime();
+        for(int i=0;i<pspDate.count();i++){
+            qDebug()<<pspDate.at(i);
+            QDateTime pspTime;
+            pspTime=pspTime.fromString(pspDate.at(i),"yyyy-MM-dd hh:mm:ss");
+            if(pspTime>=currentTime.addDays(-7)){
+                QString disease=patientDisease.at(i)+" 诊断者:"+staffName.at(i)+" 诊断时间:"+pspTime.toString("yyyy-MM-dd hh:mm:ss dddd");
+                QListWidgetItem *Item=new QListWidgetItem();
+                Item->setText(disease);
+                ui->historyDiseaseListWidget->insertItem(i,Item);
+            }
         }
     }
 }
 
 
+void diagnosisWindow::on_AddButton_clicked()
+{
+    medicineDialog m(this);
+    connect(&m,SIGNAL(setMedicineInformation(QString,QString,QString,QString)),this,SLOT(getMedicineInformation(QString,QString,QString,QString)));
+    m.setModal(false);
+    m.exec();
 
+}
+void diagnosisWindow::getMedicineInformation(QString drugId,QString drugName,QString drugPrice,QString info){
+    QString medicine="药品名称:"+drugName+" 药品价格:"+drugPrice+" 使用说明:"+info;
+    QListWidgetItem *Item=new QListWidgetItem(medicine);
+    int row=ui->medicineListWidget->count();
+    ui->medicineListWidget->insertItem(row,Item);
+}
+void diagnosisWindow::on_DelButton_clicked()
+{
+    QListWidgetItem *Item=ui->medicineListWidget->currentItem();
+    delete  Item;
+}
 
+void diagnosisWindow::on_OKButton_clicked()
+{
 
+}
 
+void diagnosisWindow::on_PrintButton_clicked()
+{
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

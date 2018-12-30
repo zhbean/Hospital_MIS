@@ -31,7 +31,9 @@ SOURCES += \
     diagnosiswindow.cpp \
     managewindow.cpp \
     registerwindow.cpp \
-    patientdialog.cpp
+    patientdialog.cpp \
+    medicinedialog.cpp \
+    infodialog.cpp
 
 HEADERS += \
         dbManager.h \
@@ -40,7 +42,9 @@ HEADERS += \
     diagnosiswindow.h \
     managewindow.h \
     registerwindow.h \
-    patientdialog.h
+    patientdialog.h \
+    medicinedialog.h \
+    infodialog.h
 
 
 
@@ -51,7 +55,9 @@ FORMS += \
     managewindow.ui \
    pharmacydialog.ui\
     registerwindow.ui \
-    patientdialog.ui
+    patientdialog.ui \
+    medicinedialog.ui \
+    infodialog.ui
 
 
 QT += sql
