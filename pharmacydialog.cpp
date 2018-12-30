@@ -475,3 +475,173 @@ void PharmacyDialog::on_pushButton_selectByStaffId_clicked()
 }
 
 
+//-------------------------------------------tab出厂商管理-------------------------------------------------------
+
+//------------添加出厂商----------------
+void PharmacyDialog::on_pushButton_addFactory_clicked()
+{
+    //获取输入信息
+    QString factory_name=ui->lineEdit_tabFactory_factoryName_forAdd->text();
+    QString factory_address=ui->lineEdit_tabFactory_factoryAddress_forAdd->text();
+    QString factory_connect=ui->lineEdit_tabFactory_factoryConn_forAdd->text();
+    //判断输入信息是否完善
+    if(factory_name==""||factory_address==""||factory_connect=="")
+    {
+        QMessageBox::information(this,"错误","有必要信息为空");
+        return;
+    }
+    QString sql="insert into factory(factory_name,factory_address,factory_contact) values('"+factory_name+"','"+factory_address+"','"+factory_connect+"');";
+    //连接数据库
+    dbManager db;
+    if(!db.openDB())
+    {
+        QMessageBox::information(this,"失败","连接数据库失败.");
+        return;
+    }
+    QSqlDatabase* pDB=db.getDB();//获取连接
+    QSqlQuery query(*pDB);//创建query
+    //执行查询
+    if(!query.exec(sql))
+    {
+        QMessageBox::information(this,"失败","插入出厂商信息失败");
+        return;
+    }
+    QMessageBox::information(this,"成功","添加成功");
+
+}
+
+
+//-----------更新厂商信息----------------
+void PharmacyDialog::on_pushButton_tabFactory_UpdateFactory_clicked()
+{
+    //获取输入信息
+    QString factory_id=ui->lineEdit_tabFactory_factoryId_forUpdate->text();
+    QString factory_name=ui->lineEdit_tabFactory_factoryName_forUpdate->text();
+    QString factory_address=ui->lineEdit_tabFactory_factoryAddress_forUpdate->text();
+    QString factory_contact=ui->lineEdit_tabFactory_factoryConn_forUpdate->text();
+    //判断输入信息是否完善
+    if(factory_id==""||factory_name==""||factory_address==""||factory_contact=="")
+    {
+        QMessageBox::information(this,"错误","有必要信息为空");
+        return;
+    }
+    //指定厂商号不存在，则终止本次操作。
+    QString sql;
+    sql="select *from factory where factory_id="+factory_id+";";
+    dbManager db; //连接数据库
+    if(!db.openDB())
+    {
+        QMessageBox::information(this,"失败","连接数据库失败.");
+        return;
+    }
+    QSqlDatabase* pDB=db.getDB();//获取连接
+    QSqlQuery query(*pDB);//创建query
+    if(!query.exec(sql))
+    {
+        QMessageBox::information(this,"查询失败","查询厂商信息失败");
+        return;
+    }
+    if(!query.next())//厂商信息不存在
+    {
+        QMessageBox::information(this,"失败","厂商不存在，请输入正确的厂商号。");
+        return;
+    }
+    while(query.next());//把NEXT指针移动完毕
+
+    //更新厂商信息
+    sql="update factory set factory_name='"+factory_name+"',factory_address='"+factory_address+"',factory_contact='"+factory_contact+"' where factory_id="+factory_id+";";
+    qDebug()<<"sql:"<<sql;
+    if(!query.exec(sql))
+    {
+        QMessageBox::information(this,"失败","更新厂商信息失败");
+        return;
+    }
+    QMessageBox::information(this,"成功","更新成功");
+
+
+}
+
+//-----------查询厂商信息----------------
+void PharmacyDialog::on_pushButton_tabFactory_select_clicked()
+{
+    //清空tablewidget
+    while(ui->tableWidget_factory->rowCount()!=0)
+    {
+        ui->tableWidget_factory->removeRow(0);
+    }
+    //获取输入信息
+    QString factory_id=ui->lineEdit_tabFactory_factoryID_forSelect->text();
+    QString factory_name=ui->lineEdit_tabFactory_factoryName_forSelect->text();
+    //组装SQL语句
+    QString sql;
+    if (""==factory_id &&""==factory_name)//查询显示全部
+    {
+       QMessageBox::information(this,"OK","查询全部出厂商信息");
+       sql="select* from factory;";
+
+    }
+    else
+    {
+        if (""!=factory_id)//按编号查询
+        {
+           QMessageBox::information(this,"OK","按药品编号查询");
+           sql="select *from factory where factory_id="+factory_id+";";
+
+        }
+        else//否则，按照药品名称模糊查询
+        {
+            QMessageBox::information(this,"OK","按药品名称查询");
+            sql="select *from factory where factory_name like '%"+factory_name+"%';";
+
+        }
+    }
+    //连接数据库
+    dbManager db;
+    if(!db.openDB())
+    {
+        QMessageBox::information(this,"失败","连接数据库失败.");
+        return;
+    }
+    QSqlDatabase* pDB=db.getDB();//获取连接
+    QSqlQuery query(*pDB);//创建query
+    //执行查询
+    qDebug()<<"sql:"<<sql;
+    if(!query.exec(sql))
+    {
+        QMessageBox::information(this,"查询失败","查询失败");
+        return;
+    }
+    if(!query.next())
+    {
+        QMessageBox::information(this,"error","查询结果为空");
+        return;
+    }
+    //输出显示数据
+    else
+    {
+        ui->tableWidget_factory->insertRow(0);
+        QTableWidgetItem *p0=new QTableWidgetItem(query.value(0).toString());
+        QTableWidgetItem *p1=new QTableWidgetItem(query.value(1).toString());
+        QTableWidgetItem *p2=new QTableWidgetItem(query.value(2).toString());
+        QTableWidgetItem *p3=new QTableWidgetItem(query.value(3).toString());
+        ui->tableWidget_factory->setItem(0,0,p0);
+        ui->tableWidget_factory->setItem(0,1,p1);
+        ui->tableWidget_factory->setItem(0,2,p2);
+        ui->tableWidget_factory->setItem(0,3,p3);
+        while(query.next())
+        {
+            ui->tableWidget_factory->insertRow(0);
+            QTableWidgetItem *p0=new QTableWidgetItem(query.value(0).toString());
+            QTableWidgetItem *p1=new QTableWidgetItem(query.value(1).toString());
+            QTableWidgetItem *p2=new QTableWidgetItem(query.value(2).toString());
+            QTableWidgetItem *p3=new QTableWidgetItem(query.value(3).toString());
+            ui->tableWidget_factory->setItem(0,0,p0);
+            ui->tableWidget_factory->setItem(0,1,p1);
+            ui->tableWidget_factory->setItem(0,2,p2);
+            ui->tableWidget_factory->setItem(0,3,p3);
+
+        }
+    }
+    //QTableWidget根据内容调整列宽
+    ui->tableWidget_factory->resizeColumnsToContents();
+}
