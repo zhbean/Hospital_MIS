@@ -155,7 +155,7 @@
     </size>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>1</number>
    </property>
    <property name="iconSize">
     <size>
@@ -492,11 +492,14 @@
     <widget class="QTableWidget" name="tableWidget_sale">
      <property name="geometry">
       <rect>
-       <x>-10</x>
+       <x>0</x>
        <y>0</y>
        <width>691</width>
        <height>631</height>
       </rect>
+     </property>
+     <property name="acceptDrops">
+      <bool>false</bool>
      </property>
      <column>
       <property name="text">
@@ -524,6 +527,161 @@
       </property>
      </column>
     </widget>
+    <widget class="QFrame" name="frame_12">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>0</y>
+       <width>351</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="label_89">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>20</y>
+        <width>161</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>查询病人缴费单</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="frame_13">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>240</y>
+       <width>351</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="label_90">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>20</y>
+        <width>161</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>发放药品</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_tabSale_patientId">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>100</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_91">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>100</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>身份证号：</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_tabSale_selectPayment">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>170</y>
+       <width>231</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>查询缴费单</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_92">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>330</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>缴费单号：</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_2">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>330</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>390</y>
+       <width>231</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>发放药品</string>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="listWidget_tabSale">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>460</y>
+       <width>341</width>
+       <height>171</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>                           缴费单详情</string>
+      </property>
+     </item>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_factory">
     <attribute name="title">
@@ -532,7 +690,7 @@
     <widget class="QTableWidget" name="tableWidget_factory">
      <property name="geometry">
       <rect>
-       <x>-10</x>
+       <x>0</x>
        <y>0</y>
        <width>691</width>
        <height>631</height>
@@ -562,7 +720,7 @@
     <widget class="QLineEdit" name="lineEdit_tabFactory_factoryName_forAdd">
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>10</y>
        <width>231</width>
        <height>31</height>
@@ -572,7 +730,7 @@
     <widget class="QLineEdit" name="lineEdit_tabFactory_factoryAddress_forAdd">
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>50</y>
        <width>231</width>
        <height>31</height>
@@ -582,7 +740,7 @@
     <widget class="QLineEdit" name="lineEdit_tabFactory_factoryConn_forAdd">
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>90</y>
        <width>231</width>
        <height>31</height>
@@ -592,7 +750,7 @@
     <widget class="QLabel" name="label_34">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>700</x>
        <y>10</y>
        <width>81</width>
        <height>21</height>
@@ -605,7 +763,7 @@
     <widget class="QLabel" name="label_35">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>700</x>
        <y>50</y>
        <width>81</width>
        <height>21</height>
@@ -618,7 +776,7 @@
     <widget class="QLabel" name="label_36">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>700</x>
        <y>90</y>
        <width>81</width>
        <height>21</height>
@@ -631,7 +789,7 @@
     <widget class="QPushButton" name="pushButton_addFactory">
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>140</y>
        <width>231</width>
        <height>51</height>
@@ -644,7 +802,7 @@
     <widget class="QLabel" name="label_38">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>700</x>
        <y>270</y>
        <width>81</width>
        <height>21</height>
@@ -657,7 +815,7 @@
     <widget class="QLabel" name="label_39">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>700</x>
        <y>310</y>
        <width>81</width>
        <height>21</height>
@@ -670,7 +828,7 @@
     <widget class="QLabel" name="label_40">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>700</x>
        <y>350</y>
        <width>81</width>
        <height>21</height>
@@ -686,7 +844,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>270</y>
        <width>231</width>
        <height>31</height>
@@ -696,7 +854,7 @@
     <widget class="QLineEdit" name="lineEdit_tabFactory_factoryAddress_forUpdate">
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>310</y>
        <width>231</width>
        <height>31</height>
@@ -706,7 +864,7 @@
     <widget class="QLineEdit" name="lineEdit_tabFactory_factoryConn_forUpdate">
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>350</y>
        <width>231</width>
        <height>31</height>
@@ -716,7 +874,7 @@
     <widget class="QPushButton" name="pushButton_tabFactory_UpdateFactory">
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>400</y>
        <width>231</width>
        <height>51</height>
@@ -732,7 +890,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>230</y>
        <width>231</width>
        <height>31</height>
@@ -742,7 +900,7 @@
     <widget class="QLabel" name="label_61">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>700</x>
        <y>230</y>
        <width>81</width>
        <height>21</height>
@@ -755,7 +913,7 @@
     <widget class="QLabel" name="label_62">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>700</x>
        <y>480</y>
        <width>81</width>
        <height>21</height>
@@ -768,7 +926,7 @@
     <widget class="QLabel" name="label_63">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>700</x>
        <y>530</y>
        <width>81</width>
        <height>21</height>
@@ -784,7 +942,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>480</y>
        <width>231</width>
        <height>31</height>
@@ -797,7 +955,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>530</y>
        <width>231</width>
        <height>31</height>
@@ -807,7 +965,7 @@
     <widget class="QPushButton" name="pushButton_tabFactory_select">
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>580</y>
        <width>231</width>
        <height>51</height>
@@ -825,7 +983,7 @@
     <widget class="QTableWidget" name="tableWidget_record">
      <property name="geometry">
       <rect>
-       <x>-10</x>
+       <x>0</x>
        <y>0</y>
        <width>691</width>
        <height>631</height>
@@ -865,9 +1023,9 @@
     <widget class="QFrame" name="frame">
      <property name="geometry">
       <rect>
-       <x>680</x>
+       <x>690</x>
        <y>0</y>
-       <width>361</width>
+       <width>351</width>
        <height>71</height>
       </rect>
      </property>
@@ -901,9 +1059,9 @@
     <widget class="QFrame" name="frame_2">
      <property name="geometry">
       <rect>
-       <x>680</x>
+       <x>690</x>
        <y>430</y>
-       <width>361</width>
+       <width>351</width>
        <height>71</height>
       </rect>
      </property>
@@ -937,9 +1095,9 @@
     <widget class="QFrame" name="frame_5">
      <property name="geometry">
       <rect>
-       <x>680</x>
+       <x>690</x>
        <y>220</y>
-       <width>361</width>
+       <width>351</width>
        <height>71</height>
       </rect>
      </property>
@@ -973,7 +1131,7 @@
     <widget class="QLabel" name="label_30">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>700</x>
        <y>90</y>
        <width>81</width>
        <height>31</height>
@@ -986,7 +1144,7 @@
     <widget class="QLineEdit" name="lineEdit_recordTab_drugId">
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>90</y>
        <width>231</width>
        <height>31</height>
@@ -996,7 +1154,7 @@
     <widget class="QPushButton" name="pushButton_selectByDrugId">
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>160</y>
        <width>231</width>
        <height>51</height>
@@ -1009,7 +1167,7 @@
     <widget class="QPushButton" name="pushButton_selectByStaffId">
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>600</y>
        <width>231</width>
        <height>51</height>
@@ -1022,7 +1180,7 @@
     <widget class="QLabel" name="label_31">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>700</x>
        <y>520</y>
        <width>81</width>
        <height>31</height>
@@ -1035,7 +1193,7 @@
     <widget class="QLineEdit" name="lineEdit_recordTab_staffId">
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>520</y>
        <width>231</width>
        <height>31</height>
@@ -1045,7 +1203,7 @@
     <widget class="QLabel" name="label_32">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>700</x>
        <y>300</y>
        <width>81</width>
        <height>31</height>
@@ -1058,7 +1216,7 @@
     <widget class="QLineEdit" name="lineEdit_recordTab_drugName">
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>300</y>
        <width>231</width>
        <height>31</height>
@@ -1068,7 +1226,7 @@
     <widget class="QPushButton" name="pushButton_recordTab_selectByDrugName">
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>370</y>
        <width>231</width>
        <height>51</height>

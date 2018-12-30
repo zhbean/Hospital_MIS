@@ -645,3 +645,123 @@ void PharmacyDialog::on_pushButton_tabFactory_select_clicked()
     //QTableWidget根据内容调整列宽
     ui->tableWidget_factory->resizeColumnsToContents();
 }
+
+
+//-------------------------------------------tab药品发放管理-------------------------------------------------------
+
+//查询病人缴费单
+void PharmacyDialog::on_pushButton_tabSale_selectPayment_clicked()
+{
+    //获取录入的病人身份证号
+    QString ID=ui->lineEdit_tabSale_patientId->text();
+    if(""==ID)
+    {
+        QMessageBox::information(this,"错误","请先录入病人身份证号码。");
+        return;
+    }
+    QString sql="select payment.payment_id,payment.psp_id,payment.staff_id,payment.sum_price,payment.payment_date from payment,psp where payment.psp_id=psp.psp_id and psp.ID="+ID+";";
+    //连接数据库
+    dbManager db;
+    if(!db.openDB())
+    {
+        QMessageBox::information(this,"失败","连接数据库失败.");
+        return;
+    }
+    QSqlDatabase* pDB=db.getDB();//获取连接
+    QSqlQuery query(*pDB);//创建query
+    //执行查询
+    qDebug()<<"sql:"<<sql;
+    if(!query.exec(sql))
+    {
+        QMessageBox::information(this,"查询失败","查询失败");
+        return;
+    }
+    if(!query.next())
+    {
+        QMessageBox::information(this,"error","查询结果为空");
+        return;
+    }
+    //输出显示数据
+    else
+    {
+        //填充tablewidget
+        ui->tableWidget_sale->insertRow(0);
+        QTableWidgetItem *p0=new QTableWidgetItem(query.value(0).toString());
+        QTableWidgetItem *p1=new QTableWidgetItem(query.value(1).toString());
+        QTableWidgetItem *p2=new QTableWidgetItem(query.value(2).toString());
+        QTableWidgetItem *p3=new QTableWidgetItem(query.value(3).toString());
+        QTableWidgetItem *p4=new QTableWidgetItem(query.value(4).toString());
+        ui->tableWidget_sale->setItem(0,0,p0);
+        ui->tableWidget_sale->setItem(0,1,p1);
+        ui->tableWidget_sale->setItem(0,2,p2);
+        ui->tableWidget_sale->setItem(0,3,p3);
+        ui->tableWidget_sale->setItem(0,4,p4);
+        while(query.next())
+        {
+            ui->tableWidget_sale->insertRow(0);
+            QTableWidgetItem *p0=new QTableWidgetItem(query.value(0).toString());
+            QTableWidgetItem *p1=new QTableWidgetItem(query.value(1).toString());
+            QTableWidgetItem *p2=new QTableWidgetItem(query.value(2).toString());
+            QTableWidgetItem *p3=new QTableWidgetItem(query.value(3).toString());
+            QTableWidgetItem *p4=new QTableWidgetItem(query.value(4).toString());
+            ui->tableWidget_sale->setItem(0,0,p0);
+            ui->tableWidget_sale->setItem(0,1,p1);
+            ui->tableWidget_sale->setItem(0,2,p2);
+            ui->tableWidget_sale->setItem(0,3,p3);
+            ui->tableWidget_sale->setItem(0,4,p4);
+
+        }
+    }
+    //QTableWidget根据内容调整列宽
+    ui->tableWidget_sale->resizeColumnsToContents();
+
+}
+
+//查询缴费单详情
+void PharmacyDialog::on_tableWidget_sale_cellDoubleClicked(int row, int column)
+{
+    //清空List，并添加标题
+    ui->listWidget_tabSale->clear();
+    ui->listWidget_tabSale->addItem("                           缴费单药品详情");
+    ui->listWidget_tabSale->addItem("编号    名称    数量    用法");
+    //获取选择的药方单号
+    QString psp_id=ui->tableWidget_sale->item(row,1)->text();
+    QString sql="select  pspdetail.drug_id,drug.drug_name,pspdetail.drug_num,pspdetail.psp_info from pspdetail,drug where drug.drug_id=pspdetail.drug_id and pspdetail.psp_id="+psp_id+";";
+    //连接数据库
+    dbManager db;
+    if(!db.openDB())
+    {
+        QMessageBox::information(this,"失败","连接数据库失败.");
+        return;
+    }
+    QSqlDatabase* pDB=db.getDB();//获取连接
+    QSqlQuery query(*pDB);//创建query
+    //执行查询
+    qDebug()<<"sql:"<<sql;
+    if(!query.exec(sql))
+    {
+        QMessageBox::information(this,"失败","查询缴费单详情失败");
+        return;
+    }
+    if(!query.next())
+    {
+        QMessageBox::information(this,"错误","缴费单详情为空");
+        return;
+    }
+    QString drug_id=query.value(0).toString();
+    QString drug_name=query.value(1).toString();
+    QString drug_number=query.value(2).toString();
+    QString psp_info=query.value(3).toString();
+    QString str=drug_id+"    "+drug_name+"    "+drug_number+"  "+psp_info;
+    ui->listWidget_tabSale->addItem(str);
+    while(query.next())
+    {
+        QString drug_id=query.value(0).toString();
+        QString drug_name=query.value(1).toString();
+        QString drug_number=query.value(2).toString();
+        QString psp_info=query.value(3).toString();
+        QString str=drug_id+"    "+drug_name+"    "+drug_number+"  "+psp_info;
+        ui->listWidget_tabSale->addItem(str);
+    }
+
+}

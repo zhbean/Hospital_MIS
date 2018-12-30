@@ -40,6 +40,10 @@ private slots:
 
     void on_pushButton_tabFactory_select_clicked();
 
+    void on_pushButton_tabSale_selectPayment_clicked();
+
+    void on_tableWidget_sale_cellDoubleClicked(int row, int column);
+
 private:
     Ui::PharmacyDialog *ui;
     int staff_id;
