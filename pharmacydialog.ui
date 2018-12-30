@@ -644,7 +644,7 @@
       <string>缴费单号：</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
+    <widget class="QLineEdit" name="lineEdit_tabSale_paymentId">
      <property name="geometry">
       <rect>
        <x>790</x>
@@ -654,7 +654,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="pushButton_tabSale_grant">
      <property name="geometry">
       <rect>
        <x>790</x>

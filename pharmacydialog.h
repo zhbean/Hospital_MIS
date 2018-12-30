@@ -44,6 +44,8 @@ private slots:
 
     void on_tableWidget_sale_cellDoubleClicked(int row, int column);
 
+    void on_pushButton_tabSale_grant_clicked();
+
 private:
     Ui::PharmacyDialog *ui;
     int staff_id;
