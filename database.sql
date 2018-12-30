@@ -49,6 +49,7 @@ position_name VARCHAR(20) NOT NULL,
 PRIMARY KEY (position_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8,AUTO_INCREMENT = 100;
 alter table positions add column position_limit INT NOT NULL;/*职位需要添加权限设置*/
+alter table positions add unique(position_name,position_limit);/*相同职位可以有不同限制*/
 /*科室*/
 CREATE TABLE IF NOT EXISTS department(
 department_id INT NOT NULL AUTO_INCREMENT,

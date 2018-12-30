@@ -33,12 +33,12 @@ void manageWindow::getAccountAndToolTip(int account,int dpmdetail)//account为�
 
 void manageWindow::showSetting()
 {
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void manageWindow::showStatistics()
 {
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 void manageWindow::showEvent(QShowEvent *event)
@@ -209,7 +209,7 @@ void manageWindow::on_btn_delDpm_2_clicked()
             }
             else{qDebug()<<"删除成功";initDepartment();}
         }
-        else{qDebug()<<query.lastError()<<"执行删除失败";}
+        else{qDebug()<<query.lastError()<<"执行删除失败";QMessageBox::information(NULL,"错误","有关联关系，无法删除！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);}
     }
     else{qDebug()<<"数据库未开启";}
 }
@@ -256,7 +256,196 @@ void manageWindow::on_btn_delDpm_clicked()
             }
             else{qDebug()<<"删除成功";initDepartment();}
         }
-        else{qDebug()<<query.lastError()<<"执行删除失败";}
+        else{qDebug()<<query.lastError()<<"执行删除失败";QMessageBox::information(NULL,"错误","有关联关系，无法删除！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);}
     }
     else{qDebug()<<"数据库未开启";}
+}
+
+//初始化员工表格
+void manageWindow::initStaff()
+{
+    dbManager db;
+    if(db.openDB()){
+        //初始化
+        QString sql = "select staff.staff_id,staff.staff_name,staff.staff_sex,staff.staff_age,positions.position_name,positions.position_limit,department.department_name,staff_password from staff,positions,department";
+        sql += " where staff.position_id=positions.position_id and staff.department_id=department.department_id;";
+
+        QSqlQueryModel * model = new QSqlQueryModel(ui->tbv_staff);
+        model->setQuery(sql);
+
+        model->setHeaderData(0,Qt::Horizontal,QObject::tr("员工编号"));
+        model->setHeaderData(1,Qt::Horizontal,QObject::tr("员工姓名"));
+        model->setHeaderData(2,Qt::Horizontal,QObject::tr("性别"));
+        model->setHeaderData(3,Qt::Horizontal,QObject::tr("年龄"));
+        model->setHeaderData(4,Qt::Horizontal,QObject::tr("职位"));
+        model->setHeaderData(5,Qt::Horizontal,QObject::tr("职位权限"));
+        model->setHeaderData(6,Qt::Horizontal,QObject::tr("所属科室"));
+        model->setHeaderData(7,Qt::Horizontal,QObject::tr("账号密码"));
+
+        while(model->canFetchMore())
+        {
+            model->fetchMore();
+        }
+
+        ui->tbv_staff->setModel(model);
+        ui->tbv_staff->show();
+
+        ui->tbv_staff->setSortingEnabled(true);
+
+    }
+    else{QMessageBox::information(NULL,"错误","数据库未开启！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);}
+
+}
+//初始化职工下拉框
+void manageWindow::initStaffCombobox()
+{
+    this->ui->comb_staffPosition->clear();
+    this->ui->comb_staffDepartment->clear();
+
+    dbManager db;
+    if(db.openDB()){
+        QSqlQuery qPosition,qDepartment;
+        QString strPosition = "select * from positions;";
+        QString strDepartment = "select * from department;";
+
+        if(qPosition.exec(strPosition)){
+            QStandardItemModel * model = new QStandardItemModel(this);
+            QStandardItem * item;
+            while(qPosition.next()){
+                item = new QStandardItem(qPosition.value("position_name").toString());
+                item->setToolTip("职位限制:"+qPosition.value("position_limit").toString());
+                model->appendRow(item);
+            }
+            this->ui->comb_staffPosition->setModel(model);
+        }
+        else{QMessageBox::information(NULL,"错误","数据库查询出错！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);}
+
+        if(qDepartment.exec(strDepartment)){
+            while(qDepartment.next()){
+                this->ui->comb_staffDepartment->addItem(qDepartment.value("department_name").toString());
+
+            }
+        }
+        else{QMessageBox::information(NULL,"错误","数据库查询出错！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);}
+    }
+    else{QMessageBox::information(NULL,"错误","数据库未开启！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);}
+}
+
+
+//初始化职位表格
+void manageWindow::initPosition()
+{
+    QSqlRelationalTableModel *model = new QSqlRelationalTableModel();
+    model->setTable("positions");
+    model->setHeaderData(0,Qt::Horizontal, QObject::tr("职位ID"));
+    model->setHeaderData(1,Qt::Horizontal, QObject::tr("职位名"));
+    model->setHeaderData(2,Qt::Horizontal, QObject::tr("登陆限制"));
+    this->ui->tbv_position->setModel(model);
+    model->select();
+    //设置自动排序
+    ui->tbv_position->setSortingEnabled(true);
+}
+
+//页签改变初始化页面
+void manageWindow::on_tabWidget_currentChanged(int index)
+{
+    if(index==2){initStaff();initStaffCombobox();}
+    else if(index==3){initPosition();}
+}
+
+void manageWindow::on_tbv_position_clicked(const QModelIndex &index)
+{
+    QString positionID,positionName;
+    int positionLimit;
+    int curRow = index.row();
+    positionID = index.sibling(curRow,0).data().toString();
+    positionName = index.sibling(curRow,1).data().toString();
+    positionLimit = index.sibling(curRow,2).data().toInt();
+
+    this->ui->edt_positionID->setText(positionID);
+    this->ui->edt_positionName->setText(positionName);
+    this->ui->comb_positionLimit->setCurrentIndex(positionLimit);
+}
+
+void manageWindow::on_btn_addPosition_clicked()
+{
+    dbManager db;
+    if(db.openDB()){
+        QString positionName = this->ui->edt_positionName->text();
+        int positionLimit = this->ui->comb_positionLimit->currentIndex();
+
+        QString sql = "insert into positions(position_name,position_limit) values(?,?);";
+        QSqlQuery query;
+        query.prepare(sql);
+        query.addBindValue(positionName);
+        query.addBindValue(positionLimit);
+        if(query.exec()){
+            if(query.numRowsAffected()==0){
+                qDebug()<<"数据失败";
+            }
+            else{qDebug()<<"插入成功";}
+        }
+        else{qDebug()<<query.lastError()<<"执行插入失败";}
+    }
+    else{qDebug()<<"数据库未开启";}
+    initPosition();
+}
+
+void manageWindow::on_btn_updatePosition_clicked()
+{
+    dbManager db;
+    if(db.openDB()){
+        QString positionName = this->ui->edt_positionName->text();
+        int positionLimit = this->ui->comb_positionLimit->currentIndex();
+        int positionID = this->ui->edt_positionID->text().toInt();
+
+        QString sql = "update positions set position_name=:positionName,position_limit=:positionLimit where position_id=:positionID;";
+        QSqlQuery query;
+        query.prepare(sql);
+        query.bindValue(":positionName",positionName);
+        query.bindValue(":positionLimit",positionLimit);
+        query.bindValue(":positionID",positionID);
+        if(query.exec()){
+            if(query.numRowsAffected()==0){
+                qDebug()<<"数据失败";
+            }
+            else{qDebug()<<"更新成功";}
+        }
+        else{qDebug()<<query.lastError()<<"执行更新失败";}
+    }
+    else{qDebug()<<"数据库未开启";}
+    initPosition();
+}
+
+void manageWindow::on_btn_delPosition_clicked()
+{
+    dbManager db;
+    if(db.openDB()){
+        int positionID = this->ui->edt_positionID->text().toInt();
+
+        QString sql = "delete from positions where position_id=:positionID;";
+        QSqlQuery query;
+        query.prepare(sql);
+        query.bindValue(":positionID",positionID);
+        if(query.exec()){
+            if(query.numRowsAffected()==0){
+                qDebug()<<"数据失败";
+            }
+            else{qDebug()<<"删除成功";}
+        }
+        else{qDebug()<<query.lastError()<<"执行删除失败";QMessageBox::information(NULL,"错误","有关联关系，无法删除！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);}
+    }
+    else{qDebug()<<"数据库未开启";}
+    initPosition();
+}
+
+void manageWindow::on_tbv_staff_clicked(const QModelIndex &index)
+{
+    int curRow = index.row();
+    this->ui->edt_staffName->setText(index.sibling(curRow,1).data().toString());
+    this->ui->comb_staffSex->setCurrentIndex(index.sibling(curRow,2).data().toInt());
+    this->ui->spb_staffAge->setValue(index.sibling(curRow,3).data().toInt());
+    this->ui->comb_staffPosition->setCurrentText(index.sibling(curRow,4).data().toString());
+    this->ui->comb_staffDepartment->setCurrentText(index.sibling(curRow,5).data().toString());
+    this->ui->edt_staffPassword->setText(index.sibling(curRow,6).data().toString());
 }

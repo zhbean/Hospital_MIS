@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>picture/cross 1.png</file>
+        <file>picture/magnifier.png</file>
     </qresource>
 </RCC>

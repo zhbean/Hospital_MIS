@@ -30,12 +30,12 @@ INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,depa
 INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,department_id) VALUES('小黄',0,28,103,'123',103);
 INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,department_id) VALUES('老白',1,30,104,'123',104);
 /*处方单*/
-INSERT INTO psp(doctor_id,ID,patient_disease,psp_date) VALUES(10000,'122199801020000','重度感冒','2018/06/21 10:30:26 星期四');
+INSERT INTO psp(doctor_id,ID,patient_disease,psp_date) VALUES(10000,'122199801020000','重度感冒','2018-06-21 10:30:26');
 /*药方详情*/
 INSERT INTO pspdetail(psp_id,drug_id,drug_num,psp_price,psp_info) VALUES(10000,1,5,150,'每天一瓶');
 INSERT INTO pspdetail(psp_id,drug_id,drug_num,psp_price,psp_info) VALUES(10000,2,5,3000,'每天一瓶');
 /*缴费单*/
-INSERT INTO payment(psp_id,staff_id,sum_price,payment_date) VALUES(10000,10003,3150,'2018-06-21 10:30:26 星期四');
+INSERT INTO payment(psp_id,staff_id,sum_price,payment_date) VALUES(10000,10003,3150,'2018-06-21 10:30:26');
 /*科室详情*/
 INSERT INTO dpmdetail(department_id,dpmdetail_name,dpmdetail_position) VALUES(100,'内科1','101室');
 INSERT INTO dpmdetail(department_id,dpmdetail_name,dpmdetail_position) VALUES(100,'内科2','102室');
@@ -43,6 +43,6 @@ INSERT INTO dpmdetail(department_id,dpmdetail_name,dpmdetail_position) VALUES(10
 INSERT INTO dpmdetail(department_id,dpmdetail_name,dpmdetail_position) VALUES(102,'皮肤科','104室');
 INSERT INTO dpmdetail(department_id,dpmdetail_name,dpmdetail_position) VALUES(103,'护士科','201室');
 /*值班详情*/
-INSERT INTO duty(staff_id,dpmdetail_id,start_date,end_date) VALUES(10001,1001,'2018/06/21 08:00:00 星期四','2018/06/21 11:50:00 星期四');
+INSERT INTO duty(staff_id,dpmdetail_id,start_date,end_date) VALUES(10001,1001,'2018-06-21 08:00:00 星期四','2018-06-21 11:50:00 星期四');
 /*值班记录*/
-INSERT INTO dutyrecord(duty_id,dutyrecord_status,staff_id,real_start_date,real_end_date) VALUES(100000,1,10001,'2018/06/21 08:05:06 星期四','2018/06/21 11:46:50 星期四');
+INSERT INTO dutyrecord(duty_id,dutyrecord_status,staff_id,real_start_date,real_end_date) VALUES(100000,1,10001,'2018-06-21 08:05:06 星期四','2018-06-21 11:46:50 星期四');
