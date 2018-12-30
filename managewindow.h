@@ -6,6 +6,8 @@
 #include "QStandardItemModel"
 #include "QStandardItem"
 #include<QMessageBox>
+#include "QSqlRelationalTableModel"
+#include "QSqlQueryModel"
 
 namespace Ui {
 class manageWindow;
@@ -23,6 +25,9 @@ private:
     Ui::manageWindow *ui;
     void showEvent(QShowEvent *event);
     void initDepartment();
+    void initStaff();
+    void initPosition();
+    void initStaffCombobox();
 
 private slots:
     void getAccountAndToolTip(int account,int dpmdetail);
@@ -36,6 +41,12 @@ private slots:
     void on_btn_delDpm_2_clicked();
     void on_btn_updateDpm_clicked();
     void on_btn_delDpm_clicked();
+    void on_tabWidget_currentChanged(int index);
+    void on_tbv_position_clicked(const QModelIndex &index);
+    void on_btn_addPosition_clicked();
+    void on_btn_updatePosition_clicked();
+    void on_btn_delPosition_clicked();
+    void on_tbv_staff_clicked(const QModelIndex &index);
 };
 
 #endif // MANAGEWINDOW_H
