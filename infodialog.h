@@ -15,6 +15,7 @@ public:
     explicit infoDialog(QWidget *parent = nullptr);
     ~infoDialog();
     QString info;
+    QString num;
 private slots:
     void on_buttonBox_accepted();
 

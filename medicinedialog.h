@@ -30,7 +30,7 @@ private:
     Ui::medicineDialog *ui;
 
 signals:
-    void setMedicineInformation(QString,QString,QString,QString);
+    void setMedicineInformation(QString,QString,QString,float,QString);
 };
 
 #endif // MEDICINEDIALOG_H

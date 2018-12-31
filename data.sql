@@ -1,4 +1,4 @@
-/*病人*/
+﻿/*病人*/
 INSERT INTO patient(patient_name,ID,patient_age,patient_sex,patient_contact,emergency_contact,allergy_history) VALUES('小明','122199801020000',20,1,'110','119','小龙虾过敏');
 INSERT INTO patient(patient_name,ID,patient_age,patient_sex,patient_contact,emergency_contact,allergy_history) VALUES('大明','122197801020000',40,1,'110','119','大龙虾过敏');
 INSERT INTO patient(patient_name,ID,patient_age,patient_sex,patient_contact,emergency_contact,allergy_history) VALUES('老明','122195801020000',60,1,'110','119','老龙虾过敏');
@@ -30,12 +30,13 @@ INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,depa
 INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,department_id) VALUES('小黄',0,28,103,'123',103);
 INSERT INTO staff(staff_name,staff_sex,staff_age,position_id,staff_password,department_id) VALUES('老白',1,30,104,'123',104);
 /*处方单*/
-INSERT INTO psp(doctor_id,ID,patient_disease,psp_date) VALUES(10000,'122199801020000','重度感冒','2018-06-21 10:30:26');
+INSERT INTO psp(psp_id,doctor_id,ID,patient_disease,psp_date) VALUES('2018123010302600',10000,'122199801020000','重度感冒','2018-12-30 10:30:26');
+INSERT INTO psp(psp_id,doctor_id,ID,patient_disease,psp_date) VALUES('2018123110302600',10000,'122199801020000','重度感冒','2018-12-31 10:30:26');
 /*药方详情*/
-INSERT INTO pspdetail(psp_id,drug_id,drug_num,psp_price,psp_info) VALUES(10000,1,5,150,'每天一瓶');
-INSERT INTO pspdetail(psp_id,drug_id,drug_num,psp_price,psp_info) VALUES(10000,2,5,3000,'每天一瓶');
+INSERT INTO pspdetail(psp_id,drug_id,drug_num,psp_price,psp_info) VALUES('2018123010302600',1,5,150,'每天一瓶');
+INSERT INTO pspdetail(psp_id,drug_id,drug_num,psp_price,psp_info) VALUES('2018123010302600',2,5,3000,'每天一瓶');
 /*缴费单*/
-INSERT INTO payment(psp_id,staff_id,sum_price,payment_date) VALUES(10000,10003,3150,'2018-06-21 10:30:26');
+INSERT INTO payment(payment_id,psp_id,staff_id,sum_price,payment_date) VALUES('2018123010302600','2018123010302600',10003,3150,'2018-12-30 10:30:26');
 /*科室详情*/
 INSERT INTO dpmdetail(department_id,dpmdetail_name,dpmdetail_position) VALUES(100,'内科1','101室');
 INSERT INTO dpmdetail(department_id,dpmdetail_name,dpmdetail_position) VALUES(100,'内科2','102室');

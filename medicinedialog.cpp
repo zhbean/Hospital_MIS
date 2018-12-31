@@ -83,10 +83,12 @@ void medicineDialog::on_tableWidget_cellDoubleClicked(int row, int column)
     i.setModal(false);
     if(i.exec()==QDialog::Accepted){
         QString info=i.info;
+        int num=i.num.toInt();
         QString drugId=ui->tableWidget->item(row,0)->text();
         QString drugName=ui->tableWidget->item(row,1)->text();
-        QString drugPrice=ui->tableWidget->item(row,2)->text();
+        float drugPrice=ui->tableWidget->item(row,2)->text().toFloat();
         QString Inventory=ui->tableWidget->item(row,3)->text();
-        emit setMedicineInformation(drugId,drugName,drugPrice,info);
+        float price=num*drugPrice;
+        emit setMedicineInformation(drugId,drugName,QString::number(num),price,info);
     }
 }

@@ -8,6 +8,7 @@
 #include <QDateTime>
 #include <QTimer>
 #include "medicinedialog.h"
+#include "ui_diagnosiswindow.h"
 
 
 namespace Ui {
@@ -24,6 +25,8 @@ public:
 
 private:
     Ui::diagnosisWindow *ui;
+signals:
+    void setPspId(QString);
 
 private slots:
     void getAccountAndToolTip(int account,int dpmdetail);
@@ -32,7 +35,8 @@ private slots:
     void on_DelButton_clicked();
     void on_OKButton_clicked();
     void on_PrintButton_clicked();
-    void getMedicineInformation(QString,QString,QString,QString);
+    void getMedicineInformation(QString,QString,QString,float,QString);
+    void on_historyDiseaseListWidget_itemDoubleClicked(QListWidgetItem *item);
 };
 
 #endif // DIAGNOSISWINDOW_H

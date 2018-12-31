@@ -69,7 +69,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>***</string>
       </property>
      </widget>
     </widget>
@@ -104,7 +104,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>***</string>
       </property>
      </widget>
     </widget>
@@ -139,7 +139,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>***</string>
       </property>
      </widget>
     </widget>
@@ -174,7 +174,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>***</string>
       </property>
      </widget>
     </widget>
@@ -212,7 +212,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>***</string>
       </property>
      </widget>
     </widget>
@@ -250,7 +250,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>***</string>
       </property>
      </widget>
     </widget>
@@ -460,7 +460,7 @@
     <property name="title">
      <string>药方清单</string>
     </property>
-    <widget class="QListWidget" name="medicineListWidget">
+    <widget class="QTableWidget" name="medicineTableWidget">
      <property name="geometry">
       <rect>
        <x>5</x>
@@ -475,6 +475,31 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <column>
+      <property name="text">
+       <string>药品Id</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>药品名称</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>药品数量</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>药品价格(单价*数量)</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>使用方法</string>
+      </property>
+     </column>
     </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_5">
@@ -493,7 +518,7 @@
      </sizepolicy>
     </property>
     <property name="title">
-     <string>历史病症</string>
+     <string>历史诊断</string>
     </property>
     <widget class="QListWidget" name="historyDiseaseListWidget">
      <property name="geometry">
@@ -582,7 +607,7 @@
   <tabstop>OKButton</tabstop>
   <tabstop>PrintButton</tabstop>
   <tabstop>diseasePlainTextEdit</tabstop>
-  <tabstop>medicineListWidget</tabstop>
+  <tabstop>medicineTableWidget</tabstop>
   <tabstop>allergyPlainTextEdit</tabstop>
  </tabstops>
  <resources/>
