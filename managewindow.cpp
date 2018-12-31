@@ -81,6 +81,7 @@ void manageWindow::initDepartment()
             }
             ui->trv_department->setModel(pModel);
             ui->trv_department->expandAll();
+            ui->trv_department->setSortingEnabled(true);
         }
         else{qDebug()<<"数据查询出错";}
     }
@@ -313,7 +314,8 @@ void manageWindow::initStaffCombobox()
             QStandardItem * item;
             while(qPosition.next()){
                 item = new QStandardItem(qPosition.value("position_name").toString());
-                item->setToolTip("职位限制:"+qPosition.value("position_limit").toString());
+                item->setAccessibleText(qPosition.value("position_id").toString());
+                item->setToolTip("登陆限制:"+qPosition.value("position_limit").toString());
                 model->appendRow(item);
             }
             this->ui->comb_staffPosition->setModel(model);
@@ -321,10 +323,14 @@ void manageWindow::initStaffCombobox()
         else{QMessageBox::information(NULL,"错误","数据库查询出错！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);}
 
         if(qDepartment.exec(strDepartment)){
+            QStandardItemModel * model = new QStandardItemModel(this);
+            QStandardItem * item;
             while(qDepartment.next()){
-                this->ui->comb_staffDepartment->addItem(qDepartment.value("department_name").toString());
-
+                item = new QStandardItem(qDepartment.value("department_name").toString());
+                item->setToolTip(qDepartment.value("department_id").toString());
+                model->appendRow(item);
             }
+            this->ui->comb_staffDepartment->setModel(model);
         }
         else{QMessageBox::information(NULL,"错误","数据库查询出错！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);}
     }
@@ -349,7 +355,8 @@ void manageWindow::initPosition()
 //页签改变初始化页面
 void manageWindow::on_tabWidget_currentChanged(int index)
 {
-    if(index==2){initStaff();initStaffCombobox();}
+    if(index==1){initDuty();}
+    else if(index==2){initStaff();initStaffCombobox();}
     else if(index==3){initPosition();}
 }
 
@@ -442,10 +449,217 @@ void manageWindow::on_btn_delPosition_clicked()
 void manageWindow::on_tbv_staff_clicked(const QModelIndex &index)
 {
     int curRow = index.row();
+    this->ui->edt_staffID->setText(index.sibling(curRow,0).data().toString());
     this->ui->edt_staffName->setText(index.sibling(curRow,1).data().toString());
     this->ui->comb_staffSex->setCurrentIndex(index.sibling(curRow,2).data().toInt());
     this->ui->spb_staffAge->setValue(index.sibling(curRow,3).data().toInt());
     this->ui->comb_staffPosition->setCurrentText(index.sibling(curRow,4).data().toString());
-    this->ui->comb_staffDepartment->setCurrentText(index.sibling(curRow,5).data().toString());
-    this->ui->edt_staffPassword->setText(index.sibling(curRow,6).data().toString());
+    this->ui->comb_staffDepartment->setCurrentText(index.sibling(curRow,6).data().toString());
+    this->ui->edt_staffPassword->setText(index.sibling(curRow,7).data().toString());
+}
+
+void manageWindow::on_btn_addStaff_clicked()
+{
+    QString staffName = this->ui->edt_staffName->text();
+    int staffSex = this->ui->comb_staffSex->currentIndex();
+    int staffAge = this->ui->spb_staffAge->value();
+    //取职位号
+    int curRow=this->ui->comb_staffPosition->currentIndex();
+    QModelIndex index = this->ui->comb_staffPosition->model()->index(curRow,0);
+    QStandardItemModel* model = static_cast<QStandardItemModel*>(ui->comb_staffPosition->model());//拿到combobox里加入的model
+    QStandardItem *item = model->itemFromIndex(index);//从model拿到item
+    int positionID = item->accessibleText().toInt();
+    //取科室号
+    curRow=this->ui->comb_staffDepartment->currentIndex();
+    index = this->ui->comb_staffDepartment->model()->index(curRow,0);
+    model = static_cast<QStandardItemModel*>(ui->comb_staffDepartment->model());//拿到combobox里加入的model
+    item = model->itemFromIndex(index);//从model拿到item
+    int departmentID = item->toolTip().toInt();
+
+    QString staffPassword = this->ui->edt_staffPassword->text();
+
+    dbManager db;
+    if(db.openDB()){
+
+        QString sql = "insert into staff(staff_name,staff_sex,staff_age,position_id,department_id,staff_password) values(?,?,?,?,?,?);";
+        QSqlQuery query;
+        query.prepare(sql);
+        query.addBindValue(staffName);
+        query.addBindValue(staffSex);
+        query.addBindValue(staffAge);
+        query.addBindValue(positionID);
+        query.addBindValue(departmentID);
+        query.addBindValue(staffPassword);
+        if(query.exec()){
+            if(query.numRowsAffected()==0){
+                qDebug()<<"数据失败";
+            }
+            else{qDebug()<<"插入成功";}
+        }
+        else{qDebug()<<query.lastError()<<"执行插入失败";}
+    }
+    else{qDebug()<<"数据库未开启";}
+    initStaff();
+}
+
+void manageWindow::on_btn_updateStaff_clicked()
+{
+    int staffID= this->ui->edt_staffID->text().toInt();
+    QString staffName = this->ui->edt_staffName->text();
+    int staffSex = this->ui->comb_staffSex->currentIndex();
+    int staffAge = this->ui->spb_staffAge->value();
+    //取职位号
+    int curRow=this->ui->comb_staffPosition->currentIndex();
+    QModelIndex index = this->ui->comb_staffPosition->model()->index(curRow,0);
+    QStandardItemModel* model = static_cast<QStandardItemModel*>(ui->comb_staffPosition->model());//拿到combobox里加入的model
+    QStandardItem *item = model->itemFromIndex(index);//从model拿到item
+    int positionID = item->accessibleText().toInt();
+    //取科室号
+    curRow=this->ui->comb_staffDepartment->currentIndex();
+    index = this->ui->comb_staffDepartment->model()->index(curRow,0);
+    model = static_cast<QStandardItemModel*>(ui->comb_staffDepartment->model());//拿到combobox里加入的model
+    item = model->itemFromIndex(index);//从model拿到item
+    int departmentID = item->toolTip().toInt();
+
+    QString staffPassword = this->ui->edt_staffPassword->text();
+
+    dbManager db;
+    if(db.openDB()){
+
+        QString sql = "update staff set staff_name=:staffName,staff_sex=:staffSex,staff_age=:staffAge,position_id=:positionID,department_id=:departmentID,staff_password=:staffPassword where staff_id=:staffID;";
+        QSqlQuery query;
+        query.prepare(sql);
+        query.bindValue(":staffName",staffName);
+        query.bindValue(":staffSex",staffSex);
+        query.bindValue(":staffAge",staffAge);
+        query.bindValue(":positionID",positionID);
+        query.bindValue(":departmentID",departmentID);
+        query.bindValue(":staffPassword",staffPassword);
+        query.bindValue(":staffID",staffID);
+        if(query.exec()){
+            if(query.numRowsAffected()==0){
+                qDebug()<<"数据失败";
+            }
+            else{qDebug()<<"更新成功";}
+        }
+        else{qDebug()<<query.lastError()<<"执行更新失败";}
+    }
+    else{qDebug()<<"数据库未开启";}
+    initStaff();
+}
+
+void manageWindow::on_btn_delStaff_clicked()
+{
+    int staffID= this->ui->edt_staffID->text().toInt();
+
+    dbManager db;
+    if(db.openDB()){
+        QString sql = "delete from staff where staff_id=:staffID;";
+        QSqlQuery query;
+        query.prepare(sql);
+        query.bindValue(":staffID",staffID);
+        if(query.exec()){
+            if(query.numRowsAffected()==0){
+                qDebug()<<"数据失败";
+            }
+            else{qDebug()<<"删除成功";}
+        }
+        else{qDebug()<<query.lastError()<<"执行删除失败";}
+    }
+    else{qDebug()<<"数据库未开启";}
+    initStaff();
+}
+
+
+void manageWindow::initDuty()
+{
+    QStandardItemModel* pModel = new QStandardItemModel(ui->trv_duty);//取父节点
+    pModel->setHorizontalHeaderLabels(QStringList()<<"科室号"<<"科室名"<<"值班序号"<<"员工序号"<<"员工姓名"<<"开始时间"<<"结束时间");//设置标题
+
+    dbManager db;
+    if(db.openDB()){
+        QSqlQuery qDpm;
+        if(qDpm.exec("select * from department")){
+            while(qDpm.next()){
+                QString dpm = qDpm.value("department_name").toString();
+                QString dpm_id = qDpm.value("department_id").toString();
+                QStandardItem * pItem = new QStandardItem(dpm_id);//给model赋第一列值
+                pModel->appendRow(pItem);
+                pModel->setItem(pModel->indexFromItem(pItem).row(),1, new QStandardItem(dpm));
+
+                QSqlQuery qDuty;
+                QString sql = "select * from duty,staff,department,dpmdetail where duty.staff_id=staff.staff_id and duty.dpmdetail_id=dpmdetail.dpmdetail_id and dpmdetail.department_id=department.department_id and dpmdetail.department_id="+dpm_id;
+
+                if(qDuty.exec(sql)){
+                    while(qDuty.next()){
+                        QString dpmDtlName = qDuty.value("dpmdetail.dpmdetail_name").toString();
+                        QString dpmDtlID = qDuty.value("dpmdetail.dpmdetail_id").toString();
+                        QString dutyID = qDuty.value("duty.duty_id").toString();
+                        QString staffID = qDuty.value("staff.staff_id").toString();
+                        QString staffName = qDuty.value("staff.staff_name").toString();
+                        QString dutyStart = qDuty.value("duty.start_date").toString();
+                        QString dutyEnd = qDuty.value("duty.end_date").toString();
+                        QStandardItem * cItem = new QStandardItem(dpmDtlID);//给model赋第一列值
+                        pItem->appendRow(cItem);
+                        pItem->setChild(cItem->index().row(),1, new QStandardItem(dpmDtlName));
+                        pItem->setChild(cItem->index().row(),2, new QStandardItem(dutyID));//给model赋第二列值
+                        pItem->setChild(cItem->index().row(),3, new QStandardItem(staffID));//给model赋第二列值
+                        pItem->setChild(cItem->index().row(),4, new QStandardItem(staffName));
+                        pItem->setChild(cItem->index().row(),5, new QStandardItem(dutyStart));
+                        pItem->setChild(cItem->index().row(),6, new QStandardItem(dutyEnd));
+                    }
+                }
+                else{qDebug()<<"详情数据查询出错"<<qDuty.lastError();}
+            }
+            ui->trv_duty->setModel(pModel);
+            ui->trv_duty->expandAll();
+            ui->trv_duty->setSortingEnabled(true);
+        }
+        else{qDebug()<<"数据查询出错";}
+    }
+    else{qDebug()<<"数据库未连接";}
+}
+
+//填充值班表编号
+void manageWindow::on_trv_duty_clicked(const QModelIndex &index)
+{
+    this->ui->edt_dutyID->setText(index.sibling(index.row(),2).data().toString());
+}
+
+void manageWindow::on_btn_addDuty_clicked()
+{
+    EditDuty editduty(this);
+    editduty.setPage(0);
+    editduty.exec();
+    initDuty();
+}
+
+void manageWindow::on_btn_updateDuty_clicked()
+{
+    if(this->ui->edt_dutyID->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","没有选中值班信息！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);//错误处理
+        return;
+    }
+    QString dutyID = this->ui->edt_dutyID->text();
+    EditDuty editduty(this);
+    editduty.setPage(1);
+    editduty.initDuty(dutyID);
+    editduty.exec();
+    initDuty();
+}
+
+void manageWindow::on_btn_delDuty_clicked()
+{
+    if(this->ui->edt_dutyID->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","没有选中值班信息！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);//错误处理
+        return;
+    }
+    QString dutyID = this->ui->edt_dutyID->text();
+    EditDuty editduty(this);
+    editduty.setPage(2);
+    editduty.initDuty(dutyID);
+    editduty.exec();
+    initDuty();
 }

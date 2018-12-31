@@ -154,7 +154,7 @@
            </font>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab_dpm">
            <attribute name="title">
@@ -183,7 +183,7 @@
              <number>0</number>
             </property>
             <widget class="QWidget" name="page">
-             <widget class="QWidget" name="">
+             <widget class="QWidget" name="layoutWidget">
               <property name="geometry">
                <rect>
                 <x>90</x>
@@ -261,7 +261,7 @@
                </item>
               </layout>
              </widget>
-             <widget class="QWidget" name="">
+             <widget class="QWidget" name="layoutWidget">
               <property name="geometry">
                <rect>
                 <x>120</x>
@@ -342,7 +342,7 @@
                <string>修改</string>
               </property>
              </widget>
-             <widget class="QWidget" name="">
+             <widget class="QWidget" name="layoutWidget">
               <property name="geometry">
                <rect>
                 <x>90</x>
@@ -448,6 +448,66 @@
            <attribute name="title">
             <string>值班设置</string>
            </attribute>
+           <widget class="QTreeView" name="trv_duty">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>891</width>
+              <height>481</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QWidget" name="">
+            <property name="geometry">
+             <rect>
+              <x>900</x>
+              <y>130</y>
+              <width>101</width>
+              <height>181</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_7">
+             <item>
+              <widget class="QPushButton" name="btn_addDuty">
+               <property name="text">
+                <string>添加</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_6">
+               <property name="spacing">
+                <number>10</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="label_14">
+                 <property name="text">
+                  <string>值班编号：</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="edt_dutyID"/>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btn_updateDuty">
+                 <property name="text">
+                  <string>修改</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btn_delDuty">
+                 <property name="text">
+                  <string>删除</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
           </widget>
           <widget class="QWidget" name="tab_staff">
            <attribute name="title">
@@ -463,7 +523,7 @@
              </rect>
             </property>
            </widget>
-           <widget class="QWidget" name="">
+           <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
               <x>710</x>
@@ -473,55 +533,65 @@
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
-             <item row="5" column="0">
+             <item row="5" column="1" colspan="2">
+              <widget class="QComboBox" name="comb_staffPosition">
+               <property name="editable">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
               <widget class="QLabel" name="label_11">
                <property name="text">
                 <string>科室：</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
+             <item row="3" column="0">
               <widget class="QLabel" name="label_7">
                <property name="text">
                 <string>性别：</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="0">
+             <item row="7" column="0">
               <widget class="QLabel" name="label_12">
                <property name="text">
                 <string>密码：</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="1" colspan="2">
+             <item row="1" column="1" colspan="2">
               <widget class="QLineEdit" name="edt_staffName"/>
              </item>
-             <item row="6" column="1" colspan="2">
+             <item row="7" column="1" colspan="2">
               <widget class="QLineEdit" name="edt_staffPassword"/>
              </item>
-             <item row="0" column="0">
+             <item row="1" column="0">
               <widget class="QLabel" name="label_5">
                <property name="text">
                 <string>姓名：</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="0">
+             <item row="5" column="0">
               <widget class="QLabel" name="label_10">
                <property name="text">
                 <string>职位：</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="0">
+             <item row="4" column="0">
               <widget class="QLabel" name="label_9">
                <property name="text">
                 <string>年龄：</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1" colspan="2">
+             <item row="6" column="1" colspan="2">
+              <widget class="QComboBox" name="comb_staffDepartment"/>
+             </item>
+             <item row="3" column="1" colspan="2">
               <widget class="QComboBox" name="comb_staffSex">
                <property name="currentIndex">
                 <number>1</number>
@@ -539,25 +609,29 @@
               </widget>
              </item>
              <item row="4" column="1" colspan="2">
-              <widget class="QComboBox" name="comb_staffPosition">
-               <property name="editable">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1" colspan="2">
-              <widget class="QComboBox" name="comb_staffDepartment"/>
-             </item>
-             <item row="3" column="1" colspan="2">
               <widget class="QSpinBox" name="spb_staffAge">
                <property name="maximum">
                 <number>130</number>
                </property>
               </widget>
              </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_13">
+               <property name="text">
+                <string>员工编号</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="edt_staffID">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="">
+           <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
               <x>780</x>
@@ -605,7 +679,7 @@
              </rect>
             </property>
            </widget>
-           <widget class="QWidget" name="">
+           <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
               <x>680</x>
@@ -638,7 +712,7 @@
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="">
+           <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
               <x>640</x>
