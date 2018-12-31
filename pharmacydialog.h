@@ -46,6 +46,8 @@ private slots:
 
     void on_pushButton_tabSale_grant_clicked();
 
+    void on_pushButton_return_clicked();
+
 private:
     Ui::PharmacyDialog *ui;
     int staff_id;
