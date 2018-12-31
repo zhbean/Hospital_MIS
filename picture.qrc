@@ -2,5 +2,15 @@
     <qresource prefix="/">
         <file>picture/cross 1.png</file>
         <file>picture/magnifier.png</file>
+        <file>picture/ico_药房管理_药品请领（新）.png</file>
+        <file>picture/材料厂家.png</file>
+        <file>picture/记录.png</file>
+        <file>picture/ico_药库管理_库存盘点（新）.png</file>
+        <file>picture/药库查询.png</file>
+        <file>picture/ico_健康门诊_门诊记录查询.png</file>
+        <file>picture/查询.png</file>
+        <file>picture/设置更新.png</file>
+        <file>picture/添加.png</file>
+        <file>picture/修改交易登陆方式.png</file>
     </qresource>
 </RCC>
