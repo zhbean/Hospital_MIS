@@ -155,13 +155,10 @@
     </size>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
-   <property name="iconSize">
-    <size>
-     <width>16</width>
-     <height>16</height>
-    </size>
+   <property name="tabBarAutoHide">
+    <bool>false</bool>
    </property>
    <widget class="QWidget" name="tab_store">
     <attribute name="title">
@@ -340,7 +337,17 @@
       </rect>
      </property>
      <property name="text">
-      <string>仓库进药</string>
+      <string>      仓库进药</string>
+     </property>
+     <property name="icon">
+      <iconset resource="picture.qrc">
+       <normaloff>:/picture/ico_药库管理_库存盘点（新）.png</normaloff>:/picture/ico_药库管理_库存盘点（新）.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_drugid_forReturn">
@@ -399,7 +406,17 @@
       </rect>
      </property>
      <property name="text">
-      <string>仓库退药</string>
+      <string>      仓库退药</string>
+     </property>
+     <property name="icon">
+      <iconset resource="picture.qrc">
+       <normaloff>:/picture/ico_药房管理_药品请领（新）.png</normaloff>:/picture/ico_药房管理_药品请领（新）.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_selectDrug">
@@ -412,7 +429,17 @@
       </rect>
      </property>
      <property name="text">
-      <string>药品查询</string>
+      <string>       药品查询</string>
+     </property>
+     <property name="icon">
+      <iconset resource="picture.qrc">
+       <normaloff>:/picture/查询.png</normaloff>:/picture/查询.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
      </property>
     </widget>
     <widget class="QLabel" name="label_22">
@@ -628,7 +655,17 @@
       </rect>
      </property>
      <property name="text">
-      <string>查询缴费单</string>
+      <string>      查询缴费单</string>
+     </property>
+     <property name="icon">
+      <iconset resource="picture.qrc">
+       <normaloff>:/picture/ico_健康门诊_门诊记录查询.png</normaloff>:/picture/ico_健康门诊_门诊记录查询.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
      </property>
     </widget>
     <widget class="QLabel" name="label_92">
@@ -664,7 +701,17 @@
       </rect>
      </property>
      <property name="text">
-      <string>发放药品</string>
+      <string>      发放药品</string>
+     </property>
+     <property name="icon">
+      <iconset resource="picture.qrc">
+       <normaloff>:/picture/ico_药房管理_药品请领（新）.png</normaloff>:/picture/ico_药房管理_药品请领（新）.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
      </property>
     </widget>
     <widget class="QListWidget" name="listWidget_tabSale">
@@ -796,7 +843,17 @@
       </rect>
      </property>
      <property name="text">
-      <string>添加厂商</string>
+      <string>      添加厂商</string>
+     </property>
+     <property name="icon">
+      <iconset resource="picture.qrc">
+       <normaloff>:/picture/添加.png</normaloff>:/picture/添加.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
      </property>
     </widget>
     <widget class="QLabel" name="label_38">
@@ -881,7 +938,17 @@
       </rect>
      </property>
      <property name="text">
-      <string>更新厂商</string>
+      <string>      更新厂商</string>
+     </property>
+     <property name="icon">
+      <iconset resource="picture.qrc">
+       <normaloff>:/picture/修改交易登陆方式.png</normaloff>:/picture/修改交易登陆方式.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_tabFactory_factoryId_forUpdate">
@@ -972,7 +1039,17 @@
       </rect>
      </property>
      <property name="text">
-      <string>查询</string>
+      <string>      查询</string>
+     </property>
+     <property name="icon">
+      <iconset resource="picture.qrc">
+       <normaloff>:/picture/查询.png</normaloff>:/picture/查询.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
      </property>
     </widget>
    </widget>
@@ -1161,7 +1238,17 @@
       </rect>
      </property>
      <property name="text">
-      <string>查询</string>
+      <string>      查询</string>
+     </property>
+     <property name="icon">
+      <iconset resource="picture.qrc">
+       <normaloff>:/picture/查询.png</normaloff>:/picture/查询.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_selectByStaffId">
@@ -1174,7 +1261,17 @@
       </rect>
      </property>
      <property name="text">
-      <string>查询</string>
+      <string>      查询</string>
+     </property>
+     <property name="icon">
+      <iconset resource="picture.qrc">
+       <normaloff>:/picture/查询.png</normaloff>:/picture/查询.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
      </property>
     </widget>
     <widget class="QLabel" name="label_31">
@@ -1233,7 +1330,17 @@
       </rect>
      </property>
      <property name="text">
-      <string>查询</string>
+      <string>      查询</string>
+     </property>
+     <property name="icon">
+      <iconset resource="picture.qrc">
+       <normaloff>:/picture/查询.png</normaloff>:/picture/查询.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
      </property>
     </widget>
     <zorder>pushButton_selectByStaffId</zorder>
@@ -1252,6 +1359,8 @@
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="picture.qrc"/>
+ </resources>
  <connections/>
 </ui>

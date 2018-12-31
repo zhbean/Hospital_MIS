@@ -16,4 +16,5 @@ infoDialog::~infoDialog()
 void infoDialog::on_buttonBox_accepted()
 {
     info=ui->lineEdit->text();
+    num=ui->numLneEdit->text();
 }

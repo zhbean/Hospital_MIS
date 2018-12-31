@@ -34,7 +34,8 @@ SOURCES += \
     patientdialog.cpp \
     medicinedialog.cpp \
     infodialog.cpp \
-    editduty.cpp
+    editduty.cpp \
+    historymedicinedialog.cpp
 
 HEADERS += \
         dbManager.h \
@@ -46,7 +47,8 @@ HEADERS += \
     patientdialog.h \
     medicinedialog.h \
     infodialog.h \
-    editduty.h
+    editduty.h \
+    historymedicinedialog.h
 
 
 
@@ -60,7 +62,8 @@ FORMS += \
     patientdialog.ui \
     medicinedialog.ui \
     infodialog.ui \
-    editduty.ui
+    editduty.ui \
+    historymedicinedialog.ui
 
 
 QT += sql
