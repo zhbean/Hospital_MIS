@@ -816,7 +816,7 @@ void manageWindow::initDpmStatistics()
 void manageWindow::initDilyStatistics()
 {
     //取当前时间
-    QDateTime curDt=QDateTime::currentDateTime();
+    QDate curDt=QDate::currentDate();
 
     QStandardItemModel* pModel = new QStandardItemModel(ui->trv_dailyStatistics);//取父节点
     pModel->setHorizontalHeaderLabels(QStringList()<<"科室编号"<<"科室名"<<"处方编号"<<"开方日期"<<"医生名"<<"员工编号");//设置标题
@@ -835,11 +835,10 @@ void manageWindow::initDilyStatistics()
                 QSqlQuery qPsp;
                 if(qPsp.exec("select * from psp,staff,department where psp.doctor_id=staff.staff_id and staff.department_id=department.department_id and staff.department_id="+dpm_id+";")){
                     while(qPsp.next()){
-                        QString psp_date = qPsp.value("psp.psp_date").toString();
-                        QDateTime pspDt;
-                        pspDt=pspDt.fromString(psp_date,"yy-MM-dd");
+                        QDate pspDt = qPsp.value("psp.psp_date").toDate();
                         if(curDt!=pspDt){continue;}
 
+                        QString psp_date = qPsp.value("psp.psp_date").toString();
                         QString psp_id = qPsp.value("psp.psp_id").toString();
                         QString staff_id = qPsp.value("staff.staff_id").toString();
                         QString staff_name = qPsp.value("staff.staff_name").toString();
@@ -877,6 +876,23 @@ void manageWindow::on_btn_dailyStatistics_clicked()
 {
     this->ui->stackedWidget_3->setCurrentIndex(1);
     initDilyStatistics();
+}
+
+
+
+void manageWindow::on_btn_charts_clicked()
+{
+    ShowChart showChart(this);
+    if(this->ui->stackedWidget_3->currentIndex()==0){
+        //科室统计图表
+        showChart.showDpmCharts();
+    }
+    else if(this->ui->stackedWidget_3->currentIndex()==1){
+        //每日统计图表
+        QDate curDt=QDate::currentDate();
+        showChart.showDailyCharts(curDt);
+    }
+    showChart.exec();
 }
 
 
