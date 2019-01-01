@@ -44,6 +44,7 @@ void diagnosisWindow::showStatistics(){
             ui->medicineTableWidget->removeRow(0);
         }
         ui->diseasePlainTextEdit->clear();
+        ui->historyDiseaseListWidget->clear();
         ui->AddButton->setEnabled(true);
         ui->DelButton->setEnabled(true);
         ui->OKButton->setEnabled(true);
@@ -183,7 +184,6 @@ void diagnosisWindow::on_OKButton_clicked()
     dbManager db;
     db.openDB();
     if(db.getDB()->transaction()){
-        bool succ1,succ2;
         QString pspId=QDateTime::currentDateTime().toString("yyyyMMddhhmmss")+ui->patientIdLabel->text().at(0)+ui->patientIdLabel->text().at(8);
         QString doctorId=ui->StaffIdLabel->text();
         QString patientDisease=ui->diseasePlainTextEdit->toPlainText();
@@ -197,10 +197,9 @@ void diagnosisWindow::on_OKButton_clicked()
         query.bindValue(2,patientID);
         query.bindValue(3,patientDisease);
         query.bindValue(4,pspTime);
-        succ1=query.exec();
-        if(!succ1){
+        if(!query.exec()){
             qDebug()<<query.lastError();
-            QMessageBox::critical(this,"Error","执行SQL语句失败，将要回滚");
+            QMessageBox::critical(this,"Error","添加处方单失败，将要回滚");
             if(!db.getDB()->rollback()){
                 QMessageBox::critical(this,"Error","回滚失败");
                 qDebug()<<db.getDB()->lastError();
@@ -219,15 +218,27 @@ void diagnosisWindow::on_OKButton_clicked()
             query.bindValue(2,drugNum);
             query.bindValue(3,pspPrice);
             query.bindValue(4,pspInfo);
-            succ2=query.exec();
-            if(!succ2){
+            if(!query.exec()){
                 qDebug()<<query.lastError();
-                QMessageBox::critical(this,"Error","执行SQL语句失败，将要回滚");
+                QMessageBox::critical(this,"Error","添加药品失败，将要回滚");
                 if(!db.getDB()->rollback()){
                     QMessageBox::critical(this,"Error","回滚失败");
                     qDebug()<<db.getDB()->lastError();
                 }
-                break;
+                return;
+            }
+            else{
+                QString dSql="UPDATE drug SET virtual_inventory = virtual_inventory-"+drugNum+" where drug_id="+drugId+";";
+                query.prepare(dSql);
+                if(!query.exec()){
+                    qDebug()<<query.lastError();
+                    QMessageBox::critical(this,"Error","更改库存失败，将要回滚");
+                    if(!db.getDB()->rollback()){
+                        QMessageBox::critical(this,"Error","回滚失败");
+                        qDebug()<<db.getDB()->lastError();
+                    }
+                    return;
+                }
             }
         }
         if(!db.getDB()->commit()){
@@ -243,49 +254,34 @@ void diagnosisWindow::on_OKButton_clicked()
 }
 QString diagnosisWindow::makePspHtml()
 {
-    if(!pspID.isEmpty()){
-        dbManager db;
-        db.openDB();
-        QSqlQuery query;
-        QString sql="select * from pspdetail where psp_id='"+this->pspID+"';";
-        query.exec(sql);
-        QString html="<head><h1 style="">缴费单</h1>";
-        while (query.next()) {
-            QString drugName=query.value("drug_name").toString();
-            QString drugNum=query.value("drug_num").toString();
-            QString pspPrice=query.value("psp_price").toString();
-            QString pspInfo=query.value("psp_info").toString();
-        }
+    QString html="<html>";
+    html+=" <body><div style='text-align:center'><h1>处方单<h1></div>";
+    html+="<HR width='100%' color=#000 SIZE=3>";
+    html+="<p>处方单号：2018123010302600</p>";
+    html+="<p>姓名："+ui->patientNameLabel->text()+"</p><p>性别："+ui->patientSexLabel->text()+"</p><p>年龄："+ui->patientAgeLabel->text()+"</p>";
+    html+="<HR width='100%' color=#000 SIZE=3>";
+    for(int i=0;i<ui->medicineTableWidget->rowCount();i++){
+        html+="<p><span>药品：</span>"+ui->medicineTableWidget->item(i,1)->text();
+        html+="<span>数量：</span>"+ui->medicineTableWidget->item(i,2)->text();
+        html+="<span>价格（数量*单价）：</span>"+ui->medicineTableWidget->item(i,3)->text();
+        html+="<span>使用说明：</span>"+ui->medicineTableWidget->item(i,4)->text()+"</p>";
     }
+    html+="<HR width='100%' color=#000 SIZE=3>";
+    html+="<div style='text-align:right'><p>医师签字："+ui->StaffNameLabel->text()+"</p></div>";
+    html+="</body></html>";
+    return html;
 }
 
 void diagnosisWindow::on_PrintButton_clicked()
 {
-    QString html;
-    html="<html>";
-    html+="<head>";
-    html+="<meta http-equiv=Content-Type content=text/html; charset=gb2312 />";
-    html+="<STYLE type=text/css>";
-    html+="*{margin:0;padding:0;}";
-    html+="body, html {";
-    html+="margin: 0;";
-    html+="padding:0 !important;";
-    html+="padding:90px 0 32px 0;";
-    html+="width:100%;";
-    html+="height:500px;";
-    html+="overflow:hidden;}";
-    html+=".header {background: #C9F;width: 100%;height: 90px;overflow: hidden;position: absolute;top: 0;width: 100%;text-align: center;background-color: #FFCC00;}";
-    html+=".content {position:absolute!important;position:relative;top:90px!important;top:0;bottom:32px;width:100%;overflow:hidden;height:auto!important;height:100%;left: -3px;}";
-    html+=".main {height:100%;background:#66CCFF;overflow-y:auto;text-align:center;}";
-    html+=".footer {background: #9CF;width: 100%;height: 40px;color: #e1efff;line-height: 32px;letter-spacing: 1px;text-align: center;clear: both;position: absolute;bottom: 0;left: 0;background-color: #FF6600;}</STYLE></head>";
-   html+=" <body><div class=\"header\"><br />这里是顶部</div><div class=\"content\"><div class=\"main\"><br /><br /><p>网页header和footer高度是固定的，中间的content高度自适应浏览器窗口高度代码，随着窗口的大小变动都是满屏的。</p><p></p></div></div><div class=\"footer\">这里是底部</div></body></html>";
-//------------------------------------------
-    QPrintDialog p(this);
-    if(p.exec()==QDialog::Accepted){
-        QPrinter *print=p.printer();
-        QTextDocument text;
-        text.setHtml(html);
-        text.print(print);
+    if(!pspID.isEmpty()){
+        QPrintDialog p(this);
+        if(p.exec()==QDialog::Accepted){
+            QPrinter *print=p.printer();
+            QTextDocument text;
+            text.setHtml(makePspHtml());
+            text.print(print);
+        }
     }
 }
 
