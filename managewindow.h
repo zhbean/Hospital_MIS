@@ -8,6 +8,7 @@
 #include<QMessageBox>
 #include "QSqlRelationalTableModel"
 #include "QSqlQueryModel"
+# include "editduty.h"
 
 namespace Ui {
 class manageWindow;
@@ -28,6 +29,7 @@ private:
     void initStaff();
     void initPosition();
     void initStaffCombobox();
+    void initDuty();
 
 private slots:
     void getAccountAndToolTip(int account,int dpmdetail);
@@ -47,6 +49,13 @@ private slots:
     void on_btn_updatePosition_clicked();
     void on_btn_delPosition_clicked();
     void on_tbv_staff_clicked(const QModelIndex &index);
+    void on_btn_addStaff_clicked();
+    void on_btn_updateStaff_clicked();
+    void on_btn_delStaff_clicked();
+    void on_trv_duty_clicked(const QModelIndex &index);
+    void on_btn_addDuty_clicked();
+    void on_btn_updateDuty_clicked();
+    void on_btn_delDuty_clicked();
 };
 
 #endif // MANAGEWINDOW_H

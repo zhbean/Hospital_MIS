@@ -37,6 +37,7 @@ SOURCES += \
     patientdialog.cpp \
     medicinedialog.cpp \
     infodialog.cpp \
+    editduty.cpp \
     historymedicinedialog.cpp
 
 HEADERS += \
@@ -49,6 +50,7 @@ HEADERS += \
     patientdialog.h \
     medicinedialog.h \
     infodialog.h \
+    editduty.h \
     historymedicinedialog.h
 
 
@@ -63,6 +65,7 @@ FORMS += \
     patientdialog.ui \
     medicinedialog.ui \
     infodialog.ui \
+    editduty.ui \
     historymedicinedialog.ui
 
 
