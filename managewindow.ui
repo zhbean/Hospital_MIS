@@ -111,9 +111,9 @@
       <item row="1" column="0">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
-        <widget class="QWidget" name="pag_Setting">
+        <widget class="QWidget" name="pag_Statistics">
          <widget class="QTabWidget" name="tabWidget_2">
           <property name="geometry">
            <rect>
@@ -128,17 +128,117 @@
           </property>
           <widget class="QWidget" name="tab_3">
            <attribute name="title">
-            <string>Tab 1</string>
+            <string>工作统计</string>
            </attribute>
+           <widget class="QStackedWidget" name="stackedWidget_3">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>891</width>
+              <height>491</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>13</pointsize>
+             </font>
+            </property>
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <widget class="QWidget" name="page_3">
+             <widget class="QTreeView" name="trv_dpmStatistics">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>881</width>
+                <height>491</height>
+               </rect>
+              </property>
+             </widget>
+            </widget>
+            <widget class="QWidget" name="page_4">
+             <widget class="QTreeView" name="trv_dailyStatistics">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>881</width>
+                <height>491</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>13</pointsize>
+               </font>
+              </property>
+             </widget>
+            </widget>
+           </widget>
+           <widget class="QWidget" name="">
+            <property name="geometry">
+             <rect>
+              <x>900</x>
+              <y>130</y>
+              <width>111</width>
+              <height>191</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>13</pointsize>
+             </font>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_8">
+             <item>
+              <widget class="QPushButton" name="btn_dpmStatistics">
+               <property name="font">
+                <font>
+                 <pointsize>13</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>科室统计</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btn_dailyStatistics">
+               <property name="font">
+                <font>
+                 <pointsize>13</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>每日统计</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btn_charts">
+               <property name="font">
+                <font>
+                 <pointsize>13</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>统计图表</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </widget>
           <widget class="QWidget" name="tab_4">
            <attribute name="title">
-            <string>Tab 2</string>
+            <string>交接班汇总</string>
            </attribute>
           </widget>
          </widget>
         </widget>
-        <widget class="QWidget" name="pag_Statistics">
+        <widget class="QWidget" name="pag_Setting">
          <widget class="QTabWidget" name="tabWidget">
           <property name="geometry">
            <rect>
@@ -154,7 +254,7 @@
            </font>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab_dpm">
            <attribute name="title">
@@ -458,13 +558,13 @@
              </rect>
             </property>
            </widget>
-           <widget class="QWidget" name="">
+           <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
               <x>900</x>
               <y>130</y>
               <width>101</width>
-              <height>181</height>
+              <height>187</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_7">
