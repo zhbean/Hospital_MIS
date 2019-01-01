@@ -192,13 +192,13 @@ void diagnosisWindow::on_OKButton_clicked()
         qDebug()<<pspId <<doctorId <<patientID <<patientDisease <<pspTime;
         QSqlQuery query;
         query.prepare(pspSql);
-        query.bindValue(0,"2018123010302600");
+        query.bindValue(0,pspId);
         query.bindValue(1,doctorId);
         query.bindValue(2,patientID);
         query.bindValue(3,patientDisease);
         query.bindValue(4,pspTime);
         succ1=query.exec();
-        if(!query.exec()){
+        if(!succ1){
             qDebug()<<query.lastError();
             QMessageBox::critical(this,"Error","执行SQL语句失败，将要回滚");
             if(!db.getDB()->rollback()){
@@ -219,7 +219,8 @@ void diagnosisWindow::on_OKButton_clicked()
             query.bindValue(2,drugNum);
             query.bindValue(3,pspPrice);
             query.bindValue(4,pspInfo);
-            if(!query.exec()){
+            succ2=query.exec();
+            if(!succ2){
                 qDebug()<<query.lastError();
                 QMessageBox::critical(this,"Error","执行SQL语句失败，将要回滚");
                 if(!db.getDB()->rollback()){

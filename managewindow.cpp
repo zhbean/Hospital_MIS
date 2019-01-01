@@ -39,6 +39,8 @@ void manageWindow::showSetting()
 void manageWindow::showStatistics()
 {
     ui->stackedWidget->setCurrentIndex(0);
+    this->ui->stackedWidget_3->setCurrentIndex(0);
+    initDpmStatistics();
 }
 
 void manageWindow::showEvent(QShowEvent *event)
@@ -114,6 +116,11 @@ void manageWindow::on_trv_department_clicked(const QModelIndex &index)
 
 void manageWindow::on_btn_addDpm_clicked()
 {
+    if(ui->edt_dpmName->text().trimmed().isEmpty()||ui->edt_dpmInfo->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","请填写科室信息！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
     dbManager db;
     if(db.openDB()){
         QString dpmName = ui->edt_dpmName->text();
@@ -136,6 +143,11 @@ void manageWindow::on_btn_addDpm_clicked()
 
 void manageWindow::on_btn_addDpm_2_clicked()
 {
+    if(ui->edt_dpmName_2->text().trimmed().isEmpty()||ui->edt_dpmInfo_2->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","填写科室详情！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
     dbManager db;
     if(db.openDB()){
         int dpmID = ui->edt_dpmID->text().toInt();
@@ -160,6 +172,11 @@ void manageWindow::on_btn_addDpm_2_clicked()
 
 void manageWindow::on_btn_addDtl_clicked()
 {
+    if(ui->edt_dpmID->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","选择一个科室！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
     ui->stackedWidget_2->setCurrentIndex(1);
     ui->edt_dpmID_3->setText(ui->edt_dpmID->text());
     ui->edt_dpmID_2->clear();
@@ -169,6 +186,16 @@ void manageWindow::on_btn_addDtl_clicked()
 
 void manageWindow::on_btn_updateDpm_2_clicked()
 {
+    if(ui->edt_dpmID_2->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","选择一个科室详情！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
+    if(ui->edt_dpmID_3->text().trimmed().isEmpty()||ui->edt_dpmName_2->text().trimmed().isEmpty()||ui->edt_dpmInfo_2->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","选择填写科室详情！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
     dbManager db;
     if(db.openDB()){
         QString dpmID = ui->edt_dpmID_3->text();
@@ -196,6 +223,11 @@ void manageWindow::on_btn_updateDpm_2_clicked()
 
 void manageWindow::on_btn_delDpm_2_clicked()
 {
+    if(ui->edt_dpmID_2->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","选择一个科室详情！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
     dbManager db;
     if(db.openDB()){
         QString dpmDtlID = ui->edt_dpmID_2->text();
@@ -217,6 +249,16 @@ void manageWindow::on_btn_delDpm_2_clicked()
 
 void manageWindow::on_btn_updateDpm_clicked()
 {
+    if(ui->edt_dpmID->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","选择一个科室！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
+    if(ui->edt_dpmName->text().trimmed().isEmpty()||ui->edt_dpmInfo->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","请填写科室信息！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
     dbManager db;
     if(db.openDB()){
         QString dpmName = ui->edt_dpmName->text();
@@ -243,6 +285,11 @@ void manageWindow::on_btn_updateDpm_clicked()
 
 void manageWindow::on_btn_delDpm_clicked()
 {
+    if(ui->edt_dpmID->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","选择一个科室！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
     dbManager db;
     if(db.openDB()){
         int dpmID = ui->edt_dpmID->text().toInt();
@@ -376,6 +423,11 @@ void manageWindow::on_tbv_position_clicked(const QModelIndex &index)
 
 void manageWindow::on_btn_addPosition_clicked()
 {
+    if(ui->edt_positionName->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","请填写职位信息！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
     dbManager db;
     if(db.openDB()){
         QString positionName = this->ui->edt_positionName->text();
@@ -400,6 +452,16 @@ void manageWindow::on_btn_addPosition_clicked()
 
 void manageWindow::on_btn_updatePosition_clicked()
 {
+    if(ui->edt_positionID->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","请选中职位信息！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
+    if(ui->edt_positionName->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","请填写职位信息！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
     dbManager db;
     if(db.openDB()){
         QString positionName = this->ui->edt_positionName->text();
@@ -426,6 +488,11 @@ void manageWindow::on_btn_updatePosition_clicked()
 
 void manageWindow::on_btn_delPosition_clicked()
 {
+    if(ui->edt_positionID->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","请选中职位信息！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
     dbManager db;
     if(db.openDB()){
         int positionID = this->ui->edt_positionID->text().toInt();
@@ -460,6 +527,11 @@ void manageWindow::on_tbv_staff_clicked(const QModelIndex &index)
 
 void manageWindow::on_btn_addStaff_clicked()
 {
+    if(ui->edt_staffName->text().trimmed().isEmpty()||ui->edt_staffPassword->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","请填写员工信息！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
     QString staffName = this->ui->edt_staffName->text();
     int staffSex = this->ui->comb_staffSex->currentIndex();
     int staffAge = this->ui->spb_staffAge->value();
@@ -504,6 +576,16 @@ void manageWindow::on_btn_addStaff_clicked()
 
 void manageWindow::on_btn_updateStaff_clicked()
 {
+    if(ui->edt_staffID->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","请选中员工信息！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
+    if(ui->edt_staffName->text().trimmed().isEmpty()||ui->edt_staffPassword->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","请填写员工信息！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
     int staffID= this->ui->edt_staffID->text().toInt();
     QString staffName = this->ui->edt_staffName->text();
     int staffSex = this->ui->comb_staffSex->currentIndex();
@@ -550,6 +632,11 @@ void manageWindow::on_btn_updateStaff_clicked()
 
 void manageWindow::on_btn_delStaff_clicked()
 {
+    if(ui->edt_staffID->text().trimmed().isEmpty())
+    {
+        QMessageBox::information(NULL,"错误","请选中员工信息！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
     int staffID= this->ui->edt_staffID->text().toInt();
 
     dbManager db;
@@ -663,3 +750,133 @@ void manageWindow::on_btn_delDuty_clicked()
     editduty.exec();
     initDuty();
 }
+
+void manageWindow::on_tabWidget_2_currentChanged(int index)
+{
+    switch(index)
+    {
+    case 0:
+        this->ui->stackedWidget_3->setCurrentIndex(0);
+        initDpmStatistics();
+        break;
+    case 1:
+
+        break;
+    default:break;
+    }
+}
+
+void manageWindow::initDpmStatistics()
+{
+    QStandardItemModel* pModel = new QStandardItemModel(ui->trv_dpmStatistics);//取父节点
+    pModel->setHorizontalHeaderLabels(QStringList()<<"科室编号"<<"科室名"<<"处方编号"<<"开方日期"<<"医生名"<<"员工编号");//设置标题
+
+    dbManager db;
+    if(db.openDB()){
+        QSqlQuery qDpm;
+        if(qDpm.exec("select * from department;")){
+            while(qDpm.next()){
+                QString dpm_id = qDpm.value("department_id").toString();
+                QString dpm = qDpm.value("department_name").toString();
+                QStandardItem * pItem = new QStandardItem(dpm_id);//给model赋第一列值
+                pModel->appendRow(pItem);
+                pModel->setItem(pModel->indexFromItem(pItem).row(),1, new QStandardItem(dpm));//给model赋第二列值
+
+                QSqlQuery qPsp;
+                if(qPsp.exec("select * from psp,staff,department where psp.doctor_id=staff.staff_id and staff.department_id=department.department_id and staff.department_id="+dpm_id+";")){
+                    while(qPsp.next()){
+                        QString psp_id = qPsp.value("psp.psp_id").toString();
+                        QString psp_date = qPsp.value("psp.psp_date").toString();
+                        QString staff_id = qPsp.value("staff.staff_id").toString();
+                        QString staff_name = qPsp.value("staff.staff_name").toString();
+                        QStandardItem * cItem = new QStandardItem();//给model赋第一列值
+                        pItem->appendRow(cItem);
+                        pItem->setChild(cItem->index().row(),2, new QStandardItem(psp_id));//给model赋第二列值
+                        pItem->setChild(cItem->index().row(),3, new QStandardItem(psp_date));
+                        pItem->setChild(cItem->index().row(),4, new QStandardItem(staff_name));
+                        pItem->setChild(cItem->index().row(),5, new QStandardItem(staff_id));
+                    }
+                }
+                else{qDebug()<<"详情数据查询出错";}
+            }
+            ui->trv_dpmStatistics->setModel(pModel);
+            ui->trv_dpmStatistics->expandAll();
+            ui->trv_dpmStatistics->setSortingEnabled(true);
+            for(int i = 0;i < 5 ;i++)//宽度自适应
+            {
+                ui->trv_dpmStatistics->resizeColumnToContents(i);
+
+            }
+        }
+        else{qDebug()<<"数据查询出错";}
+    }
+    else{qDebug()<<"数据库未连接";}
+}
+
+void manageWindow::initDilyStatistics()
+{
+    //取当前时间
+    QDateTime curDt=QDateTime::currentDateTime();
+
+    QStandardItemModel* pModel = new QStandardItemModel(ui->trv_dailyStatistics);//取父节点
+    pModel->setHorizontalHeaderLabels(QStringList()<<"科室编号"<<"科室名"<<"处方编号"<<"开方日期"<<"医生名"<<"员工编号");//设置标题
+
+    dbManager db;
+    if(db.openDB()){
+        QSqlQuery qDpm;
+        if(qDpm.exec("select * from department;")){
+            while(qDpm.next()){
+                QString dpm_id = qDpm.value("department_id").toString();
+                QString dpm = qDpm.value("department_name").toString();
+                QStandardItem * pItem = new QStandardItem(dpm_id);//给model赋第一列值
+                pModel->appendRow(pItem);
+                pModel->setItem(pModel->indexFromItem(pItem).row(),1, new QStandardItem(dpm));//给model赋第二列值
+
+                QSqlQuery qPsp;
+                if(qPsp.exec("select * from psp,staff,department where psp.doctor_id=staff.staff_id and staff.department_id=department.department_id and staff.department_id="+dpm_id+";")){
+                    while(qPsp.next()){
+                        QString psp_date = qPsp.value("psp.psp_date").toString();
+                        QDateTime pspDt;
+                        pspDt=pspDt.fromString(psp_date,"yy-MM-dd");
+                        if(curDt!=pspDt){continue;}
+
+                        QString psp_id = qPsp.value("psp.psp_id").toString();
+                        QString staff_id = qPsp.value("staff.staff_id").toString();
+                        QString staff_name = qPsp.value("staff.staff_name").toString();
+                        QStandardItem * cItem = new QStandardItem();//给model赋第一列值
+                        pItem->appendRow(cItem);
+                        pItem->setChild(cItem->index().row(),2, new QStandardItem(psp_id));//给model赋第二列值
+                        pItem->setChild(cItem->index().row(),3, new QStandardItem(psp_date));
+                        pItem->setChild(cItem->index().row(),4, new QStandardItem(staff_name));
+                        pItem->setChild(cItem->index().row(),5, new QStandardItem(staff_id));
+                    }
+                }
+                else{qDebug()<<"详情数据查询出错";}
+            }
+            ui->trv_dailyStatistics->setModel(pModel);
+            ui->trv_dailyStatistics->expandAll();
+            ui->trv_dailyStatistics->setSortingEnabled(true);
+            for(int i = 0;i < 5 ;i++)//宽度自适应
+            {
+                ui->trv_dailyStatistics->resizeColumnToContents(i);
+
+            }
+        }
+        else{qDebug()<<"数据查询出错";}
+    }
+    else{qDebug()<<"数据库未连接";}
+}
+
+void manageWindow::on_btn_dpmStatistics_clicked()
+{
+    this->ui->stackedWidget_3->setCurrentIndex(0);
+    initDpmStatistics();
+}
+
+void manageWindow::on_btn_dailyStatistics_clicked()
+{
+    this->ui->stackedWidget_3->setCurrentIndex(1);
+    initDilyStatistics();
+}
+
+
