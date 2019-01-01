@@ -91,7 +91,7 @@ drug_id INT NOT NULL,
 drug_num INT NOT NULL,
 psp_price FLOAT(8,2) NOT NULL,
 psp_info TEXT ,
-PRIMARY KEY (psp_id, drug_id),
+PRIMARY KEY (psp_id,drug_id),
 FOREIGN KEY(psp_id) REFERENCES psp(psp_id),
 FOREIGN KEY(drug_id) REFERENCES drug(drug_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -9,7 +9,9 @@
 #include <QTimer>
 #include "medicinedialog.h"
 #include "ui_diagnosiswindow.h"
-
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QTextDocument>
 
 namespace Ui {
 class diagnosisWindow;
@@ -25,6 +27,9 @@ public:
 
 private:
     Ui::diagnosisWindow *ui;
+    QString patientID;
+    QString pspID;
+    QString makePspHtml();
 signals:
     void setPspId(QString);
 
@@ -37,6 +42,7 @@ private slots:
     void on_PrintButton_clicked();
     void getMedicineInformation(QString,QString,QString,float,QString);
     void on_historyDiseaseListWidget_itemDoubleClicked(QListWidgetItem *item);
+    void on_medicineTableWidget_itemChanged(QTableWidgetItem *item);
 };
 
 #endif // DIAGNOSISWINDOW_H
