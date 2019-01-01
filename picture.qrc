@@ -12,5 +12,6 @@
         <file>picture/设置更新.png</file>
         <file>picture/添加.png</file>
         <file>picture/修改交易登陆方式.png</file>
+        <file>picture/关闭工程.png</file>
     </qresource>
 </RCC>

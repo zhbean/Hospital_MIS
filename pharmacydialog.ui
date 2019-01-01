@@ -155,7 +155,7 @@
     </size>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="tabBarAutoHide">
     <bool>false</bool>
@@ -422,14 +422,14 @@
     <widget class="QPushButton" name="pushButton_selectDrug">
      <property name="geometry">
       <rect>
-       <x>810</x>
+       <x>880</x>
        <y>600</y>
-       <width>211</width>
+       <width>141</width>
        <height>51</height>
       </rect>
      </property>
      <property name="text">
-      <string>       药品查询</string>
+      <string>  药品查询</string>
      </property>
      <property name="icon">
       <iconset resource="picture.qrc">
@@ -511,6 +511,29 @@
       </rect>
      </property>
     </widget>
+    <widget class="QPushButton" name="pushButton_closeDoor">
+     <property name="geometry">
+      <rect>
+       <x>710</x>
+       <y>600</y>
+       <width>141</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>药房关闭</string>
+     </property>
+     <property name="icon">
+      <iconset resource="picture.qrc">
+       <normaloff>:/picture/关闭工程.png</normaloff>:/picture/关闭工程.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_sale">
     <attribute name="title">
@@ -551,6 +574,11 @@
      <column>
       <property name="text">
        <string>缴费时间</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>取药状态</string>
       </property>
      </column>
     </widget>

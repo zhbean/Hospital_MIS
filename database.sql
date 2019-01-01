@@ -106,6 +106,7 @@ PRIMARY KEY (payment_id),
 FOREIGN KEY(psp_id) REFERENCES psp(psp_id),
 FOREIGN KEY(staff_id) REFERENCES staff(staff_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+alter table payment add column status INT not null default 0 after payment_date;/*添加性别列*/
 /*科室详情*/
 CREATE TABLE IF NOT EXISTS dpmdetail(
 dpmdetail_id INT NOT NULL AUTO_INCREMENT,

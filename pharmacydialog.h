@@ -42,6 +42,8 @@ private slots:
 
 
 
+    void on_pushButton_closeDoor_clicked();
+
 private:
     Ui::PharmacyDialog *ui;
     int staff_id;//当前登陆的员工号
