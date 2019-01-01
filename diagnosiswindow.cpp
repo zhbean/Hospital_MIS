@@ -44,6 +44,7 @@ void diagnosisWindow::showStatistics(){
             ui->medicineTableWidget->removeRow(0);
         }
         ui->diseasePlainTextEdit->clear();
+        ui->historyDiseaseListWidget->clear();
         ui->AddButton->setEnabled(true);
         ui->DelButton->setEnabled(true);
         ui->OKButton->setEnabled(true);
