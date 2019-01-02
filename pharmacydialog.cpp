@@ -40,13 +40,6 @@ void PharmacyDialog::getAccountAndToolTip(int account,int dpmdetail)//account为
 //-----------仓库进药---------
 void PharmacyDialog::on_pushButton_purchase_clicked()
 {
-    //判断输入信息是否完善
-    if(ui->lineEdit_drugId_forPurchase->text()==""||ui->lineEdit_drugName_forPurchase->text()==""||ui->lineEdit_factoryId->text()==""||ui->lineEdit_drugBuyPrice->text()==""||ui->lineEdit_drugPrice->text()==""||ui->lineEdit_purchaseNumber->text()=="")
-    {
-        QMessageBox::warning(this,"错误","有必要信息为空");
-        return;
-    }
-
     //获取输入信息
     QString drug_id=ui->lineEdit_drugId_forPurchase->text();
     QString factory_id=ui->lineEdit_factoryId->text();
@@ -54,7 +47,12 @@ void PharmacyDialog::on_pushButton_purchase_clicked()
     QString drug_buyPrice=ui->lineEdit_drugBuyPrice->text();
     QString drug_price=ui->lineEdit_drugPrice->text();
     QString drug_number=ui->lineEdit_purchaseNumber->text();
-
+    //判断输入信息是否完善
+    if(drug_id==""||factory_id==""||drug_name==""||drug_buyPrice==""||drug_price==""||drug_number=="")
+    {
+        QMessageBox::warning(this,"错误","有必要信息为空");
+        return;
+    }
     //连接数据库
     dbManager db;
     if(!db.openDB())
@@ -64,7 +62,6 @@ void PharmacyDialog::on_pushButton_purchase_clicked()
     }
     QSqlDatabase* pDB=db.getDB();//获取连接
     QSqlQuery query(*pDB);//创建query
-
     //厂商不在库，则终止本次操作。
     QString sql;
     sql="select *from factory where factory_id="+factory_id+";";
@@ -79,54 +76,90 @@ void PharmacyDialog::on_pushButton_purchase_clicked()
         return;
     }
     while(query.next());//把NEXT指针移动完毕
+    //由于同时对药品表格、操作记录表格数据进行操作，用事物保证数据的一致性。
+    if(pDB->transaction()){
 
-    //插入进货记录
-    QDateTime time =QDateTime::currentDateTime();
-    QString record_time=time.toString("yyyy-MM-dd hh:mm:ss");
-    QString record_type="进货";
-    qDebug()<<staff_id;
-    QString staff_id_str=QString::number(staff_id);
-    sql="insert into storecord(drug_id,drug_number,record_type,staff_id,record_time) values("+drug_id+","+drug_number+",'"+record_type+"',"+staff_id_str+",'"+record_time+"');";
-    qDebug()<<sql;
-    if(!query.exec(sql))
-    {
-        QMessageBox::warning(this,"失败","插入进货记录失败");
-        return;
-    }
-    QMessageBox::information(this,"成功","插入进货记录");
-
-
-    //药品信息不在库,insert
-    sql="select * from drug where drug_id="+drug_id+";";
-    if(!query.exec(sql))
-    {
-        QMessageBox::warning(this,"查询失败","查询药品信息失败");
-        return;
-    }
-    if(!query.next())//药品信息不存在，insert
-    {
-
-        sql="insert into drug values("+drug_id+",'"+drug_name+"',"+factory_id+","+drug_buyPrice+","+drug_price+","+drug_number+","+drug_number+");";
+        //插入进货记录
+        QDateTime time =QDateTime::currentDateTime();
+        QString record_time=time.toString("yyyy-MM-dd hh:mm:ss");
+        QString record_type="进货";
+        qDebug()<<staff_id;
+        QString staff_id_str=QString::number(staff_id);
+        sql="insert into storecord(drug_id,drug_number,record_type,staff_id,record_time) values("+drug_id+","+drug_number+",'"+record_type+"',"+staff_id_str+",'"+record_time+"');";
+        qDebug()<<sql;
         if(!query.exec(sql))
         {
-            QMessageBox::warning(this,"失败","插入药品信息失败");
+            QMessageBox::warning(this,"失败","插入进货记录失败");
+            if(pDB->rollback())
+            {
+                QMessageBox::information(this,"成功","回滚成功");
+                return;
+            }
+            else{
+                QMessageBox::warning(this,"失败","回滚失败");
+                return;
+            }
+
+        }
+        QMessageBox::information(this,"成功","插入进货记录");
+        //药品信息不在库,insert
+        sql="select * from drug where drug_id="+drug_id+";";
+        if(!query.exec(sql))
+        {
+            QMessageBox::warning(this,"查询失败","查询药品信息失败");
             return;
         }
-        QMessageBox::information(this,"成功","插入药品信息");
-        return;
+        if(!query.next())//药品信息不存在，insert
+        {
 
+            sql="insert into drug values("+drug_id+",'"+drug_name+"',"+factory_id+","+drug_buyPrice+","+drug_price+","+drug_number+","+drug_number+");";
+            if(!query.exec(sql))//插入失败
+            {
+                QMessageBox::warning(this,"失败","插入药品信息失败");
+                if(pDB->rollback())
+                {
+                    QMessageBox::information(this,"成功","回滚成功");
+                    return;
+                }
+                else{
+                    QMessageBox::warning(this,"失败","回滚失败");
+                    return;
+                }
+
+            }else{//插入成功
+                QMessageBox::information(this,"成功","插入药品记录");
+                if(pDB->commit())
+                {
+                    QMessageBox::information(this,"成功","事物提交成功，本次操作成功。");
+                    return;
+                }
+                else{
+                    QMessageBox::warning(this,"失败","事物提交失败");
+                    return;
+                }
+            }
+
+        }
+        while(query.next());//把NEXT指针移动完毕
+
+        //药品信息已存在,update,虚库存，实库存都要增加。
+        sql="update drug set real_inventory=real_inventory+"+drug_number+",virtual_inventory=virtual_inventory+"+drug_number+" where drug_id="+drug_id+";";
+        if(!query.exec(sql))//更新失败
+        {
+            QMessageBox::warning(this,"失败","更新药品信息失败");
+            pDB->rollback();
+            return;
+        }else{//更新成功
+            QMessageBox::information(this,"成功","更新药品信息成功。");
+            if(pDB->commit())
+            {
+                QMessageBox::information(this,"成功","事物提交成功，本次操作成功。");
+            }
+            else{
+                QMessageBox::warning(this,"失败","事物提交失败");
+            }
+        }
     }
-    while(query.next());//把NEXT指针移动完毕
-
-    //药品信息已存在,update,虚库存，实库存都要增加。
-    sql="update drug set real_inventory=real_inventory+"+drug_number+",virtual_inventory=virtual_inventory+"+drug_number+" where drug_id="+drug_id+";";
-    if(!query.exec(sql))
-    {
-        QMessageBox::warning(this,"失败","更新药品信息失败");
-        return;
-    }
-    QMessageBox::information(this,"成功","更新药品库存");
-
 
 }
 
@@ -168,34 +201,59 @@ void PharmacyDialog::on_pushButton_return_clicked()
     int old_inventory=query.value(6).toInt();//应以虚库存为准，否则影响缴费过，但并未取药的病人。
     if(return_number>old_inventory)
     {
-         int number=return_number-old_inventory;
-         QMessageBox::warning(this,"失败","退货数量不合理，超过当前库存数量,超过："+number);
+         int number=return_number-old_inventory;\
+         QString number_str=QString::number(number);
+         QMessageBox::warning(this,"失败","退货数量不合理，超过当前库存数量,超过："+number_str);
          return;
     }
     while(query.next());//把NEXT指针移动完毕
 
-    //在库，且退货数量合理，执行退货操作。
+    //在库，且退货数量合理，执行退货操作。------涉及两个药品、记录两个表格，用事物处理，保证数据一致性。
     //更新药品库存
-    sql="update drug set real_inventory=real_inventory-"+return_number_str+",virtual_inventory=virtual_inventory-"+return_number_str+" where drug_id="+drug_id+";";
-    if(!query.exec(sql))
+    if(pDB->transaction())
     {
-        QMessageBox::warning(this,"失败","更新药品库存失败");
-        return;
+        sql="update drug set real_inventory=real_inventory-"+return_number_str+",virtual_inventory=virtual_inventory-"+return_number_str+" where drug_id="+drug_id+";";
+        if(!query.exec(sql))//更新失败
+        {
+            QMessageBox::warning(this,"失败","更新药品库存失败");
+            if(pDB->rollback())
+            {
+                QMessageBox::information(this,"成功","回滚成功");
+                return;
+            }
+            else{
+                QMessageBox::warning(this,"失败","回滚失败");
+                return;
+            }
+        }
+        QMessageBox::information(this,"成功","更新药品库存成功");
+        //插入退货记录
+        QDateTime time =QDateTime::currentDateTime();//获取当前时间
+        QString record_time=time.toString("yyyy-MM-dd hh:mm:ss");
+        QString record_type="退货";
+        QString staff_id_str=QString::number(staff_id);
+        sql="insert into storecord(drug_id,drug_number,record_type,staff_id,record_time) values("+drug_id+","+return_number_str+",'"+record_type+"',"+staff_id_str+",'"+record_time+"');";
+        if(!query.exec(sql))
+        {
+            QMessageBox::warning(this,"失败","插入退货记录失败");
+            if(pDB->rollback())
+            {
+                QMessageBox::information(this,"成功","回滚成功");
+            }
+            else{
+                QMessageBox::warning(this,"失败","回滚失败");
+            }
+        }else{
+            QMessageBox::information(this,"成功","插入退货记录");
+            if(pDB->commit())
+            {
+                QMessageBox::information(this,"成功","事物提交成功，本次操作成功。");
+            }
+            else{
+                QMessageBox::warning(this,"失败","事物提交失败");
+            }
+        }
     }
-    QMessageBox::information(this,"成功","更新药品库存");
-    //插入退货记录
-    QDateTime time =QDateTime::currentDateTime();//获取当前时间
-    QString record_time=time.toString("yyyy-MM-dd hh:mm:ss");
-    QString record_type="退货";
-    QString staff_id_str=QString::number(staff_id);
-    sql="insert into storecord(drug_id,drug_number,record_type,staff_id,record_time) values("+drug_id+","+return_number_str+",'"+record_type+"',"+staff_id_str+",'"+record_time+"');";
-    qDebug()<<sql;
-    if(!query.exec(sql))
-    {
-        QMessageBox::warning(this,"失败","插入退货记录失败");
-        return;
-    }
-    QMessageBox::information(this,"成功","插入退货记录");
 
 }
 
@@ -294,9 +352,18 @@ void PharmacyDialog::on_pushButton_selectDrug_clicked()
 }
 
 //-------------药房关闭，更新药品库存，保证数据一致性。
-//即把实际库存的值赋给临时库存。且，未取药的缴费单，标记为status=2。
+//把实际库存的值赋给临时库存。
+//未取药的缴费单，标记为status=2。
 void PharmacyDialog::on_pushButton_closeDoor_clicked()
 {
+    QMessageBox Msg(QMessageBox::Warning, QString::fromLocal8Bit("警告!!!"), QString::fromLocal8Bit("您正在执行关闭药房的操作，将影响所有药品的库存。是否继续？"));
+    QAbstractButton *pYesBtn = (QAbstractButton *)Msg.addButton(QString::fromLocal8Bit("是"), QMessageBox::YesRole);
+    QAbstractButton *pNoBtn = (QAbstractButton *)Msg.addButton(QString::fromLocal8Bit("否"), QMessageBox::NoRole);
+    Msg.exec();
+    if (Msg.clickedButton()!=pYesBtn)
+    {
+        return;
+    }
     //更新库存
     QString sql="update drug set  virtual_inventory=real_inventory;";
     //连接数据库
@@ -350,12 +417,12 @@ void PharmacyDialog::on_pushButton_closeDoor_clicked()
         {
             if(!query1.exec(sql2))
             {
-                 QMessageBox::warning(this,"失败","设置第一条缴费单状态失败");
+                 QMessageBox::warning(this,"失败","设置缴费单状态失败,失败的缴费单号为:"+payment_id);
                  return;
             }
         }
     }
-     QMessageBox::information(this,"成功","药品库存更新完毕，可以正常关闭药房。");
+    QMessageBox::information(this,"成功","药品库存更新完毕，可以正常关闭药房。");
 
 
 }
@@ -444,7 +511,7 @@ void PharmacyDialog::on_pushButton_tabSale_selectPayment_clicked()
 void PharmacyDialog::on_pushButton_tabSale_grant_clicked()
 {
 
-    //获取输入的缴费单号（模拟刷病人卡获得）
+    //获取输入的缴费单号
     QString payment_id=ui->lineEdit_tabSale_paymentId->text();
     if(payment_id=="")
     {
@@ -490,42 +557,89 @@ void PharmacyDialog::on_pushButton_tabSale_grant_clicked()
         QMessageBox::warning(this,"查询失败","处方详情失败");
         return;
     }
+    //遍历处方详情，依次将处方单上每一条药品详情的库存更新至数据库。
     while(query.next())
     {
          QSqlQuery query1(*pDB);
          QString drug_id=query.value(1).toString();
          QString drug_num=query.value(2).toString();
          QString sql1;
-         if(2==status)//隔天未取药，临时库存和实际库存都要减少。
-         {
-             sql1="update drug set real_inventory=real_inventory-"+drug_num+",virtual_inventory=virtual_inventory-"+drug_num+" where drug_id="+drug_id+";";
-             if(!query1.exec(sql1))
+         //涉及药品表格，以及缴费单表格。以事物来处理本次操作。
+         if(pDB->transaction()){
+             if(2==status)//非当天取药，临时库存和实际库存都要减少。
              {
-                 QMessageBox::warning(this,"发生错误","库存不足，药品号为:"+drug_id);
-                 return;
-             }
-         }
-
-         else
-         {
-             sql1="update drug set real_inventory=real_inventory-"+drug_num+" where drug_id="+drug_id+";";
-             if(!query1.exec(sql1))
+                 sql1="update drug set real_inventory=real_inventory-"+drug_num+",virtual_inventory=virtual_inventory-"+drug_num+" where drug_id="+drug_id+";";
+                 if(!query1.exec(sql1))//更新库存失败，回滚。
+                 {
+                     QMessageBox::warning(this,"发生错误","更新失败，药品号为:"+drug_id);
+                     if(pDB->rollback())
+                     {
+                         QMessageBox::information(this,"成功","回滚成功");
+                         return;
+                     }
+                     else
+                     {
+                        QMessageBox::warning(this,"失败","回滚失败");
+                        return;
+                     }
+                 }
+                 else//全部药品更新成功。
+                 {
+                   QMessageBox::information(this,"成功","处方单所有药品更新库存成功。");
+                 }
+             }//status=2
+             else//status=0，当天取药，仅减少实际库存。
              {
-                 QMessageBox::warning(this,"发生错误","更新失败，药品号为:"+drug_id);
-                 return;
+                 sql1="update drug set real_inventory=real_inventory-"+drug_num+" where drug_id="+drug_id+";";
+                 if(!query1.exec(sql1))//更新库存失败，回滚。
+                 {
+                     QMessageBox::warning(this,"发生错误","更新失败，药品号为:"+drug_id);
+                     if(pDB->rollback())
+                     {
+                         QMessageBox::information(this,"成功","回滚成功");
+                         return;
+                     }
+                     else
+                     {
+                        QMessageBox::warning(this,"失败","回滚失败");
+                        return;
+                     }
+                 }
+                 else//全部药品更新成功.
+                 {
+                   QMessageBox::information(this,"成功","处方单所有药品更新库存成功。");
+                 }
+             }//status=0
+
+             //缴费单作废。
+             sql="update payment set status=1 where payment_id='"+payment_id+"';";
+             if(!query.exec(sql))
+             {
+                 QMessageBox::warning(this,"失败","尝试作废缴费单失败");
+                 if(pDB->rollback())
+                 {
+                     QMessageBox::information(this,"成功","回滚成功");
+                     return;
+                 }
+                 else
+                 {
+                    QMessageBox::warning(this,"失败","回滚失败");
+                    return;
+                 }
              }
+             QMessageBox::information(this,"成功","缴费单已作废。");
+             if(pDB->commit())
+             {
+                 QMessageBox::information(this,"成功","事物提交成功，本次操作成功。");
+             }
+             else{
+                 QMessageBox::warning(this,"失败","事物提交失败");
+             }
+
+    }else{//启动事物失败。
+            QMessageBox::warning(this,"错误","启动处理药方详情的事物失败。");
          }
-
-
-    }
-    //缴费单作废。
-    sql="update payment set status=1 where payment_id='"+payment_id+"';";
-    if(!query.exec(sql))
-    {
-        QMessageBox::warning(this,"失败","尝试作废缴费单失败");
-        return;
-    }
-    QMessageBox::information(this,"成功","药品库存更新成功，缴费单已作废。");
+  }//while
 
 
 }

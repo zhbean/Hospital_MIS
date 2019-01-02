@@ -8,8 +8,10 @@
 #include<QMessageBox>
 #include "QSqlRelationalTableModel"
 #include "QSqlQueryModel"
-# include "editduty.h"
+#include "editduty.h"
 #include "QDateTime"
+#include "showchart.h"
+#include "login.h"
 
 namespace Ui {
 class manageWindow;
@@ -33,11 +35,13 @@ private:
     void initDuty();
     void initDpmStatistics();
     void initDilyStatistics();
+    void initDutyRecord();
 
 private slots:
     void getAccountAndToolTip(int account,int dpmdetail);
     void showSetting();
     void showStatistics();
+    void signout();
     void on_trv_department_clicked(const QModelIndex &index);
     void on_btn_addDpm_clicked();
     void on_btn_addDpm_2_clicked();
@@ -62,6 +66,7 @@ private slots:
     void on_tabWidget_2_currentChanged(int index);
     void on_btn_dpmStatistics_clicked();
     void on_btn_dailyStatistics_clicked();
+    void on_btn_charts_clicked();
 };
 
 #endif // MANAGEWINDOW_H

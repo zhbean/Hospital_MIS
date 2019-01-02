@@ -89,6 +89,7 @@ void Login::on_OkButton_clicked()
                         limit = limit_query.value("position_limit").toInt();
                     }
                     checkDuty(dpmdetail,account);
+
                     emit setAccountAndToolTip(account,dpmdetail);
                     this->accept();
                 }
@@ -123,6 +124,7 @@ void Login::checkDuty(int dpmdetail,int account)
 {
     //得到当前时间
     QDateTime curTime = QDateTime::currentDateTime();
+    curTime.setDate(QDate::fromString(curTime.toString("dddd"),"dddd"));
     dbManager db;
     if(db.openDB()){
 /*
@@ -139,8 +141,9 @@ void Login::checkDuty(int dpmdetail,int account)
                 //比对值班表时间与当前时间
                 QDateTime startTime;
                 QDateTime endTime;
-                startTime=startTime.fromString(query.value("start_date").toString(),"yyyy-MM-dd hh:mm:ss dddd");
-                endTime=endTime.fromString(query.value("end_date").toString(),"yyyy-MM-dd hh:mm:ss dddd");
+                QString s=query.value("start_date").toString();
+                startTime=startTime.fromString(query.value("start_date").toString(),"hh:mm:ss dddd");
+                endTime=endTime.fromString(query.value("end_date").toString(),"hh:mm:ss dddd");
                 if(startTime.isValid()&&endTime.isValid()){
                     int staff = query.value("staff_id").toInt();
                     int dpm = query.value("dpmdetail_id").toInt();
@@ -149,8 +152,9 @@ void Login::checkDuty(int dpmdetail,int account)
                     if(curTime>startTime&&curTime<endTime){
                         writeDuty(dutyID,0,staff,curTime);
                         qDebug()<<"到勤";
+                        break;
                     }
-                    else {qDebug()<<"有安排值班但是时间不对替班1";}
+                    //else {qDebug()<<"有安排值班但是时间不对替班1";}
                 }
                 else {
                     qDebug()<<"数据库时间格式有误";
@@ -166,6 +170,7 @@ void Login::checkDuty(int dpmdetail,int account)
 
 void Login::writeDuty(int dutyID,int status,int staffID,QDateTime curTime)
 {
+    curTime=curTime.currentDateTime();
     dbManager db;
     if(db.openDB()){
         QSqlQuery query;
