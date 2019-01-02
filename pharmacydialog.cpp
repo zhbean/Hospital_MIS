@@ -201,8 +201,9 @@ void PharmacyDialog::on_pushButton_return_clicked()
     int old_inventory=query.value(6).toInt();//应以虚库存为准，否则影响缴费过，但并未取药的病人。
     if(return_number>old_inventory)
     {
-         int number=return_number-old_inventory;
-         QMessageBox::warning(this,"失败","退货数量不合理，超过当前库存数量,超过："+number);
+         int number=return_number-old_inventory;\
+         QString number_str=QString::number(number);
+         QMessageBox::warning(this,"失败","退货数量不合理，超过当前库存数量,超过："+number_str);
          return;
     }
     while(query.next());//把NEXT指针移动完毕
@@ -351,9 +352,18 @@ void PharmacyDialog::on_pushButton_selectDrug_clicked()
 }
 
 //-------------药房关闭，更新药品库存，保证数据一致性。
-//即把实际库存的值赋给临时库存。且，未取药的缴费单，标记为status=2。
+//把实际库存的值赋给临时库存。
+//未取药的缴费单，标记为status=2。
 void PharmacyDialog::on_pushButton_closeDoor_clicked()
 {
+    QMessageBox Msg(QMessageBox::Warning, QString::fromLocal8Bit("警告!!!"), QString::fromLocal8Bit("您正在执行关闭药房的操作，将影响所有药品的库存。是否继续？"));
+    QAbstractButton *pYesBtn = (QAbstractButton *)Msg.addButton(QString::fromLocal8Bit("是"), QMessageBox::YesRole);
+    QAbstractButton *pNoBtn = (QAbstractButton *)Msg.addButton(QString::fromLocal8Bit("否"), QMessageBox::NoRole);
+    Msg.exec();
+    if (Msg.clickedButton()!=pYesBtn)
+    {
+        return;
+    }
     //更新库存
     QString sql="update drug set  virtual_inventory=real_inventory;";
     //连接数据库
@@ -407,12 +417,12 @@ void PharmacyDialog::on_pushButton_closeDoor_clicked()
         {
             if(!query1.exec(sql2))
             {
-                 QMessageBox::warning(this,"失败","设置第一条缴费单状态失败");
+                 QMessageBox::warning(this,"失败","设置缴费单状态失败,失败的缴费单号为:"+payment_id);
                  return;
             }
         }
     }
-     QMessageBox::information(this,"成功","药品库存更新完毕，可以正常关闭药房。");
+    QMessageBox::information(this,"成功","药品库存更新完毕，可以正常关闭药房。");
 
 
 }
