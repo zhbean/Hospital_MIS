@@ -9,6 +9,7 @@ manageWindow::manageWindow(QWidget *parent) :
 
     ui->menubar->addAction("基本设置",this,SLOT(showSetting()));//自己添加一个菜单
     ui->menubar->addAction("门诊统计",this,SLOT(showStatistics()));
+    ui->menubar->addAction("注销",this,SLOT(signout()));
 }
 
 manageWindow::~manageWindow()
@@ -41,6 +42,13 @@ void manageWindow::showStatistics()
     ui->stackedWidget->setCurrentIndex(0);
     this->ui->stackedWidget_3->setCurrentIndex(0);
     initDpmStatistics();
+}
+
+void manageWindow::signout()
+{
+    Login l;
+    this->close();
+    l.exec();
 }
 
 void manageWindow::showEvent(QShowEvent *event)
@@ -760,7 +768,7 @@ void manageWindow::on_tabWidget_2_currentChanged(int index)
         initDpmStatistics();
         break;
     case 1:
-
+        initDutyRecord();
         break;
     default:break;
     }
@@ -893,6 +901,57 @@ void manageWindow::on_btn_charts_clicked()
         showChart.showDailyCharts(curDt);
     }
     showChart.exec();
+}
+
+void manageWindow::initDutyRecord()
+{
+    QStandardItemModel* pModel = new QStandardItemModel(ui->trv_dutyRecord);//取父节点
+    pModel->setHorizontalHeaderLabels(QStringList()<<"科室编号"<<"科室名"<<"登陆编号"<<"员工编号"<<"员工名"<<"登陆日期"<<"注销日期"<<"值班状态");//设置标题
+
+    dbManager db;
+    if(db.openDB()){
+        QSqlQuery qDpm;
+        if(qDpm.exec("select * from department;")){
+            while(qDpm.next()){
+                QString dpm_id = qDpm.value("department_id").toString();
+                QString dpm = qDpm.value("department_name").toString();
+                QStandardItem * pItem = new QStandardItem(dpm_id);//给model赋第一列值
+                pModel->appendRow(pItem);
+                pModel->setItem(pModel->indexFromItem(pItem).row(),1, new QStandardItem(dpm));//给model赋第二列值
+
+                QSqlQuery qDutyRecord;
+                if(qDutyRecord.exec("select * from dutyrecord,staff,department where dutyrecord.staff_id=staff.staff_id and staff.department_id=department.department_id and staff.department_id="+dpm_id+";")){
+                    while(qDutyRecord.next()){
+                        QString dutyrecord_id = qDutyRecord.value("dutyrecord.dutyrecord_id").toString();
+                        QString staff_id = qDutyRecord.value("staff.staff_id").toString();
+                        QString staff_name = qDutyRecord.value("staff.staff_name").toString();
+                        QString dutyrecord_start_date = qDutyRecord.value("dutyrecord.real_start_date").toString();
+                        QString dutyrecord_end_date = qDutyRecord.value("dutyrecord.real_end_date").toString();
+                        QString dutyrecord_status = qDutyRecord.value("dutyrecord.dutyrecord_status").toString();
+                        QStandardItem * cItem = new QStandardItem();//给model赋第一列值
+                        pItem->appendRow(cItem);
+                        pItem->setChild(cItem->index().row(),2, new QStandardItem(dutyrecord_id));//给model赋第二列值
+                        pItem->setChild(cItem->index().row(),3, new QStandardItem(staff_name));
+                        pItem->setChild(cItem->index().row(),4, new QStandardItem(staff_id));
+                        pItem->setChild(cItem->index().row(),5, new QStandardItem(dutyrecord_start_date));
+                        pItem->setChild(cItem->index().row(),6, new QStandardItem(dutyrecord_end_date));
+                        pItem->setChild(cItem->index().row(),7, new QStandardItem(dutyrecord_status));
+                    }
+                }
+                else{qDebug()<<"详情数据查询出错";}
+            }
+            ui->trv_dutyRecord->setModel(pModel);
+            ui->trv_dutyRecord->expandAll();
+            ui->trv_dutyRecord->setSortingEnabled(true);
+            for(int i = 0;i < 8 ;i++)//宽度自适应
+            {
+                ui->trv_dutyRecord->resizeColumnToContents(i);
+
+            }
+        }
+        else{qDebug()<<"数据查询出错";}
+    }
+    else{qDebug()<<"数据库未连接";}
 }
 
 

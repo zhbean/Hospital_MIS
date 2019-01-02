@@ -124,7 +124,7 @@
            </rect>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab_3">
            <attribute name="title">
@@ -177,7 +177,7 @@
              </widget>
             </widget>
            </widget>
-           <widget class="QWidget" name="">
+           <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
               <x>900</x>
@@ -235,6 +235,16 @@
            <attribute name="title">
             <string>交接班汇总</string>
            </attribute>
+           <widget class="QTreeView" name="trv_dutyRecord">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>851</width>
+              <height>491</height>
+             </rect>
+            </property>
+           </widget>
           </widget>
          </widget>
         </widget>
@@ -254,7 +264,7 @@
            </font>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab_dpm">
            <attribute name="title">

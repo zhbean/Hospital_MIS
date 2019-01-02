@@ -9,6 +9,12 @@
 #include "QStandardItemModel"
 #include "QMessageBox"
 
+#include "qdebug.h"
+#include "managewindow.h"
+#include "diagnosiswindow.h"
+#include "registerwindow.h"
+#include "pharmacydialog.h"
+
 namespace Ui {
 class Login;
 }

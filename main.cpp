@@ -38,7 +38,6 @@ int main(int argc, char *argv[])
             break;
         default: break;
         }
-
         return a.exec();
     }
     return 0;
