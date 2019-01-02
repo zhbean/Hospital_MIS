@@ -89,6 +89,7 @@ void Login::on_OkButton_clicked()
                         limit = limit_query.value("position_limit").toInt();
                     }
                     checkDuty(dpmdetail,account);
+
                     emit setAccountAndToolTip(account,dpmdetail);
                     this->accept();
                 }
@@ -123,6 +124,7 @@ void Login::checkDuty(int dpmdetail,int account)
 {
     //得到当前时间
     QDateTime curTime = QDateTime::currentDateTime();
+    curTime.setDate(QDate::fromString(curTime.toString("dddd"),"dddd"));
     dbManager db;
     if(db.openDB()){
 /*
@@ -150,6 +152,7 @@ void Login::checkDuty(int dpmdetail,int account)
                     if(curTime>startTime&&curTime<endTime){
                         writeDuty(dutyID,0,staff,curTime);
                         qDebug()<<"到勤";
+                        break;
                     }
                     //else {qDebug()<<"有安排值班但是时间不对替班1";}
                 }
@@ -167,6 +170,7 @@ void Login::checkDuty(int dpmdetail,int account)
 
 void Login::writeDuty(int dutyID,int status,int staffID,QDateTime curTime)
 {
+    curTime=curTime.currentDateTime();
     dbManager db;
     if(db.openDB()){
         QSqlQuery query;
