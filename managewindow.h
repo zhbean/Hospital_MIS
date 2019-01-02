@@ -8,8 +8,9 @@
 #include<QMessageBox>
 #include "QSqlRelationalTableModel"
 #include "QSqlQueryModel"
-# include "editduty.h"
+#include "editduty.h"
 #include "QDateTime"
+#include "showchart.h"
 
 namespace Ui {
 class manageWindow;
@@ -62,6 +63,7 @@ private slots:
     void on_tabWidget_2_currentChanged(int index);
     void on_btn_dpmStatistics_clicked();
     void on_btn_dailyStatistics_clicked();
+    void on_btn_charts_clicked();
 };
 
 #endif // MANAGEWINDOW_H
