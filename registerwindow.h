@@ -23,6 +23,7 @@ private:
 private slots:
     void getAccountAndToolTip(int account,int dpmdetail);
     void on_registerPushButton_clicked();
+    void on_searchPushButton_clicked();
 };
 
 #endif // REGISTERWINDOW_H

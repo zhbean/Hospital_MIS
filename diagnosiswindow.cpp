@@ -16,6 +16,8 @@ diagnosisWindow::diagnosisWindow(QWidget *parent) :
     ui->DelButton->setEnabled(false);
     ui->OKButton->setEnabled(false);
     ui->PrintButton->setEnabled(false);
+    ui->medicineTableWidget->verticalHeader()->hide();
+
 }
 
 diagnosisWindow::~diagnosisWindow()
@@ -257,7 +259,7 @@ QString diagnosisWindow::makePspHtml()
     QString html="<html>";
     html+=" <body><div style='text-align:center'><h1>处方单<h1></div>";
     html+="<HR width='100%' color=#000 SIZE=3>";
-    html+="<p>处方单号：2018123010302600</p>";
+    html+="<p>处方单号："+this->pspID+"</p>";
     html+="<p>姓名："+ui->patientNameLabel->text()+"</p><p>性别："+ui->patientSexLabel->text()+"</p><p>年龄："+ui->patientAgeLabel->text()+"</p>";
     html+="<HR width='100%' color=#000 SIZE=3>";
     for(int i=0;i<ui->medicineTableWidget->rowCount();i++){
