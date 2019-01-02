@@ -139,8 +139,9 @@ void Login::checkDuty(int dpmdetail,int account)
                 //比对值班表时间与当前时间
                 QDateTime startTime;
                 QDateTime endTime;
-                startTime=startTime.fromString(query.value("start_date").toString(),"yyyy-MM-dd hh:mm:ss dddd");
-                endTime=endTime.fromString(query.value("end_date").toString(),"yyyy-MM-dd hh:mm:ss dddd");
+                QString s=query.value("start_date").toString();
+                startTime=startTime.fromString(query.value("start_date").toString(),"hh:mm:ss dddd");
+                endTime=endTime.fromString(query.value("end_date").toString(),"hh:mm:ss dddd");
                 if(startTime.isValid()&&endTime.isValid()){
                     int staff = query.value("staff_id").toInt();
                     int dpm = query.value("dpmdetail_id").toInt();
@@ -150,7 +151,7 @@ void Login::checkDuty(int dpmdetail,int account)
                         writeDuty(dutyID,0,staff,curTime);
                         qDebug()<<"到勤";
                     }
-                    else {qDebug()<<"有安排值班但是时间不对替班1";}
+                    //else {qDebug()<<"有安排值班但是时间不对替班1";}
                 }
                 else {
                     qDebug()<<"数据库时间格式有误";
