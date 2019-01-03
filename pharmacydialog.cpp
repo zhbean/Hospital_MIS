@@ -197,10 +197,11 @@ void PharmacyDialog::on_pushButton_return_clicked()
 {
     //获取输入信息
     QString drug_id=ui->lineEdit_drugid_forReturn->text();
+    QString return_price=ui->lineEdit_returnPrice->text();
     int return_number=ui->lineEdit_returnNumber->text().toInt();
     QString return_number_str=QString::number(return_number);
     //判断输入信息是否完善
-    if(drug_id==""||return_number==0){
+    if(return_price==""||drug_id==""||return_number==0){
         QMessageBox::warning(this,"错误","请您填写完整的退货信息。");
         return;
     }
@@ -227,7 +228,8 @@ void PharmacyDialog::on_pushButton_return_clicked()
         return;
     }
     //药品在库，判断退货数量是否合理。
-    int old_inventory=query.value(6).toInt();//应以虚库存为准，否则影响当天缴费过，但并未取药的病人。
+    //获取退货药品的原库存。
+    int old_inventory=query.value("virtual_inventory").toInt();//应以虚库存为准，否则影响当天缴费过，但并未取药的病人。
     if(return_number>old_inventory)
     {
          int number=return_number-old_inventory;\
@@ -249,9 +251,9 @@ void PharmacyDialog::on_pushButton_return_clicked()
             {
                 QMessageBox::information(this,"成功","回滚成功");
                 return;
+                QMessageBox::warning(this,"失败","回滚失败");
             }
             else{
-                QMessageBox::warning(this,"失败","回滚失败");
                 return;
             }
         }
@@ -261,7 +263,7 @@ void PharmacyDialog::on_pushButton_return_clicked()
         QString record_time=time.toString("yyyy-MM-dd hh:mm:ss");
         QString record_type="退货";
         QString staff_id_str=QString::number(staff_id);
-        sql="insert into storecord(drug_id,drug_number,record_type,staff_id,record_time) values("+drug_id+","+return_number_str+",'"+record_type+"',"+staff_id_str+",'"+record_time+"');";
+        sql="insert into storecord(drug_id,buy_price,drug_number,record_type,staff_id,record_time) values("+drug_id+","+return_price+","+return_number_str+",'"+record_type+"',"+staff_id_str+",'"+record_time+"');";
         if(!query.exec(sql))
         {
             QMessageBox::warning(this,"失败","插入退货记录失败");
@@ -286,6 +288,101 @@ void PharmacyDialog::on_pushButton_return_clicked()
 
 }
 
+//-----修改药品价格------
+void PharmacyDialog::on_tableWidget_store_cellDoubleClicked(int row, int column)
+{
+    pUpdatePriceDialog = new updatePriceDialog(this);
+    pUpdatePriceDialog->setModal(false);
+    //声明槽函数的映射关系。
+    connect(this,SIGNAL(sendDrugMessage(QString,QString,QString,QString)),pUpdatePriceDialog,SLOT(getDrugMessage(QString,QString,QString,QString)));
+    //获取选中药品的信息。
+    QString drug_id= ui->tableWidget_store->item(row,0)->text();
+    QString drug_name=ui->tableWidget_store->item(row,1)->text();
+    QString drug_buyPrice=ui->tableWidget_store->item(row,3)->text();
+    QString drug_price=ui->tableWidget_store->item(row,4)->text();
+    qDebug()<<"before emit "<<drug_id<<drug_name<<drug_buyPrice<<drug_price;
+    emit sendDrugMessage(drug_id,drug_name,drug_buyPrice,drug_price);
+    qDebug()<<"after emit ";
+    //点击确定按钮，执行更新操作。
+    if(pUpdatePriceDialog->exec()==QDialog::Accepted)
+    {
+        //获取更新对话框的值
+        QString new_drug_buyPrice=pUpdatePriceDialog->MyDrugBuyPrice;
+        QString new_drug_price=pUpdatePriceDialog->MyDrugSalePrice;
+        qDebug()<<new_drug_buyPrice<<new_drug_price;
+        //连接数据库
+        dbManager db;
+        if(!db.openDB())
+        {
+            QMessageBox::warning(this,"失败","连接数据库失败.");
+            return;
+        }
+        //获取连接
+        QSqlDatabase* pDB=db.getDB();
+        //创建query
+        QSqlQuery query(*pDB);
+        //涉及药品表格以及操作记录表格，事物处理。
+        if(pDB->transaction())
+        {
+            //更新药品价格
+            QString sql="update drug set drug_buyprice="+new_drug_buyPrice+",drug_price="+new_drug_price+" where drug_id="+drug_id+";";
+            qDebug()<<sql;
+            //更新药品价格失败
+            if(!query.exec(sql))
+            {
+                QMessageBox::warning(this,"失败","更新药品价格失败");
+                if(pDB->rollback())
+                {
+                    QMessageBox::information(this,"成功","回滚成功");
+                    return;
+                }
+                else
+                {
+                    QMessageBox::warning(this,"失败","回滚失败");
+                    return;
+                }
+            }
+            QMessageBox::information(this,"成功","更新药品价格成功");
+            //插入修改记录
+            QDateTime time =QDateTime::currentDateTime();//获取当前时间
+            QString record_time=time.toString("yyyy-MM-dd hh:mm:ss");
+            QString record_type="修改价格";
+            QString staff_id_str=QString::number(staff_id);
+            sql="insert into storecord(drug_id,buy_price,sale_price,record_type,staff_id,record_time) values("+drug_id+","+new_drug_buyPrice+","+new_drug_price+",'"+record_type+"',"+staff_id_str+",'"+record_time+"');";
+            //插入修改记录失败
+            if(!query.exec(sql))
+            {
+                QMessageBox::warning(this,"失败","插入修改记录失败");
+                if(pDB->rollback())
+                {
+                    QMessageBox::information(this,"成功","回滚成功");
+                }
+                else
+                {
+                    QMessageBox::warning(this,"失败","回滚失败");
+                }
+            }
+            else//成功，提交事物。
+            {
+                QMessageBox::information(this,"成功","插入修改记录成功。");
+                if(pDB->commit())
+                {
+                    QMessageBox::information(this,"成功","事物提交成功，本次操作成功。");
+                }
+                else{
+                    QMessageBox::warning(this,"失败","事物提交失败,本次操作无效。");
+                }
+            }
+
+        }//事务处理
+        else
+        {
+             QMessageBox::warning(this,"失败","开启事务处理失败。");
+        }
+    }//点击确定
+
+
+}
 //------药品查询------
 void PharmacyDialog::on_pushButton_selectDrug_clicked()
 {
@@ -811,7 +908,52 @@ void PharmacyDialog::on_pushButton_tabFactory_UpdateFactory_clicked()
 
 
 }
+//-----------------删除厂商信息
+void PharmacyDialog::on_tableWidget_factory_cellDoubleClicked(int row, int column)
+{
+    QMessageBox Msg(QMessageBox::Warning, QString::fromLocal8Bit("警告!!!"), QString::fromLocal8Bit("确定要删除该厂商的信息？"));
+    QAbstractButton *pYesBtn = (QAbstractButton *)Msg.addButton(QString::fromLocal8Bit("是"), QMessageBox::YesRole);
+    QAbstractButton *pNoBtn = (QAbstractButton *)Msg.addButton(QString::fromLocal8Bit("否"), QMessageBox::NoRole);
+    Msg.exec();
+    if (Msg.clickedButton()!=pYesBtn)//否，则不继续执行。
+    {
+        return;
+    }
+    //获取选择厂商的编号。
+    QString factory_id=ui->tableWidget_factory->item(row,0)->text();
+    //连接数据库
+    dbManager db;
+    if(!db.openDB())
+    {
+        QMessageBox::warning(this,"失败","连接数据库失败.");
+        return;
+    }
+    //获取连接
+    QSqlDatabase* pDB=db.getDB();
+    //创建query
+    QSqlQuery query(*pDB);
+    //先判断是否有药品依赖于该厂商。
+    QString sql="select * from drug where factory_id="+factory_id+";";
+    if(!query.exec(sql))
+    {
+        QMessageBox::warning(this,"查询失败","查询与药品的依赖关系失败");
+        return;
+    }
+    if(query.next())//在依赖关系
+    {
+        QMessageBox::warning(this,"错误","存在依赖关系，暂不允许删除该厂商信息。");
+        return;
+    }
+    while(query.next()){}//移完指针
+    sql="delete from factory where factory_id="+factory_id+";";
+    if(!query.exec(sql))
+    {
+        QMessageBox::warning(this,"删除失败","删除厂商信息失败。");
+        return;
+    }
+    QMessageBox::information(this,"成功","删除成功。");
 
+}
 //-----------查询厂商信息----------------
 void PharmacyDialog::on_pushButton_tabFactory_select_clicked()
 {
@@ -1167,6 +1309,10 @@ void PharmacyDialog::on_pushButton_selectByStaffId_clicked()
     ui->tableWidget_record->resizeColumnsToContents();
 
 }
+
+
+
+
 
 
 
