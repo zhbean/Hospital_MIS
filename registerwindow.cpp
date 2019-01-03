@@ -91,6 +91,24 @@ void registerWindow::on_searchPushButton_clicked()
 
 void registerWindow::on_PayPushButton_clicked()
 {
+    QString sql="INSERT INTO payment(payment_id,psp_id,staff_id,sum_price,payment_date)VALUES(?,?,?,?,?);";
+    QString paymentId=QDateTime::currentDateTime().toString("yyyyMMddhhmmss")+ui->pspIdLineEdit->text().at(0)+ui->pspIdLineEdit->text().at(8);
+    QString pspId=ui->pspIdLineEdit->text();
+    QString staffId=ui->StaffIdLabel->text();
+    QString sumPrice=ui->payLabel->text();
+    QString paymentDate=QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+    dbManager db;
+    db.openDB();
+    QSqlQuery query;
+    query.prepare(sql);
+    query.bindValue(0,paymentId);
+    query.bindValue(1,pspId);
+    query.bindValue(2,staffId);
+    query.bindValue(3,sumPrice);
+    query.bindValue(4,paymentDate);
+    if(query.exec()){
+        QMessageBox::information(NULL,"支付成功","找零："+QString::number(ui->payLineEdit->text().toDouble()-ui->payLabel->text().toDouble()),QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+    }
 }
 
 void registerWindow::on_IDLineEdit_textChanged(const QString &arg1)
@@ -101,5 +119,22 @@ void registerWindow::on_IDLineEdit_textChanged(const QString &arg1)
     }
     else{
         ui->registerPushButton->setEnabled(false);
+    }
+}
+
+void registerWindow::on_payLineEdit_textChanged(const QString &arg1)
+{
+    if(!ui->payLineEdit->text().isEmpty()){
+        if(ui->payLineEdit->text().toDouble()>=ui->payLabel->text().toDouble()){
+            ui->PayPushButton->setEnabled(true);
+            ui->messLabel->clear();
+        }
+        else{
+            ui->PayPushButton->setEnabled(false);
+            ui->messLabel->setText("支付金额不足");
+        }
+    }
+    else {
+        ui->messLabel->clear();
     }
 }

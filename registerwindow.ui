@@ -69,7 +69,7 @@
     <item row="1" column="0" colspan="9">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="registerTab">
        <attribute name="title">
@@ -666,6 +666,19 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_5">
               <item>
+               <spacer name="horizontalSpacer_8">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
                <widget class="QPushButton" name="PayPushButton">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -675,12 +688,29 @@
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
+                  <width>95</width>
                   <height>40</height>
                  </size>
                 </property>
                 <property name="text">
                  <string>缴费</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="messLabel">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">font: 75 8pt &quot;Tibetan Machine Uni&quot;;
+color: rgb(204, 0, 0);s</string>
+                </property>
+                <property name="text">
+                 <string/>
                 </property>
                </widget>
               </item>

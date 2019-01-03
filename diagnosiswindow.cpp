@@ -269,9 +269,9 @@ QString diagnosisWindow::makePspHtml()
     html+="病症：<p>"+ui->diseasePlainTextEdit->toPlainText()+"</p>";
     for(int i=0;i<ui->medicineTableWidget->rowCount();i++){
         html+="<p><span>药品：</span>"+ui->medicineTableWidget->item(i,1)->text();
-        html+="<span>数量：</span>"+ui->medicineTableWidget->item(i,2)->text();
-        html+="<span>价格（数量*单价）：</span>"+ui->medicineTableWidget->item(i,3)->text();
-        html+="<span>使用说明：</span>"+ui->medicineTableWidget->item(i,4)->text()+"</p>";
+        html+=" <span> 数量：</span>"+ui->medicineTableWidget->item(i,2)->text();
+        html+=" <span> 价格（数量*单价）：</span>"+ui->medicineTableWidget->item(i,3)->text();
+        html+=" <span> 使用说明：</span>"+ui->medicineTableWidget->item(i,4)->text()+"</p>";
     }
     html+="<HR width='100%' color=#000 SIZE=3>";
     html+="<div style='text-align:right'><p>医师签字："+ui->StaffNameLabel->text()+"</p></div>";

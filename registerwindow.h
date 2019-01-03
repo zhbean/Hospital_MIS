@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include "dbManager.h"
-#include<QMessageBox>
+#include <QMessageBox>
+#include <QDateTime>
 
 namespace Ui {
 class registerWindow;
@@ -27,6 +28,7 @@ private slots:
     void on_searchPushButton_clicked();
     void on_PayPushButton_clicked();
     void on_IDLineEdit_textChanged(const QString &arg1);
+    void on_payLineEdit_textChanged(const QString &arg1);
 };
 
 #endif // REGISTERWINDOW_H
