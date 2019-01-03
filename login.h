@@ -27,7 +27,7 @@ public:
     explicit Login(QWidget *parent = nullptr);
     ~Login();
     int limit=-1;//登陆权限
-
+    bool judge=0;
 private:
     Ui::Login *ui;
     void showEvent(QShowEvent *event);

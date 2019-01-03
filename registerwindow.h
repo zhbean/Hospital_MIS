@@ -16,6 +16,7 @@ class registerWindow : public QMainWindow
 public:
     explicit registerWindow(QWidget *parent = nullptr);
     ~registerWindow();
+    bool login=0;
 
 private:
     Ui::registerWindow *ui;
@@ -24,6 +25,8 @@ private slots:
     void getAccountAndToolTip(int account,int dpmdetail);
     void on_registerPushButton_clicked();
     void on_searchPushButton_clicked();
+    void on_PayPushButton_clicked();
+    void on_IDLineEdit_textChanged(const QString &arg1);
 };
 
 #endif // REGISTERWINDOW_H

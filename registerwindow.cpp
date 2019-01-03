@@ -12,6 +12,7 @@ registerWindow::registerWindow(QWidget *parent) :
 
     QRegExp rx("^[A-Za-z0-9]+$");
     ui->pspIdLineEdit->setValidator(new QRegExpValidator(rx,this));
+    ui->IDLineEdit->setValidator(new QRegExpValidator(rx,this));
 }
 
 registerWindow::~registerWindow()
@@ -86,4 +87,19 @@ void registerWindow::on_searchPushButton_clicked()
         ui->patientNameLabel->setText(patientName);
     }
     ui->payLabel->setNum(price);
+}
+
+void registerWindow::on_PayPushButton_clicked()
+{
+}
+
+void registerWindow::on_IDLineEdit_textChanged(const QString &arg1)
+{
+    QString s=ui->IDLineEdit->text();
+    if(s.count()==18||s.count()==15){
+        ui->registerPushButton->setEnabled(true);
+    }
+    else{
+        ui->registerPushButton->setEnabled(false);
+    }
 }

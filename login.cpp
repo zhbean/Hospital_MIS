@@ -117,7 +117,8 @@ void Login::on_OkButton_clicked()
 
 void Login::on_CancelButton_clicked()
 {
-    this->close();
+    this->accept();
+    this->judge=1;
 }
 
 void Login::checkDuty(int dpmdetail,int account)
