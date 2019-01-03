@@ -82,7 +82,7 @@ void dbManager::updateDuty(int loginAccount)
     }
     //更新时间
     for(int i=0;i<dutyIDList.size();i++){
-        if(query.exec("update dutyrecord set real_end_date="+curDT+",status=1 where dutyrecord_id="+dutyIDList.at(i)+";")){
+        if(query.exec("update dutyrecord set real_end_date='"+curDT+"',dutyrecord_status=1 where dutyrecord_id="+dutyIDList.at(i)+";")){
             if(query.numRowsAffected()>0){
                 qDebug()<<"更新成功";
             }
