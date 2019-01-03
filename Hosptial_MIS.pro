@@ -39,7 +39,8 @@ SOURCES += \
     infodialog.cpp \
     editduty.cpp \
     historymedicinedialog.cpp \
-    showchart.cpp
+    showchart.cpp \
+    updatepricedialog.cpp
 
 HEADERS += \
         dbManager.h \
@@ -53,7 +54,8 @@ HEADERS += \
     infodialog.h \
     editduty.h \
     historymedicinedialog.h \
-    showchart.h
+    showchart.h \
+    updatepricedialog.h
 
 
 
@@ -69,7 +71,8 @@ FORMS += \
     infodialog.ui \
     editduty.ui \
     historymedicinedialog.ui \
-    showchart.ui
+    showchart.ui \
+    updatepricedialog.ui
 
 
 QT += sql
