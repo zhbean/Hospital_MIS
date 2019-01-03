@@ -19,6 +19,7 @@ manageWindow::~manageWindow()
 
 void manageWindow::getAccountAndToolTip(int account,int dpmdetail)//account为账号即员工号，dpmdetail为科室详情号
 {
+    loginAccount = account;
     dbManager db;
     db.openDB();
     QStringList information=db.getStaffAndRoom(account,dpmdetail);
@@ -46,9 +47,15 @@ void manageWindow::showStatistics()
 
 void manageWindow::signout()
 {
-    Login l;
+    dbManager db;
+    if(db.openDB()){
+        db.updateDuty(loginAccount);
+    }
+    else{
+        QMessageBox::information(NULL,"错误","数据库未连接！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
     this->close();
-    l.exec();
 }
 
 void manageWindow::showEvent(QShowEvent *event)
@@ -946,7 +953,6 @@ void manageWindow::initDutyRecord()
             for(int i = 0;i < 8 ;i++)//宽度自适应
             {
                 ui->trv_dutyRecord->resizeColumnToContents(i);
-
             }
         }
         else{qDebug()<<"数据查询出错";}

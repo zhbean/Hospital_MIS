@@ -60,3 +60,35 @@ QStringList dbManager::getStaffAndRoom(int account,int dpmdetail){
     }
     return information;
 }
+
+//用户注销时更新值班记录
+void dbManager::updateDuty(int loginAccount)
+{
+    QDate curDate = QDate::currentDate();
+    QDateTime curDateTime = QDateTime::currentDateTime();
+    QString curDT = curDateTime.toString("yyyy-MM-dd hh:mm:ss dddd");
+    QStringList dutyIDList;
+    QSqlQuery query;
+    if(query.exec("select * from dutyrecord where staff_id="+QString::number(loginAccount)+";")){
+        while(query.next()){
+            QDate dutyRecordDate = query.value("real_start_date").toDate();
+            if(dutyRecordDate.isValid()&&curDate==dutyRecordDate){
+                dutyIDList.append(query.value("dutyrecord_id").toString());
+            }
+        }
+    }
+    else{
+        qDebug()<<"没有登陆信息";
+    }
+    //更新时间
+    for(int i=0;i<dutyIDList.size();i++){
+        if(query.exec("update dutyrecord set real_end_date="+curDT+",status=1 where dutyrecord_id="+dutyIDList.at(i)+";")){
+            if(query.numRowsAffected()>0){
+                qDebug()<<"更新成功";
+            }
+        }
+        else{
+            qDebug()<<"没有登陆信息";
+        }
+    }
+}

@@ -80,7 +80,7 @@ void ShowChart::slotPointHoverd(const QPointF &point, bool state)
         ui->m_valueLabel->move(curPos.x() - ui->m_valueLabel->width() / 2, curPos.y() - ui->m_valueLabel->height() * 1.5);//移动数值
         ui->m_valueLabel->show();//显示出来
     }
-    else ui->m_valueLabel->hide();//进行隐藏
+    //else ui->m_valueLabel->hide();//进行隐藏
     ui->verticalLayout->insertWidget(1, ui->m_valueLabel);
 }
 

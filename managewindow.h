@@ -27,6 +27,7 @@ public:
 
 private:
     Ui::manageWindow *ui;
+    int loginAccount;
     void showEvent(QShowEvent *event);
     void initDepartment();
     void initStaff();

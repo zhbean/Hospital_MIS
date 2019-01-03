@@ -5,6 +5,7 @@
 #include <QSqlError>
 #include <QDebug>
 #include "QSqlQuery"
+#include "QDate"
 
 class dbManager
 {
@@ -15,6 +16,7 @@ public:
     bool openDB();
     QSqlQuery selectDB(QString sql);
     QStringList getStaffAndRoom(int account,int dpmdetail);
+    void updateDuty(int loginAccount);
 private:
     QSqlDatabase db;
 };
