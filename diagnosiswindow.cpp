@@ -16,6 +16,8 @@ diagnosisWindow::diagnosisWindow(QWidget *parent) :
     ui->DelButton->setEnabled(false);
     ui->OKButton->setEnabled(false);
     ui->PrintButton->setEnabled(false);
+    ui->medicineTableWidget->verticalHeader()->hide();
+
 }
 
 diagnosisWindow::~diagnosisWindow()
@@ -44,6 +46,7 @@ void diagnosisWindow::showStatistics(){
             ui->medicineTableWidget->removeRow(0);
         }
         ui->diseasePlainTextEdit->clear();
+        pspID.clear();
         ui->historyDiseaseListWidget->clear();
         ui->AddButton->setEnabled(true);
         ui->DelButton->setEnabled(true);
@@ -100,12 +103,12 @@ void diagnosisWindow::showStatistics(){
         QStringList pspDate;
         QStringList staffName;
         QDateTime psp[10];
-        int i=0;
+        //int i=0;
         while (Query.next()){
-            pspId.insert(i,Query.value("psp_id").toString());
-            patientDisease.insert(i,Query.value("patient_disease").toString());
-            staffName.insert(i,Query.value("staff_name").toString());
-            pspDate.insert(i,Query.value("psp_date").toString());
+            pspId.insert(0,Query.value("psp_id").toString());
+            patientDisease.insert(0,Query.value("patient_disease").toString());
+            staffName.insert(0,Query.value("staff_name").toString());
+            pspDate.insert(0,Query.value("psp_date").toString());
         }
         QDateTime currentTime=QDateTime::currentDateTime();
         for(int i=0;i<pspDate.count();i++){
@@ -181,74 +184,77 @@ void diagnosisWindow::on_DelButton_clicked()
 
 void diagnosisWindow::on_OKButton_clicked()
 {
-    dbManager db;
-    db.openDB();
-    if(db.getDB()->transaction()){
-        QString pspId=QDateTime::currentDateTime().toString("yyyyMMddhhmmss")+ui->patientIdLabel->text().at(0)+ui->patientIdLabel->text().at(8);
-        QString doctorId=ui->StaffIdLabel->text();
-        QString patientDisease=ui->diseasePlainTextEdit->toPlainText();
-        QString pspTime=QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-        QString pspSql="INSERT INTO psp(psp_id,doctor_id,ID,patient_disease,psp_date) VALUES(?,?,?,?,?);";
-        qDebug()<<pspId <<doctorId <<patientID <<patientDisease <<pspTime;
-        QSqlQuery query;
-        query.prepare(pspSql);
-        query.bindValue(0,pspId);
-        query.bindValue(1,doctorId);
-        query.bindValue(2,patientID);
-        query.bindValue(3,patientDisease);
-        query.bindValue(4,pspTime);
-        if(!query.exec()){
-            qDebug()<<query.lastError();
-            QMessageBox::critical(this,"Error","添加处方单失败，将要回滚");
-            if(!db.getDB()->rollback()){
-                QMessageBox::critical(this,"Error","回滚失败");
-                qDebug()<<db.getDB()->lastError();
-            }
-            return;
-        }
-        for(int i=0;i<ui->medicineTableWidget->rowCount();i++){
-            QString drugSql="INSERT INTO pspdetail(psp_id,drug_id,drug_num,psp_price,psp_info) VALUES(?,?,?,?,?);";
-            QString drugId=ui->medicineTableWidget->item(i,0)->text();
-            QString drugNum=ui->medicineTableWidget->item(i,2)->text();
-            QString pspPrice=ui->medicineTableWidget->item(i,3)->text();
-            QString pspInfo=ui->medicineTableWidget->item(i,4)->text();
-            query.prepare(drugSql);
+    if(pspID.isEmpty()){
+        dbManager db;
+        db.openDB();
+        if(db.getDB()->transaction()){
+            QString pspId=QDateTime::currentDateTime().toString("yyyyMMddhhmmss")+ui->patientIdLabel->text().at(0)+ui->patientIdLabel->text().at(8);
+            QString doctorId=ui->StaffIdLabel->text();
+            QString patientDisease=ui->diseasePlainTextEdit->toPlainText();
+            QString pspTime=QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+            QString pspSql="INSERT INTO psp(psp_id,doctor_id,ID,patient_disease,psp_date) VALUES(?,?,?,?,?);";
+            qDebug()<<pspId <<doctorId <<patientID <<patientDisease <<pspTime;
+            QSqlQuery query;
+            query.prepare(pspSql);
             query.bindValue(0,pspId);
-            query.bindValue(1,drugId);
-            query.bindValue(2,drugNum);
-            query.bindValue(3,pspPrice);
-            query.bindValue(4,pspInfo);
+            query.bindValue(1,doctorId);
+            query.bindValue(2,patientID);
+            query.bindValue(3,patientDisease);
+            query.bindValue(4,pspTime);
             if(!query.exec()){
                 qDebug()<<query.lastError();
-                QMessageBox::critical(this,"Error","添加药品失败，将要回滚");
+                QMessageBox::critical(this,"Error","添加处方单失败，将要回滚");
                 if(!db.getDB()->rollback()){
                     QMessageBox::critical(this,"Error","回滚失败");
                     qDebug()<<db.getDB()->lastError();
                 }
                 return;
             }
-            else{
-                QString dSql="UPDATE drug SET virtual_inventory = virtual_inventory-"+drugNum+" where drug_id="+drugId+";";
-                query.prepare(dSql);
+            for(int i=0;i<ui->medicineTableWidget->rowCount();i++){
+                QString drugSql="INSERT INTO pspdetail(psp_id,drug_id,drug_num,psp_price,psp_info) VALUES(?,?,?,?,?);";
+                QString drugId=ui->medicineTableWidget->item(i,0)->text();
+                QString drugNum=ui->medicineTableWidget->item(i,2)->text();
+                QString pspPrice=ui->medicineTableWidget->item(i,3)->text();
+                QString pspInfo=ui->medicineTableWidget->item(i,4)->text();
+                query.prepare(drugSql);
+                query.bindValue(0,pspId);
+                query.bindValue(1,drugId);
+                query.bindValue(2,drugNum);
+                query.bindValue(3,pspPrice);
+                query.bindValue(4,pspInfo);
                 if(!query.exec()){
                     qDebug()<<query.lastError();
-                    QMessageBox::critical(this,"Error","更改库存失败，将要回滚");
+                    QMessageBox::critical(this,"Error","添加药品失败，将要回滚");
                     if(!db.getDB()->rollback()){
                         QMessageBox::critical(this,"Error","回滚失败");
                         qDebug()<<db.getDB()->lastError();
                     }
                     return;
                 }
+                else{
+                    QString dSql="UPDATE drug SET virtual_inventory = virtual_inventory-"+drugNum+" where drug_id="+drugId+";";
+                    query.prepare(dSql);
+                    if(!query.exec()){
+                        qDebug()<<query.lastError();
+                        QMessageBox::critical(this,"Error","更改库存失败，将要回滚");
+                        if(!db.getDB()->rollback()){
+                            QMessageBox::critical(this,"Error","回滚失败");
+                            qDebug()<<db.getDB()->lastError();
+                        }
+                        return;
+                    }
+                }
             }
-        }
-        if(!db.getDB()->commit()){
-            QMessageBox::critical(this,"Error","提交失败，将要回滚");
-            if(!db.getDB()->rollback()){
-                QMessageBox::critical(this,"Error","回滚失败");
+            if(!db.getDB()->commit()){
+                QMessageBox::critical(this,"Error","提交失败，将要回滚");
+                if(!db.getDB()->rollback()){
+                    QMessageBox::critical(this,"Error","回滚失败");
+                }
             }
-        }
-        else{
-            this->pspID=pspId;
+            else{
+                QMessageBox::critical(this,"恭喜","开药成功！");
+                this->pspID=pspId;
+            }
         }
     }
 }
@@ -257,14 +263,15 @@ QString diagnosisWindow::makePspHtml()
     QString html="<html>";
     html+=" <body><div style='text-align:center'><h1>处方单<h1></div>";
     html+="<HR width='100%' color=#000 SIZE=3>";
-    html+="<p>处方单号：2018123010302600</p>";
+    html+="<p>处方单号："+this->pspID+"</p>";
     html+="<p>姓名："+ui->patientNameLabel->text()+"</p><p>性别："+ui->patientSexLabel->text()+"</p><p>年龄："+ui->patientAgeLabel->text()+"</p>";
     html+="<HR width='100%' color=#000 SIZE=3>";
+    html+="病症：<p>"+ui->diseasePlainTextEdit->toPlainText()+"</p>";
     for(int i=0;i<ui->medicineTableWidget->rowCount();i++){
         html+="<p><span>药品：</span>"+ui->medicineTableWidget->item(i,1)->text();
-        html+="<span>数量：</span>"+ui->medicineTableWidget->item(i,2)->text();
-        html+="<span>价格（数量*单价）：</span>"+ui->medicineTableWidget->item(i,3)->text();
-        html+="<span>使用说明：</span>"+ui->medicineTableWidget->item(i,4)->text()+"</p>";
+        html+=" <span> 数量：</span>"+ui->medicineTableWidget->item(i,2)->text();
+        html+=" <span> 价格（数量*单价）：</span>"+ui->medicineTableWidget->item(i,3)->text();
+        html+=" <span> 使用说明：</span>"+ui->medicineTableWidget->item(i,4)->text()+"</p>";
     }
     html+="<HR width='100%' color=#000 SIZE=3>";
     html+="<div style='text-align:right'><p>医师签字："+ui->StaffNameLabel->text()+"</p></div>";
