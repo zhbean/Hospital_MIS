@@ -85,7 +85,7 @@ void PharmacyDialog::on_pushButton_purchase_clicked()
         QString record_type="进货";
         qDebug()<<staff_id;
         QString staff_id_str=QString::number(staff_id);
-        sql="insert into storecord(drug_id,drug_number,record_type,staff_id,record_time) values("+drug_id+","+drug_number+",'"+record_type+"',"+staff_id_str+",'"+record_time+"');";
+        sql="insert into storecord(drug_id,drug_number,buy_price,sale_price,record_type,staff_id,record_time) values("+drug_id+","+drug_number+","+drug_buyPrice+","+drug_price+",'"+record_type+"',"+staff_id_str+",'"+record_time+"');";
         qDebug()<<sql;
         if(!query.exec(sql))
         {
@@ -140,9 +140,38 @@ void PharmacyDialog::on_pushButton_purchase_clicked()
             }
 
         }
+        //获取在库药品的原进价，和售价。
+        float old_buy_price=query.value("drug_buyprice").toFloat();
+        float old_sale_price=query.value("drug_price").toFloat();
         while(query.next());//把NEXT指针移动完毕
-
-        //药品信息已存在,update,虚库存，实库存都要增加。
+        if(old_buy_price!=drug_buyPrice.toFloat()||old_sale_price!=drug_price.toFloat())
+        {
+            QMessageBox Msg(QMessageBox::Warning, QString::fromLocal8Bit("警告!!!"), QString::fromLocal8Bit("本次采购药品已经在库，是否，以本次进价售价为准？"));
+            QAbstractButton *pYesBtn = (QAbstractButton *)Msg.addButton(QString::fromLocal8Bit("是"), QMessageBox::YesRole);
+            QAbstractButton *pNoBtn = (QAbstractButton *)Msg.addButton(QString::fromLocal8Bit("否"), QMessageBox::NoRole);
+            Msg.exec();
+            if (Msg.clickedButton()==pYesBtn)//是,以本次的进价售价为准。
+            {
+                sql="update drug set real_inventory=real_inventory+"+drug_number+",virtual_inventory=virtual_inventory+"+drug_number+",drug_buyprice="+drug_buyPrice+",drug_price="+drug_price+" where drug_id="+drug_id+";";
+                if(!query.exec(sql))//更新失败
+                {
+                    QMessageBox::warning(this,"失败","更新药品信息失败");
+                    pDB->rollback();
+                    return;
+                }else{//更新成功
+                    QMessageBox::information(this,"成功","更新药品信息成功。");
+                    if(pDB->commit())
+                    {
+                        QMessageBox::information(this,"成功","事物提交成功，本次操作成功。");
+                    }
+                    else{
+                        QMessageBox::warning(this,"失败","事物提交失败");
+                    }
+                }
+                return;
+            }
+        }
+        //药品信息已存在,update,虚库存，实库存都要增加。药品进价、售价保持不变。
         sql="update drug set real_inventory=real_inventory+"+drug_number+",virtual_inventory=virtual_inventory+"+drug_number+" where drug_id="+drug_id+";";
         if(!query.exec(sql))//更新失败
         {
@@ -198,7 +227,7 @@ void PharmacyDialog::on_pushButton_return_clicked()
         return;
     }
     //药品在库，判断退货数量是否合理。
-    int old_inventory=query.value(6).toInt();//应以虚库存为准，否则影响缴费过，但并未取药的病人。
+    int old_inventory=query.value(6).toInt();//应以虚库存为准，否则影响当天缴费过，但并未取药的病人。
     if(return_number>old_inventory)
     {
          int number=return_number-old_inventory;\
@@ -886,11 +915,11 @@ void PharmacyDialog::on_pushButton_selectByDrugId_clicked()
     if (""==drug_id)//查询显示全部
     {
        QMessageBox::information(this,"OK","未输入药品号，查询全部记录");
-       sql="select storecord.drug_id,drug.drug_name,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id;";
+       sql="select storecord.drug_id,drug.drug_name,storecord.buy_price,storecord.sale_price,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id;";
     }
     else
     {
-        sql="select storecord.drug_id,drug.drug_name,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id and storecord.drug_id="+drug_id+";";
+        sql="select storecord.drug_id,drug.drug_name,storecord.buy_price,storecord.sale_price,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id and storecord.drug_id="+drug_id+";";
 
     }
     //连接数据库
@@ -924,12 +953,16 @@ void PharmacyDialog::on_pushButton_selectByDrugId_clicked()
         QTableWidgetItem *p3=new QTableWidgetItem(query.value(3).toString());
         QTableWidgetItem *p4=new QTableWidgetItem(query.value(4).toString());
         QTableWidgetItem *p5=new QTableWidgetItem(query.value(5).toString());
+        QTableWidgetItem *p6=new QTableWidgetItem(query.value(6).toString());
+        QTableWidgetItem *p7=new QTableWidgetItem(query.value(7).toString());
         ui->tableWidget_record->setItem(0,0,p0);
         ui->tableWidget_record->setItem(0,1,p1);
         ui->tableWidget_record->setItem(0,2,p2);
         ui->tableWidget_record->setItem(0,3,p3);
         ui->tableWidget_record->setItem(0,4,p4);
         ui->tableWidget_record->setItem(0,5,p5);
+        ui->tableWidget_record->setItem(0,6,p6);
+        ui->tableWidget_record->setItem(0,7,p7);
         while(query.next())
         {
             ui->tableWidget_record->insertRow(0);
@@ -939,12 +972,16 @@ void PharmacyDialog::on_pushButton_selectByDrugId_clicked()
             QTableWidgetItem *p3=new QTableWidgetItem(query.value(3).toString());
             QTableWidgetItem *p4=new QTableWidgetItem(query.value(4).toString());
             QTableWidgetItem *p5=new QTableWidgetItem(query.value(5).toString());
+            QTableWidgetItem *p6=new QTableWidgetItem(query.value(6).toString());
+            QTableWidgetItem *p7=new QTableWidgetItem(query.value(7).toString());
             ui->tableWidget_record->setItem(0,0,p0);
             ui->tableWidget_record->setItem(0,1,p1);
             ui->tableWidget_record->setItem(0,2,p2);
             ui->tableWidget_record->setItem(0,3,p3);
             ui->tableWidget_record->setItem(0,4,p4);
             ui->tableWidget_record->setItem(0,5,p5);
+            ui->tableWidget_record->setItem(0,6,p6);
+            ui->tableWidget_record->setItem(0,7,p7);
         }
     }
     //QTableWidget根据内容调整列宽
@@ -964,12 +1001,12 @@ void PharmacyDialog::on_pushButton_recordTab_selectByDrugName_clicked()
     if (""==drug_name)//查询显示全部
     {
        QMessageBox::information(this,"OK","未输入药品名称，查询全部记录");
-       sql="select storecord.drug_id,drug.drug_name,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id;";
+       sql="select storecord.drug_id,drug.drug_name,storecord.buy_price,storecord.sale_price,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id;";
     }
     else
     {
 
-        sql="select storecord.drug_id,drug.drug_name,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id and drug.drug_name like '%"+drug_name+"%';";
+        sql="select storecord.drug_id,drug.drug_name,storecord.buy_price,storecord.sale_price,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id and drug.drug_name like '%"+drug_name+"%';";
 
     }
     //连接数据库
@@ -1003,12 +1040,16 @@ void PharmacyDialog::on_pushButton_recordTab_selectByDrugName_clicked()
         QTableWidgetItem *p3=new QTableWidgetItem(query.value(3).toString());
         QTableWidgetItem *p4=new QTableWidgetItem(query.value(4).toString());
         QTableWidgetItem *p5=new QTableWidgetItem(query.value(5).toString());
+        QTableWidgetItem *p6=new QTableWidgetItem(query.value(6).toString());
+        QTableWidgetItem *p7=new QTableWidgetItem(query.value(7).toString());
         ui->tableWidget_record->setItem(0,0,p0);
         ui->tableWidget_record->setItem(0,1,p1);
         ui->tableWidget_record->setItem(0,2,p2);
         ui->tableWidget_record->setItem(0,3,p3);
         ui->tableWidget_record->setItem(0,4,p4);
         ui->tableWidget_record->setItem(0,5,p5);
+        ui->tableWidget_record->setItem(0,6,p6);
+        ui->tableWidget_record->setItem(0,7,p7);
         while(query.next())
         {
             ui->tableWidget_record->insertRow(0);
@@ -1018,12 +1059,16 @@ void PharmacyDialog::on_pushButton_recordTab_selectByDrugName_clicked()
             QTableWidgetItem *p3=new QTableWidgetItem(query.value(3).toString());
             QTableWidgetItem *p4=new QTableWidgetItem(query.value(4).toString());
             QTableWidgetItem *p5=new QTableWidgetItem(query.value(5).toString());
+            QTableWidgetItem *p6=new QTableWidgetItem(query.value(6).toString());
+            QTableWidgetItem *p7=new QTableWidgetItem(query.value(7).toString());
             ui->tableWidget_record->setItem(0,0,p0);
             ui->tableWidget_record->setItem(0,1,p1);
             ui->tableWidget_record->setItem(0,2,p2);
             ui->tableWidget_record->setItem(0,3,p3);
             ui->tableWidget_record->setItem(0,4,p4);
             ui->tableWidget_record->setItem(0,5,p5);
+            ui->tableWidget_record->setItem(0,6,p6);
+            ui->tableWidget_record->setItem(0,7,p7);
         }
     }
     //QTableWidget根据内容调整列宽
@@ -1049,11 +1094,11 @@ void PharmacyDialog::on_pushButton_selectByStaffId_clicked()
     if (""==staff_id)//查询显示全部
     {
        QMessageBox::information(this,"OK","未输入员工号，查询全部记录");
-       sql="select storecord.drug_id,drug.drug_name,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id;";
+       sql="select storecord.drug_id,drug.drug_name,storecord.buy_price,storecord.sale_price,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id;";
     }
     else
     {
-        sql="select storecord.drug_id,drug.drug_name,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id and storecord.staff_id="+staff_id+";";
+        sql="select storecord.drug_id,drug.drug_name,storecord.buy_price,storecord.sale_price,storecord.drug_number,storecord.record_type,storecord.staff_id,storecord.record_time from drug,storecord where storecord.drug_id=drug.drug_id and storecord.staff_id="+staff_id+";";
 
     }
     //连接数据库
@@ -1087,12 +1132,16 @@ void PharmacyDialog::on_pushButton_selectByStaffId_clicked()
         QTableWidgetItem *p3=new QTableWidgetItem(query.value(3).toString());
         QTableWidgetItem *p4=new QTableWidgetItem(query.value(4).toString());
         QTableWidgetItem *p5=new QTableWidgetItem(query.value(5).toString());
+        QTableWidgetItem *p6=new QTableWidgetItem(query.value(6).toString());
+        QTableWidgetItem *p7=new QTableWidgetItem(query.value(7).toString());
         ui->tableWidget_record->setItem(0,0,p0);
         ui->tableWidget_record->setItem(0,1,p1);
         ui->tableWidget_record->setItem(0,2,p2);
         ui->tableWidget_record->setItem(0,3,p3);
         ui->tableWidget_record->setItem(0,4,p4);
         ui->tableWidget_record->setItem(0,5,p5);
+        ui->tableWidget_record->setItem(0,6,p6);
+        ui->tableWidget_record->setItem(0,7,p7);
         while(query.next())
         {
             ui->tableWidget_record->insertRow(0);
@@ -1102,12 +1151,16 @@ void PharmacyDialog::on_pushButton_selectByStaffId_clicked()
             QTableWidgetItem *p3=new QTableWidgetItem(query.value(3).toString());
             QTableWidgetItem *p4=new QTableWidgetItem(query.value(4).toString());
             QTableWidgetItem *p5=new QTableWidgetItem(query.value(5).toString());
+            QTableWidgetItem *p6=new QTableWidgetItem(query.value(6).toString());
+            QTableWidgetItem *p7=new QTableWidgetItem(query.value(7).toString());
             ui->tableWidget_record->setItem(0,0,p0);
             ui->tableWidget_record->setItem(0,1,p1);
             ui->tableWidget_record->setItem(0,2,p2);
             ui->tableWidget_record->setItem(0,3,p3);
             ui->tableWidget_record->setItem(0,4,p4);
             ui->tableWidget_record->setItem(0,5,p5);
+            ui->tableWidget_record->setItem(0,6,p6);
+            ui->tableWidget_record->setItem(0,7,p7);
         }
     }
     //QTableWidget根据内容调整列宽

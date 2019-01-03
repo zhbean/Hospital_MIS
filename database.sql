@@ -31,11 +31,13 @@ PRIMARY KEY (drug_id),
 FOREIGN KEY(factory_id) REFERENCES factory(factory_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*药品仓库进退记录*/
+/*药品仓库操作记录*/
 CREATE TABLE IF NOT EXISTS storecord(
 record_id INT NOT NULL AUTO_INCREMENT,
 drug_id INT,
 drug_number INT,
+buy_price FLOAT(8,2),
+sale_price FLOAT(8,2),
 record_type VARCHAR(10),
 staff_id INT,
 record_time TEXT,

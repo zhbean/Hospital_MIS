@@ -1106,6 +1106,16 @@
      </column>
      <column>
       <property name="text">
+       <string>进价</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>售价</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
        <string>数量</string>
       </property>
      </column>
