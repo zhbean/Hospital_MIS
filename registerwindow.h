@@ -21,6 +21,7 @@ public:
 
 private:
     Ui::registerWindow *ui;
+    int loginAccount;
 
 private slots:
     void getAccountAndToolTip(int account,int dpmdetail);
@@ -29,6 +30,7 @@ private slots:
     void on_PayPushButton_clicked();
     void on_IDLineEdit_textChanged(const QString &arg1);
     void on_payLineEdit_textChanged(const QString &arg1);
+    void signout();
 };
 
 #endif // REGISTERWINDOW_H

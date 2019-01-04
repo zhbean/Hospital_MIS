@@ -5,6 +5,7 @@ registerWindow::registerWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::registerWindow)
 {
+
     ui->setupUi(this);
     ui->tableWidget->setColumnWidth(0,400);
     ui->tableWidget->setColumnWidth(1,140);
@@ -13,14 +14,29 @@ registerWindow::registerWindow(QWidget *parent) :
     QRegExp rx("^[A-Za-z0-9]+$");
     ui->pspIdLineEdit->setValidator(new QRegExpValidator(rx,this));
     ui->IDLineEdit->setValidator(new QRegExpValidator(rx,this));
+    ui->menubar->addAction("注销",this,SLOT(signout()));
 }
 
 registerWindow::~registerWindow()
 {
     delete ui;
 }
+
+void registerWindow::signout()
+{
+    dbManager db;
+    if(db.openDB()){
+        db.updateDuty(loginAccount);
+    }
+    else{
+        QMessageBox::information(NULL,"错误","数据库未连接！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
+    this->close();
+}
 void registerWindow::getAccountAndToolTip(int account,int dpmdetail)//account为账号即员工号，dpmdetail为科室详情号
 {
+    loginAccount = account;
     dbManager db;
     db.openDB();
     QStringList information=db.getStaffAndRoom(account,dpmdetail);

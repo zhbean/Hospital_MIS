@@ -12,6 +12,7 @@ diagnosisWindow::diagnosisWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->menubar->addAction("病人刷卡",this,SLOT(showStatistics()));
+    ui->menubar->addAction("注销",this,SLOT(signout()));
     ui->AddButton->setEnabled(false);
     ui->DelButton->setEnabled(false);
     ui->OKButton->setEnabled(false);
@@ -24,8 +25,22 @@ diagnosisWindow::~diagnosisWindow()
 {
     delete ui;
 }
+
+void diagnosisWindow::signout()
+{
+    dbManager db;
+    if(db.openDB()){
+        db.updateDuty(loginAccount);
+    }
+    else{
+        QMessageBox::information(NULL,"错误","数据库未连接！",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+        return;
+    }
+    this->close();
+}
 void diagnosisWindow::getAccountAndToolTip(int account,int dpmdetail) //account为账号即员工号，dpmdetail为科室详情号
 {
+    loginAccount = account;
     dbManager db;
     db.openDB();
     QStringList information=db.getStaffAndRoom(account,dpmdetail);

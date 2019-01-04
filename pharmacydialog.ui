@@ -155,7 +155,7 @@
     </size>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>1</number>
    </property>
    <property name="tabBarAutoHide">
     <bool>false</bool>
@@ -385,7 +385,7 @@
        <x>740</x>
        <y>500</y>
        <width>252</width>
-       <height>64</height>
+       <height>70</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
@@ -417,7 +417,7 @@
        <x>741</x>
        <y>329</y>
        <width>252</width>
-       <height>98</height>
+       <height>107</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout">

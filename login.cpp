@@ -163,6 +163,7 @@ void Login::checkDuty(int dpmdetail,int account)
                 }while(query.next());
             }
             else{
+                QMessageBox::information(NULL,"错误","没有安排值班在此科室!",QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
                 qDebug()<<"没有安排值班的替班2";
             }
         }

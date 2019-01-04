@@ -30,6 +30,7 @@ private:
     QString patientID;
     QString pspID;
     QString makePspHtml();
+    int loginAccount;
 signals:
     void setPspId(QString);
 
@@ -43,6 +44,7 @@ private slots:
     void getMedicineInformation(QString,QString,QString,float,QString);
     void on_historyDiseaseListWidget_itemDoubleClicked(QListWidgetItem *item);
     void on_medicineTableWidget_itemChanged(QTableWidgetItem *item);
+    void signout();
 };
 
 #endif // DIAGNOSISWINDOW_H
