@@ -281,7 +281,7 @@ QString diagnosisWindow::makePspHtml()
     html+="<p>处方单号："+this->pspID+"</p>";
     html+="<p>姓名："+ui->patientNameLabel->text()+"</p><p>性别："+ui->patientSexLabel->text()+"</p><p>年龄："+ui->patientAgeLabel->text()+"</p>";
     html+="<HR width='100%' color=#000 SIZE=3>";
-    html+="病症：<p>"+ui->diseasePlainTextEdit->toPlainText()+"</p>";
+    html+="<p>病症："+ui->diseasePlainTextEdit->toPlainText()+"</p>";
     for(int i=0;i<ui->medicineTableWidget->rowCount();i++){
         html+="<p><span>药品：</span>"+ui->medicineTableWidget->item(i,1)->text();
         html+=" <span> 数量：</span>"+ui->medicineTableWidget->item(i,2)->text();
